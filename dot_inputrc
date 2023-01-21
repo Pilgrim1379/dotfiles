@@ -1,0 +1,31 @@
+$include /etc/inputrc
+
+# Use the text that has already been typed as the prefix for searching through
+# commands (basically more intelligent Up/Down behavior)
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+"\e[C": forward-char
+"\e[D": backward-char
+
+# Use Alt/Meta + Delete to delete the preceding word
+"\e[3;3~": kill-word
+
+# Use Ctrl+← and Ctrl+→ (or Alt/Meta, or Esc) to move between words.
+"\e[1;5D": backward-word
+"\e[1;3D": backward-word
+"\e[5D": backward-word
+"\e\e[D": backward-word
+
+"\e[1;5C": forward-word
+"\e[1;3C": forward-word
+"\e[5C": forward-word
+"\e\e[C": forward-word
+
+set colored-stats On
+set completion-ignore-case On
+set completion-prefix-display-length 3
+set mark-symlinked-directories On
+set show-all-if-ambiguous On
+set show-all-if-unmodified On
+set visible-stats On

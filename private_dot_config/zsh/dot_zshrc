@@ -1,0 +1,36 @@
+# For profiling startup
+# zmodload zsh/zprof # comment out after profiling
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+
+# ~/.zshrc or ~/.bashrc
+eval "$(sheldon source)"
+
+# The construct below is what Zsh calls an anonymous function; most other
+# languages would call this a lambda or scope function. It gets called right
+# away with the arguments provided and is then discarded.
+# Here, it enables us to use scoped variables in our dotfiles.
+() {
+    # Load all of the files in rc.d that start with <number>- and end in .zsh
+    # (n) sorts the results in numerical order.
+    # <-> is an open-ended range. It matches any non-negative integer.
+    # <1-> matches any integer >= 1. <-9> matches any integer <= 9.
+    # <1-9> matches any integer that's >= 1 and <= 9.
+    local file=
+    for file in $ZDOTDIR/rc.d/<->-*.zsh(n); do
+        . $file
+    done
+} "$@"
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+
+# Starship prompt
+# eval "$(starship init zsh)"
+
+# zprof # comment out after profiling

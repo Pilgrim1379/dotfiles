@@ -1,0 +1,25 @@
+include ~/.config/nano/syntax-highlighting/**.nanorc
+
+set guidestripe 80
+set stripecolor normal,lightblack
+
+set indicator
+set scrollercolor lightblack
+
+set linenumbers
+set numbercolor lightblack,normal
+
+set softwrap
+set atblanks
+
+set stateflags
+set tabsize 4
+set tabstospaces
+
+bind M-b  prevword all
+bind M-f  nextword all
+bind ^W   chopwordleft  all
+bind M-d  chopwordright all
+bind ^_   undo all
+bind M-<  firstline all
+bind M->  lastline all
