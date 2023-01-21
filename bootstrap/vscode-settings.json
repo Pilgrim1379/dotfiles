@@ -1,0 +1,98 @@
+{
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.fontSize": 15,
+    "editor.fontFamily": "'JetBrainsMono Nerd Font', 'Cascadia Code PL', 'SF Mono', Menlo, Monaco, monospace",
+    "workbench.colorTheme": "Dracula",
+    "workbench.iconTheme": "vscode-icons",
+    "css.validate": false,
+    "scss.validate": false,
+    "less.validate": false,
+    "python.languageServer": "Pylance",
+    "django.snippets.exclude": [
+        "cms"
+    ],
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        ".vscode": true,
+        "**/*.pyc": true,
+    },
+    "workbench.editor.enablePreview": false,
+    "editor.minimap.enabled": false,
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django"
+    ],
+    "files.associations": {
+        "**/*.html": "html",
+        "**/templates/**/*.html": "django-html",
+        "**/templates/**/*": "django-txt",
+        "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+    },
+    "emmet.includeLanguages": {
+        "django-html": "html"
+    },
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": "${env:HOME}/.local/bin/black",
+    "tailwindCSS.includeLanguages": {
+        "plaintext": "html"
+    },
+    "tailwindCSS.emmetCompletions": true,
+    "python.showStartPage": false,
+    "python.testing.pytestPath": "${env:HOME}/.local/bin/pytest",
+    "vsicons.dontShowNewVersionMessage": true,
+    "go.useLanguageServer": true,
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [
+            80
+        ],
+        "editor.selectionHighlight": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": false
+    },
+    "[sass]": {
+        "editor.tabSize": 2
+    },
+    "update.mode": "manual",
+    "python.defaultInterpreterPath": "${env:HOME}/.asdf/shims/python",
+    "insertnum.start": 1,
+    "splitHTMLAttributes.closingBracketOnNewLine": true,
+    "splitHTMLAttributes.sortOrder": [
+        "^v-if",
+        "^v-else",
+        "^v-show",
+        "^v-model",
+        "^v-for",
+        "^:key",
+        "^key",
+        "^v-",
+        "^:",
+        "^@click",
+        "^@",
+        "^id",
+        "^class",
+        "^.*=\""
+    ],
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "vue"
+    ],
+    "eslint.nodePath": "${env:HOME}/.asdf/shims/node",
+    "terminal.integrated.fontSize": 15,
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}
