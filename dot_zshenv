@@ -1,0 +1,72 @@
+#!/bin/zsh
+#
+# This file, .zshenv, is the first file sourced by zsh for EACH shell, whether
+# it's interactive or not.
+# This includes non-interactive sub-shells!
+# So, put as little in this file as possible, to avoid performance impact.
+#
+
+# These are used in /etc/zshrc
+case $VENDOR in
+  ( apple )
+    export SHELL_SESSIONS_DISABLE=1
+  ;;
+  ( ubuntu )
+    export skip_global_compinit=1
+  ;;
+esac
+[[ $OSTYPE == linux-gnu ]] &&
+    export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
+
+# Note: The shebang #!/bin/zsh is strictly necessary for executable scripts
+# only, but without it, you might not always get correct syntax highlighting
+# when viewing the code.
+
+# https://pkg.go.dev/github.com/adrg/xdg#section-readme
+# XDG Base Directories
+export XDG_CONFIG_HOME=~/.config
+export XDG_DATA_HOME=~/.local/share
+# export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+
+# Tell zsh where to look for our dotfiles.
+# By default, Zsh will look for dotfiles in $HOME (and find this file), but
+# once $ZDOTDIR is defined, it will start looking in that dir instead.
+# ${X:=Y} specifies a default value Y to use for parameter X, if X has not been
+# set or is null. This will actually create X, if necessary, and assign the
+# value to it.
+# To set a default value that is returned *without* setting X, use ${X:-Y}
+# As in other shells, ~ expands to $HOME _at the beginning of a value only._
+ZDOTDIR=${XDG_CONFIG_HOME:=~/.config}/zsh
+
+
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# # https://github.com/sorin-ionescu/prezto - Prezto — Instantly Awesome Zsh
+# # Ensure that a non-login, non-interactive shell has a defined environment.
+# if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
+# #   source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
+#   source "${ZDOTDIR:-$HOME}/.zprofile"
+# fi
+
+
+################################################################################
+# Source ~/.zprofile
+# https://github.com/sorin-ionescu/prezto/issues/1180
+################################################################################
+
+#
+# Zsh shells can lack an environment due to inconsistencies between OS X, linux,
+# and SSH implementations, so we manually keep track of if ~/.zprofile has
+# been properly sourced. This also protects ~/.zprofile from being sourced
+# more than once, as historically it's only meant to be run once at user login.
+#
+
+# if [[ -o LOGIN ]]; then
+#   export PROFILE_ENV_EXISTS='yes'
+# elif [[ -o INTERACTIVE && -z "$PROFILE_ENV_EXISTS" ]]; then
+#   echo 'ZSHENV shlvl: ' $SHLVL
+#   export PROFILE_ENV_EXISTS='yes'
+#   [[ -s "${ZDOTDIR:-HOME}/.zshrc" ]] && source "${ZDOTDIR:-HOME}/.zshrc"
+# fi
