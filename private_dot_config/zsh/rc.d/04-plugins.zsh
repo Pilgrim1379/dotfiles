@@ -2,7 +2,7 @@
 ##
 # Plugins
 #
-ZSH_HIGHLIGHT_HIGHLIGHTERS=( main brackets ) # # Command-line syntax highlighting config
+ZSH_HIGHLIGHT_HIGHLIGHTERS=( main brackets pattern ) # # Command-line syntax highlighting config
 
 ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=()
 ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(forward-char forward-word end-of-line)
@@ -91,6 +91,3 @@ fi
 # uninstall by removing these lines
 # [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
 
-
-# Source plugins
-# source "/Users/nqa/.local/share/sheldon/repos/github.com/zsh-users/zsh-completions/zsh-completions.plugin.zsh"

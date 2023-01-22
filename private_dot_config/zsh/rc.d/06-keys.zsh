@@ -14,6 +14,11 @@
 # NOTE: All configuration below should come AFTER sourcing zsh-autocomplete!
 #
 
+# Emacs key map
+bindkey -e
+
+# Vim key map
+# bindkey -v
 
 # Enable the use of Ctrl-Q and Ctrl-S for keyboard shortcuts.
 unsetopt FLOW_CONTROL
