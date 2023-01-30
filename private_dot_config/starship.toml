@@ -1,5 +1,6 @@
 # ~/.config/starship.toml
 
+# Configure the format of the prompt.
 format = """
 $username\
 $hostname\
@@ -14,46 +15,68 @@ $nodejs\
 $elixir\
 $elm\
 $python\
+$rust\
+$julia\
+$c\
 $cmd_duration $jobs $time\
 $line_break\
 $character"""
+
+# format = """
+# $username\
+# $hostname\
+# $directory\
+# $git_branch\
+# $git_commit\
+# $git_state\
+# $git_status\
+# $git_metrics\
+# $fill\
+# $cmd_duration $jobs $time\
+# $line_break\
+# $character"""
+
+# Timeout for commands executed by starship (in milliseconds).
+command_timeout = 2000
+
+# Disable the blank line at the start of the prompt
+add_newline = true
+
 
 [fill]
 symbol = " "
 
 [directory]
 read_only = " "
-truncation_length = 4
+truncation_length = 3
 truncate_to_repo = false
 truncation_symbol = "…/"
 
 [git_branch]
 symbol = " "
 style = 'bold purple'
-format = "[$symbol$branch]($style) "
-# style = "bright-black"
+format = '[$symbol$branch]($style) '
 
 [jobs]
 symbol = ""
 style = "bold red"
 number_threshold = 1
-format = "[$symbol]($style)"
+format = '[$symbol]($style)'
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
 disabled = false
-# style = "cyan"
 
 [git_state]
-format = '\([$state( $progress_current/$progress_total)]($style)\) '
 # style = "bright-black"
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
 
 [git_metrics]
 disabled = false
 
 [cmd_duration]
-format = "[$duration]($style)"
-style = "yellow"
+style = 'yellow'
+format = '[$duration]($style)'
 
 [memory_usage]
 symbol = " "
@@ -71,6 +94,7 @@ format = "[TUNNEL OPEN for $output]($style)"
 
 [rust]
 symbol = " "
+format = '[$symbol($version )]($style)'
 
 [python]
 symbol = " "
@@ -78,23 +102,28 @@ format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 
 [nodejs]
 symbol = " "
-format = "[$symbol($version )]($style)"
+format = '[$symbol($version )]($style)'
 
 [julia]
 symbol = " "
+format = '[$symbol($version )]($style)'
 
 [lua]
 symbol = " "
+format = '[$symbol($version )]($style)'
 
 [docker_context]
 symbol = " "
+format = '[$symbol($context )]($style) '
 
 [elixir]
 symbol = " "
+format = '[$symbol($version \(OTP $otp_version\) )]($style)'
 
 [elm]
 symbol = " "
+format = '[$symbol($version )]($style)'
 
 [c]
 symbol = " "
-
+format = '[$symbol($version )]($style)'
