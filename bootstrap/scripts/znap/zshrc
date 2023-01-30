@@ -1,0 +1,225 @@
+#!/usr/bin/env zsh
+
+# https://github.com/marlonrichert/zsh-snap/issues/3
+# http://zsh.sourceforge.net/Guide/zshguide02.html
+#zmodload zsh/zprof # command time  zsh -i -c exit
+
+if [[ -o login ]]; then
+	# path=(
+	#   ~/bin
+	#   ~/.local/bin
+	#   ${XDG_CONFIG_HOME}/emacs/bin
+	#   $path
+	# )
+
+	neofetch # neofetch
+fi
+
+# Znap! The lightweight plugin manager that's easy to grok.
+# Get it from https://github.com/marlonrichert/zsh-snap
+source ~/zsh/zsh-snap/znap.zsh
+
+# Znap makes your prompt appear instantly & you can start typing right away.
+# znap prompt sindresorhus/pure
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+znap source powerlevel10k
+
+
+# Real-time auto-completion
+# https://github.com/marlonrichert/zsh-autocomplete
+znap source zsh-autocomplete
+
+# In-line suggestions
+znap source zsh-autosuggestions
+
+# Reminds you that you should use one of your existing aliases for a command you just typed
+# https://github.com/MichaelAquilina/zsh-you-should-use
+znap source zsh-you-should-use
+
+# Better line editing tools
+# https://github.com/marlonrichert/zsh-edit
+znap source zsh-edit
+WORDCHARS='*?\'
+
+# Load the aliases and custon functions and some:
+for file in ~/dotfiles/zsh/{zaliases,zfunctions}; do
+	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+done
+unset file
+
+
+################ zsh options
+## https://linux.die.net/man/1/zshoptions
+
+# Expansion and Globbing
+setopt numericglobsort 	# Sort filenames numerically when it makes sense
+setopt nocaseglob # Make globbing (filename generation) insensitive to case
+setopt extendedglob # Treat the '#', '~' and '^' characters as part of patterns for filename generation
+setopt globdots	# Do not require a leading '.' in a filename to be matched explicitly
+setopt globstarshort # Enable shorter patterns for recursive globbing
+setopt nullglob # Delete unmatched filename pattern from list instead of reporting an error
+
+# Input/Output
+setopt rcquotes 	# Allow the character sequence '''' to signify a single quote within singly quoted strings.
+setopt interactivecomments 	# allow comments, even in interactive shells
+setopt noflowcontrol 	# disable start (C-s) and stop (C-q) characters
+setopt correct	# command auto-correction
+#setopt correctall	# argument auto-correction
+
+# History
+setopt extended_history
+setopt hist_expire_dups_first 	# delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups 	# do not store duplications
+setopt hist_find_no_dups 	# ignore duplicates when searching
+setopt hist_ignore_space 	# Remove command lines from the history list when the first character on the line is a space,
+setopt hist_reduce_blanks 	# removes blank lines from history
+setopt hist_save_no_dups 	# Don't to save duplicated lines more than once
+setopt share_history 	# share history across multiple zsh sessions
+setopt hist_verify	# show command with history expansion to user before running it
+
+# Changing directories
+setopt auto_cd 	# If a command is issued that can't be executed as a normal command, and the command is the name of a directory, perform the cd command to that directory.
+setopt auto_pushd 	# Make cd push the old directory onto the directory stack.
+setopt pushd_ignore_dups # Don't push multiple copies of the same directory onto the directory stack.
+
+# Completion
+setopt auto_list 	# automatically list choices on ambiguous completion
+setopt always_to_end 	# move cursor to end if word had one match
+setopt complete_in_word # Complete from both ends of word instead of from end only
+setopt menu_complete # On an ambiguous completion, instead of listing possibilities or beeping, insert the first match immediately.
+setopt list_types 	# When listing files that are possible completions, show the type of each file with a trailing identifying mark.
+setopt auto_param_keys 	# If a parameter name was completed and the next character typed is one of those that have to come directly after the name (like }, :, etc.), they are placed there automatically.
+setopt auto_param_slash 	# If a parameter is completed whose content is the name of a directory, then add a trailing slash.
+setopt nolistbeep # Don't beep on an ambiguous completion.
+
+# Prompt
+setopt prompt_subst
+
+# Zle
+setopt nobeep # Don't beep on error in ZLE.
+
+# Zstyles
+zstyle ':autocomplete:tab:*' insert-unambiguous yes # Make Tab first insert any common substring, before inserting full completions
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format 'completing %d:'
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+
+zstyle ':autocomplete:*' min-delay .3 # Wait for a minimum amount of time
+#zstyle ':autocomplete:*' min-input 3 # Wait for a minimum amount of input
+#zstyle ':autocomplete:*' ignored-input '..##' # Ignore certain inputs eg. don't trigger autocom when word consist solely of ..
+zstyle ':autocomplete:tab:*' widget-style menu-select # Do menu selection:
+#zstyle ':autocomplete:tab:*' fzf-completion yes # try Fzf's completion before using Zsh's
+
+
+################ Command line keybinding
+
+# Bind the fzf-cd-widget to ALT-C
+#
+# This is a workaround because the offical fix is to change ALT-C to
+# send Meta, but we can't do that because we will lose the ability to
+# type a # symbol.
+#
+# The other workaround is use use ESC-C, but we can't use that either
+# because when using Vim keybindings as when ESC is pressed we go
+# out of insert mode.
+#
+
+# Emacs binding
+bindkey -e
+
+# # Vi with some Emacs flavor control keys.
+# bindkey -v
+# export KEYTIMEOUT=1
+
+# bindkey "^A" beginning-of-line
+# bindkey "^E" end-of-line
+# bindkey "^K" kill-line
+# bindkey "^L" clear-screen
+# bindkey "^R" history-incremental-search-backward
+# bindkey "^U" kill-whole-line
+# bindkey "^W" backward-kill-word
+# bindkey "^Y" yank
+
+# # Use vim keys in tab complete menu
+# bindkey -M menuselect 'h' vi-backward-char
+# bindkey -M menuselect 'j' vi-down-line-or-history
+# bindkey -M menuselect 'k' vi-up-line-or-history
+# bindkey -M menuselect 'l' vi-forward-char
+# bindkey -v '^?' backward-delete-char
+
+# # bind the k and j keys for use in VI mode
+# bindkey -M vicmd 'k' history-substring-search-up
+# bindkey -M vicmd 'j' history-substring-search-down
+
+# # 'v' in visual mode opens VIM to edit the command in a full editor.
+# autoload -U edit-command-line
+# zle -N edit-command-line
+# bindkey -M vicmd v edit-command-line
+
+# Enable alt-h help function.
+unalias run-help
+autoload -Uz  run-help    run-help-git  run-help-ip   run-help-openssl \
+              run-help-p4 run-help-sudo run-help-svk  run-help-svn
+
+
+################ Misc.
+
+# Better cding like z.lua but faster
+znap eval zoxide 'zoxide init zsh'
+
+#znap eval zlua 'lua ~/github/utils/z.lua/z.lua --init zsh enhanced once fzf'
+
+# direnv hooked into asdf
+znap eval asdf-direnv "asdf exec $(asdf which direnv) hook zsh"
+
+################ Completions & corrections
+
+[[ -n $ASDF_DIR ]] && fpath=($ASDF_DIR/completions $fpath)
+
+fpath=(
+	~/.local/completions
+	$fpath
+)
+
+
+# pipx must be after autoload -Uz bashcompinit; bashcompinit
+# comment this out because already generated completion script
+# with 'register-python-argcomplete pipx > ~/.local/completion/_pipx'
+#eval "$(register-python-argcomplete pipx)"
+
+# thefuck
+znap eval thefuck 'thefuck --alias sugar'
+
+
+# initialize zsh completions
+autoload -Uz compinit
+
+for dump in "$ZDOTDIR/.zcompdump"(N.mh+24); do
+  compinit
+done
+compinit -C
+
+# initializw bash completions
+autoload -U +X bashcompinit; bashcompinit
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+
+# Command-line syntax highlighting
+export ZSH_HIGHLIGHT_HIGHLIGHTERS=( main brackets )
+znap source zsh-syntax-highlighting
+# znap source fast-syntax-highlighting
+
+
+# PS4='%? %e %N %x %I %_ '
+# setopt verbose xtrace
+
+
+#zprof
