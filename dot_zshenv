@@ -45,10 +45,10 @@ ZDOTDIR=${XDG_CONFIG_HOME:=~/.config}/zsh
 
 # # https://github.com/sorin-ionescu/prezto - Prezto — Instantly Awesome Zsh
 # # Ensure that a non-login, non-interactive shell has a defined environment.
-# if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
-# #   source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
-#   source "${ZDOTDIR:-$HOME}/.zprofile"
-# fi
+if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
+#   source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
+  source "${ZDOTDIR:-$HOME}/.zprofile"
+fi
 
 
 ################################################################################

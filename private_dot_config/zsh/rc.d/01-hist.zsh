@@ -9,8 +9,17 @@
 # Tell zsh where to store history.
 # $VENDOR and $OSTYPE let us check what kind of machine we're on.
 if [[ $VENDOR == apple ]]; then
-  # On macOS, store it in iCloud, so it syncs across multiple Macs.
   HISTFILE=~/Library/Mobile\ Documents/com\~apple\~CloudDocs/zsh_history
+
+  # Sometimes (probably due to concurrency issues), when the histfile is kept in iCloud, it is empty when Zsh starts up.
+  # However, there should always be a backup file we can copy.
+  setopt extendedglob
+  zmodload -F zsh/files b:zf_mv
+
+  # Move the largest "$HISTFILE <number>" file to $HISTFILE.
+  local -a files=( $HISTFILE(|\ <->)(OL) )
+  [[ -w $files[1] ]] &&
+      zf_mv $files[1] $HISTFILE
 else
   HISTFILE=${XDG_DATA_HOME:=~/.local/share}/zsh/history
 fi

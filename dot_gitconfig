@@ -1,6 +1,6 @@
 # use separate file for username / github token / etc
 [include]
-  path = ~/.dotfiles/git/gitconfig_local
+  path = ~/bootstrap/scripts/git/gitconfig_local
 [core]
 	autocrlf = false
 	excludesfile = ~/.gitignore_global
@@ -19,8 +19,24 @@
 	colorMoved = zebra
 [difftool "opendiff"]
 	cmd = /usr/bin/opendiff \"$LOCAL\" \"$REMOTE\" -merge \"$MERGED\" 2>/dev/null | cat
+# https://opensource.com/article/20/11/git-aliases
 [alias]
 	opendiff = difftool --no-prompt --tool opendiff --dir-diff
+	p = push
+	st = status -sb
+	ll = log --oneline
+	last = log -1 HEAD
+	ci = commit -m
+	rv = remote -v
+	d = diff
+	gl = config --global -l
+	se = !git rev-list --all | xargs git grep -F
+	br = branch
+	co = checkout
+	fit = !git reset --hard && git clean -fdx
+	uncommit = reset --soft HEAD^
+	ac = !git add -A && git commit\n
+	alias = config --get-regexp ^alias\\.
 [merge]
 	tool = opendiff
 [filter "lfs"]
@@ -97,3 +113,5 @@
 	HEAD = 6 normal italic
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+[help]
+	autocorrect = 1

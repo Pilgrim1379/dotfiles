@@ -3,12 +3,6 @@
 ##
 # Key bindings
 #
-# zsh-autocomplete and zsh-edit add many useful keybindings. See each of their
-# respective docs for the full list:
-# https://github.com/marlonrichert/zsh-autocomplete/blob/main/README.md#key-bindings
-# https://github.com/marlonrichert/zsh-edit/blob/main/README.md#key-bindings
-#
-
 
 ##
 # NOTE: All configuration below should come AFTER sourcing zsh-autocomplete!
