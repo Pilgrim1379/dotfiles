@@ -26,7 +26,7 @@ npm install -g npm-check-updates
 ## Corepack and package managers
 #
 corepack enable
-corepack prepare npm@latest --activate
+corepack prepare pnpm@latest --activate
 corepack prepare yarn@latest --activate
 
 ## this is required for pnpm commands to work
@@ -34,13 +34,6 @@ asdf reshim nodejs
 
 if command -v pnpm &> /dev/null
 then
-    ## Package updaters
-    # pnpm add -g npm-check
-    # pnpm add -g npm-check-updates
-
-    ## clojsurescript
-    # npm add -g source-map-support
-
     ## elm
     pnpm add -g elm-analyse
     pnpm add -g elm-format
@@ -58,9 +51,6 @@ then
     #pnpm add -g np
     #pnpm add -g npm-name-cli
 
-    ## neovim
-    # pnpm add -g neovim
-
     ## misc
     pnpm add -g spoof # Easily spoof your MAC address in macOS, Windows, & Linux!
     pnpm add -g wscat # Permits connecting to, sending data to, and receiving data from a WebSocket
@@ -70,9 +60,6 @@ then
 
     ## fancy listing of recent branches
     pnpm add -g git-recent
-
-    ## sexy git diffs
-    pnpm add -g diff-so-fancy
 
     ## trash as the safe `rm` alternative
     pnpm add -g trash-cli

@@ -27,7 +27,7 @@ zstyle ':autocomplete:*' default-context ''
 zstyle ':autocomplete:*' min-delay 0.05  # seconds (float)
 # Wait this many seconds for typing to stop, before showing completions.
 
-zstyle ':autocomplete:*' min-input 0  # characters (int)
+zstyle ':autocomplete:*' min-input 1  # characters (int)
 # Wait until this many characters have been typed, before showing completions.
 
 zstyle ':autocomplete:*' ignored-input '' # extended glob pattern
@@ -81,9 +81,51 @@ zstyle ':autocomplete:*' widget-style complete-word
 # ⚠️ NOTE: This setting can NOT be changed at runtime.
 
 
-## Source installed plugins
-eval "$(sheldon source)"
+## Sheldon load plugins
+# eval "$(sheldon source)" # comment out if not using znap
 
+
+## Help with manual completion config instead of allowind zsh-autocomplete to
+## to it : 
+## https://stackoverflow.com/questions/67136714/how-to-properly-call-compinit-and-bashcompinit-in-zsh
+
+# autoload -Uz compinit
+# compinit
+
+## or
+
+# autoload -Uz compinit bashcompinit
+# compinit
+# bashcompinit
+
+## 
+# Speed up the first startup by cloning all plugins in parallel.
+# This won't clone plugins that we already have.
+
+#
+## Znap load plugins
+# For more info on each plugin, visit its repo at github.com/<plugin>
+# -a sets the variable's type to array.
+local -a plugins=(
+    marlonrichert/zsh-autocomplete      # Real-time type-ahead completion
+    zsh-users/zsh-autosuggestions       # Inline suggestions
+    zsh-users/zsh-syntax-highlighting   # Command-line syntax highlighting
+    zsh-users/zsh-completions           # Additional completion definitions for Zsh
+    # romkatv/powerlevel10k               # Powerlevel10k is a prompt theme for Zsh
+)
+znap clone $plugins
+
+# Load each plugin, one at a time.
+local p=
+for p in $plugins; do
+    znap source $p
+done
+
+# Use `znap fpath` to add generated completion functions:
+znap fpath _rustup 'rustup  completions zsh'
+znap fpath _cargo 'rustup  completions zsh cargo'
+# znap fpath _solana 'solana completion --shell zsh'
+znap fpath _pdm 'pdm completion zsh'
 
 ##
 # Config in this section should come AFTER sourcing Autocomplete and cannot be
@@ -92,22 +134,29 @@ eval "$(sheldon source)"
 
 # Better cding like z.lua but faster
 if (( $+commands[zoxide] )); then
-    eval "$(zoxide init zsh)"
+    # eval "$(zoxide init zsh)"  # comment out if not using znap
+    # Better cding like z.lua but faster
+    znap eval zoxide 'zoxide init zsh'
 fi
 
 # Direnv hooked into asdf
 if (( $+commands[direnv] )); then
-    eval "$(asdf exec direnv hook zsh)"
+    # eval "$(asdf exec direnv hook zsh)"  # comment out if not using znap
+    znap eval asdf-community/asdf-direnv "asdf exec $(asdf which direnv) hook zsh"
 fi
 
 # Pipenv
 if (( $+commands[pipenv] )); then
-    eval "$(_PIPENV_COMPLETE=zsh_source pipenv)"
+    # eval "$(_PIPENV_COMPLETE=zsh_source pipenv)"  # comment out if not using znap
+    znap function _pipenv_completion pipenv 'eval "$( _PIPENV_COMPLETE=zsh_source pipenv )"'
+    compdef _pipenv_completion pipenv
 fi
 
 # Pipx
 if (( $+commands[pipx] )); then
-    eval "$( register-python-argcomplete pipx )"
+    # eval "$(register-python-argcomplete pipx)"  # comment out if not using znap
+    znap function _pipx_completion pipx 'eval "$( register-python-argcomplete pipx )"'
+    compdef _pipx_completion pipx
 fi
 
 # Pnpm completion

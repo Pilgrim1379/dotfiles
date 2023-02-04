@@ -2,4 +2,4 @@
 --color=always
 --style=plain
 --map-syntax ".ignore:Git Ignore"
---theme="Dracula"
+--theme="Catppuccin-mocha"

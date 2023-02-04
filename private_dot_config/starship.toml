@@ -73,6 +73,7 @@ format = '\([$state( $progress_current/$progress_total)]($style)\) '
 
 [git_metrics]
 disabled = false
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
 
 [cmd_duration]
 style = 'yellow'

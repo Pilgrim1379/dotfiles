@@ -1,24 +1,116 @@
 # use separate file for username / github token / etc
 [include]
-  path = ~/bootstrap/scripts/git/gitconfig_local
+	path = ~/bootstrap/scripts/git/gitconfig_local
+
 [core]
 	autocrlf = false
 	excludesfile = ~/.gitignore_global
-	editor = nvim
+	editor = code --wait
+
+[pager]
+	# branch = false
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
+
 [color]
 	ui = always
+
 [push]
 	default = upstream
+
 [pull]
 	rebase = true
+
+[rebase]
+	autosquash = true
+	abbreviateCommands = true
+
 [branch]
 	autosetuprebase = always
+
 [diff]
-	tool = opendiff
+	tool = vscode
 	noprefix = true
-	colorMoved = zebra
-[difftool "opendiff"]
-	cmd = /usr/bin/opendiff \"$LOCAL\" \"$REMOTE\" -merge \"$MERGED\" 2>/dev/null | cat
+	colorMoved = default
+
+[difftool "vscode"]
+  	cmd = code --wait --diff $LOCAL $REMOTE
+
+[merge]
+    conflictstyle = diff3
+	tool = vscode
+
+[mergetool "vscode"]
+  	cmd = code --wait $MERGED
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+	# file-decoration-style = black ul
+	# file-style = black
+	# hunk-header-decoration-style = black box
+	# hunk-header-line-number-style = black
+	# line-numbers = true
+	# line-numbers-left-format = {nm:>3}│
+	# line-numbers-left-style = black
+	# line-numbers-minus-style = black
+	# line-numbers-plus-style = black
+	# line-numbers-right-format = {np:>3}│
+	# line-numbers-right-style = black
+	# line-numbers-zero-style = black
+	# minus-emph-style = red bold
+	# minus-empty-line-marker-style = omit
+	# minus-style = red
+	# navigate = false
+	# plus-emph-style = green bold
+	# plus-empty-line-marker-style = omit
+	# plus-style = green
+	side-by-side = true
+	syntax-theme = Catppuccin-mocha
+	true-color = auto
+	zero-style = black
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[credential]
+	helper = osxkeychain
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
+
+[user]
+	name = Napoleon Ahiable
+	email = 219075+thepreacher@users.noreply.github.com
+
+[init]
+	defaultBranch = main
+
+[maintenance]
+	repo = /Users/nqa/Git/asdf-direnv
+	repo = /Users/nqa/Git/starship
+	repo = /Users/nqa/Git/zsh-autocomplete
+	repo = /Users/nqa/Git/zsh-autosuggestions
+	repo = /Users/nqa/Git/zsh-completions
+	repo = /Users/nqa/Git/zsh-snap
+	repo = /Users/nqa/Git/zsh-syntax-highlighting
+		
+[submodule]
+	recurse = true
+
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+
+[help]
+	autocorrect = 1
+
 # https://opensource.com/article/20/11/git-aliases
 [alias]
 	opendiff = difftool --no-prompt --tool opendiff --dir-diff
@@ -37,81 +129,3 @@
 	uncommit = reset --soft HEAD^
 	ac = !git add -A && git commit\n
 	alias = config --get-regexp ^alias\\.
-[merge]
-	tool = opendiff
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-[credential]
-	helper = osxkeychain
-	helper = 
-	helper = /usr/local/share/gcm-core/git-credential-manager
-[user]
-	name = Napoleon Ahiable
-	email = 219075+thepreacher@users.noreply.github.com
-[init]
-	defaultBranch = main
-[maintenance]
-		
-[color "status"]
-	branch = 6 normal
-	added = 10 normal
-	updated = 10 normal
-	localbranch = 6 normal
-	changed = 11 normal
-	header = normal
-	remotebranch = 5 normal
-	nobranch = 1 normal italic
-	unmerged = 9 normal
-	untracked = normal dim
-[color "branch"]
-	plain = 6 normal
-	remote = 5 normal
-	current = 6 normal reverse
-	local = 6 normal
-	upstream = 5 normal
-[color "remote"]
-	hint = normal dim
-	success = 2 normal
-	error = 1 normal
-	warning = 3 normal
-[color "interactive"]
-	header = normal dim bold
-	prompt = 15 4
-	help = normal dim
-	error = 1 normal italic
-[color "diff"]
-	commit = 3 normal
-	newMoved = 11 normal
-	oldMovedAlternativeDimmed = 4 normal dim
-	frag = normal dim italic
-	oldMovedAlternative = 4 normal
-	contextBold = normal bold
-	newBold = 10 normal bold
-	context = normal
-	oldMoved = 3 normal
-	oldBold = 1 normal bold
-	newMovedDimmed = 11 normal dim
-	func = normal dim italic
-	meta = normal dim
-	newDimmed = 10 normal dim
-	newMovedAlternative = 12 normal
-	new = 10 normal
-	newMovedAlternativeDimmed = 12 normal dim
-	whitespace = normal 9
-	oldMovedDimmed = 3 normal dim
-	oldDimmed = 1 normal dim
-	old = 1 normal
-[color "decorate"]
-	branch = 6 normal
-	tag = 3 normal
-	remotebranch = 5 normal
-	stash = normal dim
-	grafted = 1 normal italic
-	HEAD = 6 normal italic
-[credential "https://dev.azure.com"]
-	useHttpPath = true
-[help]
-	autocorrect = 1

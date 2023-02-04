@@ -1,5 +1,4 @@
 #!/bin/zsh
-
 ##
 # Key bindings
 #
@@ -52,7 +51,6 @@ bindkey '^[v' describe-key-briefly
   }
 } .sudo
 
-
 # Up arrow:
 bindkey '\e[A' up-line-or-search
 bindkey '\eOA' up-line-or-search
@@ -75,6 +73,6 @@ bindkey '\0' list-expand
 # zle -A {.,}history-incremental-search-backward
 
 # Return key in completion menu & history menu:
-bindkey -M menuselect '\r' .accept-line
+bindkey -M menuselect '\r' .accept-line # disable this when not using zsh-autocomplete plugin
 # .accept-line: Accept command line.
 # accept-line:  Accept selection and exit menu.
