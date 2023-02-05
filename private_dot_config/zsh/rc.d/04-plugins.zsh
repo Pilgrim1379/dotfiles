@@ -5,7 +5,7 @@
 #
 # Syntax highlight config 
 # 
-ZSH_HIGHLIGHT_HIGHLIGHTERS=( main brackets pattern ) # # Command-line syntax highlighting config
+ZSH_HIGHLIGHT_HIGHLIGHTERS=( main brackets ) # # Command-line syntax highlighting config
 
 #
 # In-line suggestions
@@ -49,21 +49,20 @@ zstyle ':autocomplete:*' insert-unambiguous no
 # no:  Tab inserts the top completion.
 # yes: Tab first inserts a substring common to all listed completions, if any.
 
-zstyle ':autocomplete:*' fzf-completion yes
-# no:  Tab uses Zsh's completion system only.
-# yes: Tab first tries Fzf's completion, then falls back to Zsh's.
-# ⚠️ NOTE: This setting can NOT be changed at runtime and requires that you
-# have installed Fzf's shell extensions.
-
 # Add a space after these completions:
 zstyle ':autocomplete:*' add-space \
     executables aliases functions builtins reserved-words commands
-
 
 ##
 # Config in this section should come BEFORE sourcing Autocomplete and cannot be
 # changed at runtime.
 #
+
+zstyle ':autocomplete:*' fzf-completion no
+# no:  Tab uses Zsh's completion system only.
+# yes: Tab first tries Fzf's completion, then falls back to Zsh's.
+# ⚠️ NOTE: This setting can NOT be changed at runtime and requires that you
+# have installed Fzf's shell extensions.
 
 # Autocomplete automatically selects a backend for its recent dirs completions.
 # So, normally you won't need to change this.
@@ -120,6 +119,9 @@ local p=
 for p in $plugins; do
     znap source $p
 done
+
+# Auto-installed by Brew, but far worse than the one supplied by Zsh
+rm -f $HOMEBREW_PREFIX/share/zsh/site-functions/_git{,.zwc}
 
 # Use `znap fpath` to add generated completion functions:
 znap fpath _rustup 'rustup  completions zsh'

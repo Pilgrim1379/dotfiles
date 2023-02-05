@@ -38,7 +38,8 @@ export GOPATH=$HOME/go
 export PIPENV_DEFAULT_PYTHON_VERSION=$HOME/.asdf/shims/python
 
 # For building Erlang with asdf-vm
-export KERL_CONFIGURE_OPTIONS="--without-javac --with-ssl=$(brew --prefix openssl@1.1)"
+export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac --with-ssl=$(brew --prefix openssl@1.1)"
+export KERL_BUILD_DOCS=yes
 
 # Required to enable Python to build dynamic library
 # See: https://github.com/danhper/asdf-python/issues/38 (for macos only)
