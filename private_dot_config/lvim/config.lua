@@ -7,10 +7,56 @@ a global executable or a path to
 an executable
 ]]
 -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
+-- general settings
+vim.opt.backup = false -- creates a backup file
+vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
+vim.opt.cmdheight = 2 -- more space in the neovim command line for displaying messages
+vim.opt.colorcolumn = "99999" -- fixes indentline for now
+vim.opt.completeopt = { "menuone", "noselect" }
+vim.opt.conceallevel = 0 -- so that `` is visible in markdown files
+vim.opt.fileencoding = "utf-8" -- the encoding written to a file
+vim.opt.foldmethod = "manual" -- folding set to "expr" for treesitter based folding
+vim.opt.foldexpr = "" -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
+vim.opt.guifont = "JetBrainsMono Nerd Font:h17" -- the font used in graphical neovim applications
+vim.opt.hidden = true -- required to keep multiple buffers and open multiple buffers
+vim.opt.hlsearch = true -- highlight all matches on previous search pattern
+vim.opt.ignorecase = true -- ignore case in search patterns
+vim.opt.mouse = "a" -- allow the mouse to be used in neovim
+vim.opt.pumheight = 10 -- pop up menu height
+vim.opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
+vim.opt.showtabline = 2 -- always show tabs
+vim.opt.smartcase = true -- smart case
+vim.opt.smartindent = true -- make indenting smarter again
+vim.opt.splitbelow = true -- force all horizontal splits to go below current window
+vim.opt.splitright = true -- force all vertical splits to go to the right of current window
+vim.opt.swapfile = false -- creates a swapfile
+vim.opt.termguicolors = true -- set term gui colors (most terminals support this)
+vim.opt.timeoutlen = 100 -- time to wait for a mapped sequence to complete (in milliseconds)
+vim.opt.title = true -- set the title of window to the value of the titlestring
+vim.opt.titlestring = "%<%F%=%l/%L - nvim" -- what the title of the window will be set to
+vim.opt.undodir = vim.fn.stdpath "cache" .. "/undo"
+vim.opt.undofile = true -- enable persistent undo
+vim.opt.updatetime = 300 -- faster completion
+vim.opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program) it is not allowed to be edited
+vim.opt.expandtab = true -- convert tabs to spaces
+vim.opt.shiftwidth = 4 -- the number of spaces inserted for each indentation
+vim.opt.tabstop = 4 -- insert 2 spaces for a tab
+vim.opt.cursorline = true -- highlight the current line
+vim.opt.number = true -- set numbered lines
+vim.opt.relativenumber = false -- set relative numbered lines
+vim.opt.numberwidth = 4 -- set number column width to 2 {default 4}
+vim.opt.signcolumn = "yes" -- always show the sign column otherwise it would shift the text each time
+vim.opt.wrap = false -- display lines as one long line
+vim.opt.spell = false
+vim.opt.spelllang = "en"
+vim.opt.scrolloff = 8 -- is one of my fav
+vim.opt.sidescrolloff = 8
 
--- general
+
+-- general lvim
 lvim.log.level = "warn"
-lvim.format_on_save.enabled = true
+-- lvim.format_on_save.enabled = true
+lvim.format_on_save = true
 lvim.colorscheme = "catppuccin-mocha"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
@@ -123,13 +169,43 @@ end, lvim.lsp.automatic_configuration.skipped_servers)
 
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- lvim.lsp.on_attach_callback = function(client, bufnr)
+lvim.lsp.on_attach_callback = function(client, bufnr)
 --   local function buf_set_option(...)
 --     vim.api.nvim_buf_set_option(bufnr, ...)
 --   end
 --   --Enable completion triggered by <c-x><c-o>
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
+
+  -- Configure format on save
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = augroup,
+      buffer = bufnr,
+      callback = function()
+        -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+        vim.lsp.buf.format({ bufnr = bufnr })
+      end,
+    })
+  end
+
+  -- Show line diagnostics automatically in hover windo
+  -- https://github.com/neovim/nvim-lspconfig/wiki/UI-customization#show-line-diagnostics-automatically-in-hover-window
+  -- vim.api.nvim_create_autocmd("CursorHold", {
+  --     buffer = bufnr,
+  --     callback = function()
+  --     local opts = {
+  --       focusable = false,
+  --       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+  --       border = 'rounded',
+  --       source = 'always',
+  --       prefix = ' ',
+  --       scope = 'cursor',
+  --     }
+  --     vim.diagnostic.open_float(nil, opts)
+  --   end
+  -- })
+end
 
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
 local formatters = require "lvim.lsp.null-ls.formatters"
@@ -149,12 +225,24 @@ formatters.setup {
     -- filetypes = { "typescript", "typescriptreact" },
   },
   { command = "clang_format"},
-  { command = "rustfmt"},
+  { 
+    command = "rustfmt",
+    filetypes = {"rust" },
+    extra_args = { "--emit=stdout" }
+  },
   { command = "shfmt"},
   { command = "stylua"},
   { command = "trim_whitespace"},
-  { command = "elm_format"},
-  { command = "mix"},
+  { 
+    command = "elm_format",
+    filetypes = { "elm" },
+    extra_args = {"--stdin"  }
+  },
+  { 
+    command = "mix",
+    filetypes = { "elixir" },
+    extra_args = { "format", "--stdin-filename", "$FILENAME", "-" },
+  },
 }
 
 -- -- set additional linters

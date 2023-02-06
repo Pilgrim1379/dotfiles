@@ -1,27 +1,6 @@
 # ~/.config/starship.toml
 
 # Configure the format of the prompt.
-format = """
-$username\
-$hostname\
-$directory\
-$git_branch\
-$git_commit\
-$git_state\
-$git_status\
-$git_metrics\
-$fill\
-$nodejs\
-$elixir\
-$elm\
-$python\
-$rust\
-$julia\
-$c\
-$cmd_duration $jobs $time\
-$line_break\
-$character"""
-
 # format = """
 # $username\
 # $hostname\
@@ -32,9 +11,30 @@ $character"""
 # $git_status\
 # $git_metrics\
 # $fill\
+# $nodejs\
+# $elixir\
+# $elm\
+# $python\
+# $rust\
+# $julia\
+# $c\
 # $cmd_duration $jobs $time\
 # $line_break\
 # $character"""
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$git_metrics\
+$fill\
+$cmd_duration $jobs $time\
+$line_break\
+$character"""
 
 # Timeout for commands executed by starship (in milliseconds).
 command_timeout = 2000

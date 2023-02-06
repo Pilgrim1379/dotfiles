@@ -60,4 +60,5 @@ elm-stuff/
 .pdm.toml
 __pypackages__/
 
+lvim/lazy-lock.json
 
