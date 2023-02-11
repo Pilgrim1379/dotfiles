@@ -124,10 +124,21 @@ done
 rm -f $HOMEBREW_PREFIX/share/zsh/site-functions/_git{,.zwc}
 
 # Use `znap fpath` to add generated completion functions:
-znap fpath _rustup 'rustup  completions zsh'
-znap fpath _cargo 'rustup  completions zsh cargo'
-# znap fpath _solana 'solana completion --shell zsh'
-znap fpath _pdm 'pdm completion zsh'
+if (( $+commands[rustup] )); then
+    znap fpath _rustup 'rustup completions zsh'
+fi
+
+if (( $+commands[cargo] )); then
+    znap fpath _cargo 'rustup completions zsh cargo'
+fi
+
+# if (( $+commands[solana] )); then
+    # znap fpath _solana 'solana completion --shell zsh'
+# fi
+
+if (( $+commands[pdm] )); then
+    znap fpath _pdm 'pdm completion zsh'
+fi
 
 ##
 # Config in this section should come AFTER sourcing Autocomplete and cannot be

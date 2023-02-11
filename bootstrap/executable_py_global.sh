@@ -34,6 +34,10 @@ if [ $? -eq 0 ]; then
             pipx install jedi-language-server
             pipx install flake8
             pipx install ruff
+            pipx install codespell
+
+            pipx install cmake-language-server
+            pipx install ruff-lsp
 
             pipx install neovim-remote
             pipx install pytest

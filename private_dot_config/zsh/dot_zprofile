@@ -92,7 +92,7 @@ export -UT INFOPATH infopath  # -T creates a "tied" pair; see below.
 # for $HOME in each $path entry.
 
 # Shellenv
-if command -v brew > /dev/null; then
+if (( $+commands[brew] )); then
     eval "$(`which brew` shellenv)"
 fi
 
@@ -126,7 +126,8 @@ fpath=(
     ~/.local/share/zsh/site-functions(N)
 )
 
-if command -v brew > /dev/null; then
+if (( $+commands[brew] )); then
+# if command -v brew > /dev/null; then
     # Add dirs containing completion functions to your $fpath and they will be
     # picked up automatically when the completion is initialized.
     # Here, we add it to the end of $fpath, so that we use brew's completions
@@ -146,14 +147,14 @@ manpath=(
 # Asdf config file location
 export ASDF_CONFIG_FILE=$XDG_CONFIG_HOME/asdf/.asdfrc
 
-if command -v asdf > /dev/null; then
+if (( $+commands[asdf] )); then
     # Manage multiple runtime versions with a single CLI tool
     # . $HOME/.asdf/asdf.sh # This option for when asdf is installed via git
     . $(brew --prefix)/opt/asdf/libexec/asdf.sh # This option for when asdf is installed via homebrew
 fi
 
 # pdm --pep582
-if command -v pdm > /dev/null; then
+if (( $+commands[pdm] )); then
     eval "$(pdm --pep582)"
 fi
 
