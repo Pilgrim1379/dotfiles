@@ -110,7 +110,7 @@ local -a plugins=(
     zsh-users/zsh-autosuggestions       # Inline suggestions
     zsh-users/zsh-syntax-highlighting   # Command-line syntax highlighting
     zsh-users/zsh-completions           # Additional completion definitions for Zsh
-    # romkatv/powerlevel10k               # Powerlevel10k is a prompt theme for Zsh
+    romkatv/powerlevel10k               # Powerlevel10k is a prompt theme for Zsh
 )
 znap clone $plugins
 
