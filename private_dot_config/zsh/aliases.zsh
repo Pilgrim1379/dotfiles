@@ -49,26 +49,26 @@ fi
 #     ls='gls --group-directories-first --color -AFvx'
 
 # # List all files colorized in long format, including dot files
-alias la="ls -lahF"
-alias ll='ls -Flh'
+alias la='ls -lahF'
+alias ll='ls -lhF'
 alias lt='du -sh * | sort -h'
 ## Show hidden files ##
-alias l.="ls -dF .*"
+alias l.='ls -dF .*'
 alias left='ls -t -1' # find where you left off:
 
 # Easier navigation: .., ..., ...., ....., ~ and -
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias ~="cd ~" # `cd` is probably faster to type though
-alias -- -="cd -"
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ~='cd ~' # `cd` is probably faster to type though
+alias -- -='cd -'
 
 # mkdir: create parent directories
-alias mkdir="mkdir -pv" 
+alias mkdir='mkdir -pv' 
 
 # ping: stop after 5 pings
-alias ping="ping -c 5" 
+alias ping='ping -c 5' 
 
 # Help command allows using "help export" eg to get help on built in commands
 alias help='run-help'
@@ -89,15 +89,15 @@ alias npmup='npm install -g npm'
 
 # Update installed Ruby gems, Homebrew, npm, and their installed packages
 #alias brew_update="brew -v update; brew upgrade --force-bottle; brew cleanup; npm-check -gu"
-alias brew_update="brew -v update && brew upgrade && pnpm up -g -L && ncu -g"
-alias brewupd="brew -v update"
+alias brew_update='brew -v update && brew upgrade && pnpm up -g -L && ncu -g'
+alias brewupd='brew -v update'
 alias brewupg="brew upgrade --formula && echo '\nstarting NPM update ...' && npm -g update && \
 corepack prepare pnpm@latest --activate && asdf reshim nodejs && echo '\nstarting PNPM update ...' && \
 pnpm -g -L update && echo '\nstarting NCU update ...' && ncu -g"
 
-alias brewupgc="brew upgrade --cask"
-alias brewupgcg="brew upgrade --cask --greedy"
-alias brewcu="brew cu -a -y --no-brew-update"
+alias brewupgc='brew upgrade --cask'
+alias brewupgcg='brew upgrade --cask --greedy'
+alias brewcu='brew cu -a -y --no-brew-update'
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload='exec ${SHELL} -l'
@@ -106,26 +106,26 @@ alias reload='exec ${SHELL} -l'
 alias path='echo -e ${PATH//:/\\n}'
 
 # mongodb
-alias mongod="mongod --config /usr/local/etc/mongod.conf"
+alias mongod='mongod --config /usr/local/etc/mongod.conf'
 
 # File size
 alias fs="stat -f \"%z bytes\""
 
 # vim
-alias vim="lvim"
-alias nvim="lvim"
+alias vim='lvim'
+alias nvim='lvim'
 
 # zip/unzip
-alias ungz="gunzip -k"
+alias ungz='gunzip -k'
 
 # emacs
-alias emd="emacs --daemon" # run emacs as daemon mode with
+alias emd='emacs --daemon' # run emacs as daemon mode with
 #alias ec="emacsclient -cnqua ''" # the void string '' is IMPORTANT
 
 # asdf
 #alias asdfup="asdf update --head"
 #alias asdfupall="asdf update --head && asdf plugin-update --all"
-alias asdfplugup="asdf plugin-update --all"
+alias asdfplugup='asdf plugin-update --all'
 
 # pipx / pip
 #alias pipx="python -m pipx"
@@ -133,32 +133,32 @@ alias pipuninstallall="pip uninstall -y -r <(pip freeze)"
 alias pipupgradeall="pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
 
 # gnu command replacement
-alias tar="gtar"
-alias indent="gindent"
-alias getopt="/usr/local/opt/gnu-getopt/bin/getopt"
+alias tar='gtar'
+alias indent='gindent'
+alias getopt='/usr/local/opt/gnu-getopt/bin/getopt'
 
 # disk usage (find size of folder or disk)
-alias dus="du -sh"
-alias duas="du -ash"
+alias dus='du -sh'
+alias duas='du -ash'
 
 # glances/htop
-alias htop="glances"
+alias htop='glances'
 
 alias pfzf="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 
 # Jupyter
-alias jl="jupyter lab"
-alias jn="jupyter notebook"
+alias jl='jupyter lab'
+alias jn='jupyter notebook'
 
 # Neovim
 alias nvimsync="nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
 alias rmnvim="rm -rf ~/.config/local/share/nvim && rm -rf ~/.local/share/nvim && rm -rf ~/.cache/nvim && rm -rf ~/.config/nvim/plugin && echo 'All Neovim configs deleted successfully ...'"
-alias nvimupd="brew reinstall neovim"
+alias nvimupd='brew reinstall neovim'
 
 # Chezmoi
-alias cmcd="chezmoi cd"
-alias cmedit="chezmoi edit"
-alias cmapply="chezmoi apply"
-alias cmdiff="chezmoi diff"
-alias cmadd="chezmoi add"
-alias cmdoc="chezmoi doctor"
+alias cmcd='chezmoi cd'
+alias cmedit='chezmoi edit'
+alias cmapply='chezmoi apply'
+alias cmdiff='chezmoi diff'
+alias cmadd='chezmoi add'
+alias cmdoc='chezmoi doctor'

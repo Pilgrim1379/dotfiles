@@ -101,6 +101,7 @@
 	repo = /Users/nqa/Git/zsh-completions
 	repo = /Users/nqa/Git/zsh-snap
 	repo = /Users/nqa/Git/zsh-syntax-highlighting
+	repo = /Users/nqa/Git/powerlevel10k
 		
 [submodule]
 	recurse = true

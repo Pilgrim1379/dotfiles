@@ -21,13 +21,13 @@ fi
 
 
 # Canonical hex dump; some systems have this symlinked
-command -v hd >/dev/null || alias hd="hexdump -C"
+command -v hd >/dev/null || alias hd='hexdump -C'
 
 # macOS has no `md5sum`, so use `md5` as a fallback
-command -v md5sum >/dev/null || alias md5sum="md5"
+command -v md5sum >/dev/null || alias md5sum='md5'
 
 # macOS has no `sha1sum`, so use `shasum` as a fallback
-command -v sha1sum >/dev/null || alias sha1sum="shasum"
+command -v sha1sum >/dev/null || alias sha1sum='shasum'
 
 
 ### Moved this aliases here from Precmd as they're unlikely to change
@@ -54,12 +54,12 @@ else
 fi
 
 # Show/hide hidden files in Finder
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+alias show='defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder'
+alias hide='defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder'
 
 # Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias hidedesktop='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'
+alias showdesktop='defaults write com.apple.finder CreateDesktop -bool true && killall Finder'
 
 # Trim new lines and copy to clipboard
 alias c="tr -d '\n' | pbcopy"
@@ -76,12 +76,12 @@ alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo 
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # Disable Spotlight
-alias spotoff="sudo mdutil -a -i off"
+alias spotoff='sudo mdutil -a -i off'
 # Enable Spotlight
-alias spoton="sudo mdutil -a -i on"
+alias spoton='sudo mdutil -a -i on'
 
 # PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
-alias plistbuddy="/usr/libexec/PlistBuddy"
+alias plistbuddy='/usr/libexec/PlistBuddy'
 
 # Associate file .extensions with programs.
 # This lets you open a file just by typing its name and pressing enter.
@@ -116,4 +116,4 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 alias elm-update-registry='elm diff elm/core 1.0.0 1.0.1 > /dev/null'
 
 # luamake
-alias luamake="~/lang-servers/lua-language-server/3rd/luamake/luamake"
+alias luamake='~/lang-servers/lua-language-server/3rd/luamake/luamake'
