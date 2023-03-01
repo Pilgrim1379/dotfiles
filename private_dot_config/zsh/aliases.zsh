@@ -82,6 +82,7 @@ alias pnpmup='pnpm up'
 alias pnpmupdev='pnpm up --dev'
 alias pnpmlsg='pnpm ls -g --depth 0'
 alias pnpmiupg='pnpm up -g -i -L'
+alias pnpmoutdated='pnpm -g outdated'
 
 # npm
 alias npmlsg='npm ls -g --depth 0'
@@ -89,15 +90,25 @@ alias npmup='npm install -g npm'
 
 # Update installed Ruby gems, Homebrew, npm, and their installed packages
 #alias brew_update="brew -v update; brew upgrade --force-bottle; brew cleanup; npm-check -gu"
-alias brew_update='brew -v update && brew upgrade && pnpm up -g -L && ncu -g'
+alias brewupdate='brew -v update && brew upgrade && pnpm up -g -L && ncu -g'
+alias brweupdate='brew -v update && brew upgrade && pnpm up -g -L && ncu -g'
 alias brewupd='brew -v update'
+alias brweupd='brew -v update'
+
 alias brewupg="brew upgrade --formula && echo '\nstarting NPM update ...' && npm -g update && \
 corepack prepare pnpm@latest --activate && asdf reshim nodejs && echo '\nstarting PNPM update ...' && \
 pnpm -g -L update && echo '\nstarting NCU update ...' && ncu -g"
 
+alias brweupg="brew upgrade --formula && echo '\nstarting NPM update ...' && npm -g update && \
+corepack prepare pnpm@latest --activate && asdf reshim nodejs && echo '\nstarting PNPM update ...' && \
+pnpm -g -L update && echo '\nstarting NCU update ...' && ncu -g"
+
 alias brewupgc='brew upgrade --cask'
+alias brweupgc='brew upgrade --cask'
 alias brewupgcg='brew upgrade --cask --greedy'
-alias brewcu='brew cu -a -y --no-brew-update'
+alias brweupgcg='brew upgrade --cask --greedy'
+alias brewcu='brew cu -a -y --no-brew-update --cleanup'
+alias brwecu='brew cu -a -y --no-brew-update --cleanup'
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload='exec ${SHELL} -l'
