@@ -1,0 +1,16 @@
+[[language]]
+name = "python"
+formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = true
+
+[[language]]
+name = "elixir"
+scope = "source.elixir"
+injection-regex = "(elixir|ex)"
+file-types = ["ex", "exs", "mix.lock"]
+shebangs = ["elixir"]
+roots = ["mix.exs", "mix.lock"]
+comment-token = "#"
+language-server = { command = "elixir-ls" }
+config = { elixirLS.dialyzerEnabled = false }
+indent = { tab-width = 2, unit = "  " }
