@@ -100,7 +100,7 @@ fi
 export LS_COLORS="$(vivid generate ~/github/ls_colors/vivid/themes/catppuccin-mocha.yml)"
 
 path=(
-    ~/bin(N)
+    # ~/bin(N)
     ~/.local/bin # this is added by znap much later but I need it earlier
     $PNPM_HOME(N) # Pnp
     ~/.nimble/bin(N) # Nim

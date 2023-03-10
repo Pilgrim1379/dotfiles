@@ -27,7 +27,7 @@ npm install -g npm-check-updates
 #
 corepack enable
 corepack prepare pnpm@latest --activate
-corepack prepare yarn@latest --activate
+corepack prepare yarn@stable --activate
 
 ## this is required for pnpm commands to work
 asdf reshim nodejs

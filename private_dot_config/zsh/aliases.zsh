@@ -100,8 +100,8 @@ corepack prepare pnpm@latest --activate && asdf reshim nodejs && echo '\nstartin
 pnpm -g -L update && echo '\nstarting NCU update ...' && ncu -g"
 
 alias brweupg="brew upgrade --formula && echo '\nstarting NPM update ...' && npm -g update && \
-corepack prepare pnpm@latest --activate && asdf reshim nodejs && echo '\nstarting PNPM update ...' && \
-pnpm -g -L update && echo '\nstarting NCU update ...' && ncu -g"
+corepack prepare pnpm@latest --activate && corepack prepare yarn@stable --activate && asdf reshim nodejs && \
+echo '\nstarting PNPM update ...' && pnpm -g -L update && echo '\nstarting NCU update ...' && ncu -g"
 
 alias brewupgc='brew upgrade --cask'
 alias brweupgc='brew upgrade --cask'

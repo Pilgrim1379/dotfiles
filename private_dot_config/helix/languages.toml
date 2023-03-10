@@ -12,5 +12,19 @@ shebangs = ["elixir"]
 roots = ["mix.exs", "mix.lock"]
 comment-token = "#"
 language-server = { command = "elixir-ls" }
-config = { elixirLS.dialyzerEnabled = false }
+config = { elixirLS.dialyzerEnabled = true }
 indent = { tab-width = 2, unit = "  " }
+formatter = { command = "mix", args = [
+    "format",
+    "--stdin-filename",
+    "$FILENAME",
+    "-",
+] }
+auto-format = true
+
+[[language]]
+name = "rust"
+auto-format = true
+
+[language.config]
+checkOnSave = { command = "clippy" }

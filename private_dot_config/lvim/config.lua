@@ -132,7 +132,7 @@ lvim.builtin.treesitter.ensure_installed = {
   "elm",
   "julia",
   "zig",
-  "nim"
+  -- "nim"
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
