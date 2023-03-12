@@ -56,6 +56,9 @@ elm-stuff/
 
 # emacs
 \#*#
+elm-cache/
+straight/
+var/
 
 .pdm.toml
 __pypackages__/

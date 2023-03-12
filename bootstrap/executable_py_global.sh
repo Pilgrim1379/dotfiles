@@ -12,8 +12,8 @@ if [ $? -eq 0 ]; then
     pip install -U bpyutils
     pip install -U pipupgrade
 
-    # first reshim python to ensure pipx is available for subsequent commands to work
-    if asdf reshim python; then
+    # when using asdf, first reshim python to ensure pipx is available for subsequent commands to work
+    # if asdf reshim python; then
         # first uninstall previous packages
         if pipx uninstall-all; then
             pipx install pdm && \
@@ -61,8 +61,8 @@ if [ $? -eq 0 ]; then
         else
   		    echo -e "\npipx uninstall-all failed or didn't excute"
   	    fi
-    else
-  	    echo -e "\npipx installation failed therefore default python packages not installed"
+    # else
+  	    # echo -e "\npipx installation failed therefore default python packages not installed"
     fi
 else
     echo -e "\nUpgrading pip failed"

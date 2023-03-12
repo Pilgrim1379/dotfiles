@@ -1,0 +1,11 @@
+# Emacs
+.config/emacs/eln-cache
+.config/emacs/eln-cache/**/*
+.config/emacs/straight
+.config/emacs/straight/**/*
+.config/emacs/var
+.config/emacs/var/**/*
+
+# asdf
+.tool-versions
+

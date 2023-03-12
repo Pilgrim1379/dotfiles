@@ -153,10 +153,10 @@ if (( $+commands[zoxide] )); then
 fi
 
 # Direnv hooked into asdf
-if (( $+commands[direnv] )); then
-    # eval "$(asdf exec direnv hook zsh)"  # comment out if not using znap
-    znap eval asdf-community/asdf-direnv "asdf exec $(asdf which direnv) hook zsh"
-fi
+# if (( $+commands[direnv] )); then
+#     # eval "$(asdf exec direnv hook zsh)"  # comment out if not using znap
+#     znap eval asdf-community/asdf-direnv "asdf exec $(asdf which direnv) hook zsh"
+# fi
 
 # Pipenv
 if (( $+commands[pipenv] )); then

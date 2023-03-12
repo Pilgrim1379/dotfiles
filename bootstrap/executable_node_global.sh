@@ -29,8 +29,8 @@ corepack enable
 corepack prepare pnpm@latest --activate
 corepack prepare yarn@stable --activate
 
-## this is required for pnpm commands to work
-asdf reshim nodejs
+## when using asdf, this is required for pnpm commands to work
+# asdf reshim nodejs
 
 if command -v pnpm &> /dev/null
 then

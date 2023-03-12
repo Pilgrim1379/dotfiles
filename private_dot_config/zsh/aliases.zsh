@@ -95,12 +95,20 @@ alias brweupdate='brew -v update && brew upgrade && pnpm up -g -L && ncu -g'
 alias brewupd='brew -v update'
 alias brweupd='brew -v update'
 
+# alias brewupg="brew upgrade --formula && echo '\nstarting NPM update ...' && npm -g update && \
+# corepack prepare pnpm@latest --activate && asdf reshim nodejs && echo '\nstarting PNPM update ...' && \
+# pnpm -g -L update && echo '\nstarting NCU update ...' && ncu -g"
+
 alias brewupg="brew upgrade --formula && echo '\nstarting NPM update ...' && npm -g update && \
-corepack prepare pnpm@latest --activate && asdf reshim nodejs && echo '\nstarting PNPM update ...' && \
+corepack prepare pnpm@latest --activate && echo '\nstarting PNPM update ...' && \
 pnpm -g -L update && echo '\nstarting NCU update ...' && ncu -g"
 
+# alias brweupg="brew upgrade --formula && echo '\nstarting NPM update ...' && npm -g update && \
+# corepack prepare pnpm@latest --activate && corepack prepare yarn@stable --activate && asdf reshim nodejs && \
+# echo '\nstarting PNPM update ...' && pnpm -g -L update && echo '\nstarting NCU update ...' && ncu -g"
+
 alias brweupg="brew upgrade --formula && echo '\nstarting NPM update ...' && npm -g update && \
-corepack prepare pnpm@latest --activate && corepack prepare yarn@stable --activate && asdf reshim nodejs && \
+corepack prepare pnpm@latest --activate && corepack prepare yarn@stable --activate && \
 echo '\nstarting PNPM update ...' && pnpm -g -L update && echo '\nstarting NCU update ...' && ncu -g"
 
 alias brewupgc='brew upgrade --cask'
@@ -136,7 +144,7 @@ alias emd='emacs --daemon' # run emacs as daemon mode with
 # asdf
 #alias asdfup="asdf update --head"
 #alias asdfupall="asdf update --head && asdf plugin-update --all"
-alias asdfplugup='asdf plugin-update --all'
+# alias asdfplugup='asdf plugin-update --all'
 
 # pipx / pip
 #alias pipx="python -m pipx"

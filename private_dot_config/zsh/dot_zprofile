@@ -34,10 +34,7 @@ export GRADLE_USER_HOME=$XDG_CONFIG_HOME/gradle
 # Golang
 export GOPATH=$HOME/go
 
-# Pipenv default python
-export PIPENV_DEFAULT_PYTHON_VERSION=$HOME/.asdf/shims/python
-
-# For building Erlang with asdf-vm
+# For building Erlang
 export KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac --with-ssl=$(brew --prefix openssl@1.1)"
 export KERL_BUILD_DOCS=yes
 
@@ -144,14 +141,23 @@ manpath=(
 # Haskell ghcup-env
 [ -f ~/.ghcup/env ] && source ~/.ghcup/env
 
-# Asdf config file location
-export ASDF_CONFIG_FILE=$XDG_CONFIG_HOME/asdf/.asdfrc
+################################################################################
+## This should come after PATH has been set unless you know what you're doing ##
+################################################################################
+# # Asdf config
+# export ASDF_CONFIG_FILE=$XDG_CONFIG_HOME/asdf/.asdfrc
 
-if (( $+commands[asdf] )); then
-    # Manage multiple runtime versions with a single CLI tool
-    # . $HOME/.asdf/asdf.sh # This option for when asdf is installed via git
-    . $(brew --prefix)/opt/asdf/libexec/asdf.sh # This option for when asdf is installed via homebrew
+# if (( $+commands[asdf] )); then
+#     # Manage multiple runtime versions with a single CLI tool
+#     # . $HOME/.asdf/asdf.sh # This option for when asdf is installed via git
+#     . $(brew --prefix)/opt/asdf/libexec/asdf.sh # This option for when asdf is installed via homebrew
+# fi
+
+## RTX config
+if (( $+commands[rtx] )); then
+    eval "$(rtx activate zsh)"
 fi
+################################################################################
 
 # pdm --pep582
 if (( $+commands[pdm] )); then
@@ -159,15 +165,18 @@ if (( $+commands[pdm] )); then
 fi
 
 
-############THESE MUST APPEAR AFTER PATH AND (ASDF CONFIG)####################
+############THESE MUST APPEAR AFTER PATH AND (ASDF/RTX CONFIG)####################
+# Pipenv default python
+export PIPENV_DEFAULT_PYTHON_VERSION="$(which python)"
+
 # Rust
 # export RUST_SRC_PATH="${HOME}/github/rust"
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
 ##############################
 
-if [[ $VENDOR == apple ]]; then
-    # export JAVA_HOME=$( /usr/libexec/java_home -v 1.8 )
-    [[ -f ~/.asdf/plugins/java/set-java-home.zsh ]] && . ~/.asdf/plugins/java/set-java-home.zsh # When using asdf-vm, set JAVA_HOME
-fi
+# if [[ $VENDOR == apple ]]; then
+#     # export JAVA_HOME=$( /usr/libexec/java_home -v 1.8 )
+#     [[ -f ~/.asdf/plugins/java/set-java-home.zsh ]] && . ~/.asdf/plugins/java/set-java-home.zsh # When using asdf-vm, set JAVA_HOME
+# fi
 # Don't put anything below this line
