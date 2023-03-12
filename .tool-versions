@@ -1,5 +1,5 @@
 python 3.11.2
-java adoptopenjdk-11.0.18+10
+java temurin-17.0.6+10
 erlang 25.3
 elixir 1.14.3-otp-25
 ruby 3.2.0
