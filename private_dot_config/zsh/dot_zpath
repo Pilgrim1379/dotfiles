@@ -1,0 +1,36 @@
+#!/bin/zsh
+#
+# -U ensures each entry in these is Unique (that is, discards duplicates).
+export -U PATH path FPATH fpath MANPATH manpath
+export -UT INFOPATH infopath  # -T creates a "tied" pair; see below.
+
+# Shellenv
+if (( $+commands[brew] )); then
+    eval "$(`which brew` shellenv)"
+fi
+
+# $PATH and $path (and also $FPATH and $fpath, etc.) are "tied" to each other.
+# Modifying one will also modify the other.
+# Note that each value in an array is expanded separately. Thus, we can use ~
+# for $HOME in each $path entry.
+
+path=(
+    # ~/bin(N)
+    ~/.local/bin # this is added by znap much later but I need it earlier
+    $XDG_DATA_HOME/pnpm(N) # Pnp home
+    ~/.nimble/bin(N) # Nim
+    ~/.cargo/bin(N) # Rust
+    ~/go/bin(N) # Golang
+    $lsp_servers/elixirls/elixir-ls(N) # Elixir
+    ~/language-servers/zls(N) # Zig
+    ~/.local/share/solana/install/active_release/bin(N) # Solana
+    /Applications/Sublime\ Text.app/Contents/SharedSupport/bin(N) # Sublime Text
+    /Applications/Postgres.app/Contents/Versions/latest/bin(N) # Postgress app
+    $HOME/Library/Android/sdk/{emulator,platform-tools,tools}(N)
+    $HOMEBREW_PREFIX/opt/{mariadb@10.3,ncurses,tomcat@9}/bin(N)
+    $HOMEBREW_PREFIX/opt/{coreutils/libexec/gnubin,findutils/libexec/gnubin,grep/libexec/gnubin}/bin(N)
+    $HOMEBREW_PREFIX/opt/{curl,gettext,sqlite,llvm}/bin(N)
+    # /home/linuxbrew/.linuxbrew/bin(N)
+    $path
+)
+################################################################################

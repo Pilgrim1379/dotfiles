@@ -1,4 +1,7 @@
-#!/bin/zsh
+
+# Note: The shebang #!/bin/zsh is strictly necessary for executable scripts
+# only, but without it, you might not always get correct syntax highlighting
+# when viewing the code.
 #
 # This file, .zshenv, is the first file sourced by zsh for EACH shell, whether
 # it's interactive or not.
@@ -17,10 +20,6 @@ case $VENDOR in
 esac
 [[ $OSTYPE == linux-gnu ]] &&
     export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
-
-# Note: The shebang #!/bin/zsh is strictly necessary for executable scripts
-# only, but without it, you might not always get correct syntax highlighting
-# when viewing the code.
 
 # https://pkg.go.dev/github.com/adrg/xdg#section-readme
 # XDG Base Directories
@@ -44,28 +43,7 @@ ZDOTDIR=${XDG_CONFIG_HOME:=~/.config}/zsh
 
 # # https://github.com/sorin-ionescu/prezto - Prezto — Instantly Awesome Zsh
 # # Ensure that a non-login, non-interactive shell has a defined environment.
-if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
-#   source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
-  source "${ZDOTDIR:-$HOME}/.zprofile"
-fi
-
-
-################################################################################
-# Source ~/.zprofile
-# https://github.com/sorin-ionescu/prezto/issues/1180
-################################################################################
-
-#
-# Zsh shells can lack an environment due to inconsistencies between OS X, linux,
-# and SSH implementations, so we manually keep track of if ~/.zprofile has
-# been properly sourced. This also protects ~/.zprofile from being sourced
-# more than once, as historically it's only meant to be run once at user login.
-#
-
-# if [[ -o LOGIN ]]; then
-#   export PROFILE_ENV_EXISTS='yes'
-# elif [[ -o INTERACTIVE && -z "$PROFILE_ENV_EXISTS" ]]; then
-#   echo 'ZSHENV shlvl: ' $SHLVL
-#   export PROFILE_ENV_EXISTS='yes'
-#   [[ -s "${ZDOTDIR:-HOME}/.zshrc" ]] && source "${ZDOTDIR:-HOME}/.zshrc"
+# if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zpath" ]]; then
+# #   source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
+#   source "${ZDOTDIR:-$HOME}/.zpath"
 # fi
