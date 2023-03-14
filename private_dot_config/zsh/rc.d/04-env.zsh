@@ -86,7 +86,7 @@ export PNPM_HOME=$XDG_DATA_HOME/pnpm # $HOME/.local/share
 # for $HOME in each $path entry.
 
 # LS_COLORS Generator
-export LS_COLORS="$(vivid generate ~/github/ls_colors/vivid/themes/catppuccin-mocha.yml)"
+export LS_COLORS=$(vivid generate ~/github/ls_colors/vivid/themes/catppuccin-mocha.yml)
 
 # Add your functions to your $fpath, so you can autoload them.
 fpath=(
@@ -143,7 +143,7 @@ fi
 
 ############THESE MUST APPEAR AFTER PATH AND (ASDF/RTX CONFIG)####################
 # Pipenv default python
-export PIPENV_DEFAULT_PYTHON_VERSION="$(which python)"
+export PIPENV_DEFAULT_PYTHON_VERSION=$(rtx which python)
 
 # Rust
 # export RUST_SRC_PATH="${HOME}/github/rust"

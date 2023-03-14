@@ -115,18 +115,16 @@
 # https://opensource.com/article/20/11/git-aliases
 [alias]
 	opendiff = difftool --no-prompt --tool opendiff --dir-diff
-	p = push
-	st = status -sb
-	ll = log --oneline
-	last = log -1 HEAD
-	ci = commit -m
-	rv = remote -v
-	d = diff
-	gl = config --global -l
-	se = !git rev-list --all | xargs git grep -F
-	br = branch
-	co = checkout
-	fit = !git reset --hard && git clean -fdx
-	uncommit = reset --soft HEAD^
-	ac = !git add -A && git commit\n
+	cm = commit -m
+	co = checkout -b
+	precommit = diff --cached --diff-algorithm=minimal -w
+	branches = branch -a
+	tags = tag
+	stashes = stash list
+	unstage = reset -q HEAD --
+	discard = checkout --
+	uncommit = reset --mixed HEAD~
+	amend = commit --amend
+	nevermind = !git reset --hard HEAD && git clean -d -f
 	alias = config --get-regexp ^alias\\.
+	graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
