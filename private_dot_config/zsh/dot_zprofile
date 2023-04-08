@@ -1,3 +1,4 @@
-# #!/bin/zsh
-# ##
-source "${ZDOTDIR:-$HOME}/.zpath"
+#!/bin/zsh
+
+# This is here to ensure no login shells get the paths set
+source "${ZDOTDIR:-$HOME}/.zpaths"

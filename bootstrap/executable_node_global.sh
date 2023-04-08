@@ -61,9 +61,6 @@ then
     ## fancy listing of recent branches
     pnpm add -g git-recent
 
-    ## trash as the safe `rm` alternative
-    pnpm add -g trash-cli
-
     ## ghost
     pnpm add -g ghost-cli@latest
 
@@ -98,8 +95,7 @@ then
     pnpm add -g @elm-tooling/elm-language-server
     pnpm add -g vscode-langservers-extracted ## consolidated for html, css, json and eslint
     pnpm add -g yaml-language-server
-#     pnpm add -g tern
-#     pnpm add -g vls
+    pnpm add -g diagnostic-languageserver
     pnpm add -g pyright
 
     ## build tools

@@ -1,11 +1,17 @@
 ;;; init-straight.el --- Settings and helpers find and install external packages -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+;; https://www.reddit.com/r/emacs/comments/mtb05k/emacs_init_time_decreased_65_after_i_realized_the/
+(setq straight-check-for-modifications '(check-on-save find-when-checking))
+
+;; Use straight from develop
+(setq straight-repository-branch "develop")
+
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
+      (bootstrap-version 6))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
@@ -14,6 +20,8 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+
+
 
 ;; Integration with use-package
 (straight-use-package 'use-package)

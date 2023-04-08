@@ -1,4 +1,4 @@
-
+#!/bin/zsh
 # Note: The shebang #!/bin/zsh is strictly necessary for executable scripts
 # only, but without it, you might not always get correct syntax highlighting
 # when viewing the code.
@@ -7,7 +7,7 @@
 # it's interactive or not.
 # This includes non-interactive sub-shells!
 # So, put as little in this file as possible, to avoid performance impact.
-#
+## REF: https://github.com/Phantas0s/.dotfiles/tree/master/zsh
 
 # These are used in /etc/zshrc
 case $VENDOR in
@@ -21,10 +21,15 @@ esac
 [[ $OSTYPE == linux-gnu ]] &&
     export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
 
+export TERM='xterm-256color'
+export WORKSPACE="$HOME/workspace"
+
 # https://pkg.go.dev/github.com/adrg/xdg#section-readme
 # XDG Base Directories
-export XDG_CONFIG_HOME=~/.config
-export XDG_DATA_HOME=~/.local/share
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
+export XDG_CACHE_HOME=$HOME/.cache
 # export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
 # Tell zsh where to look for our dotfiles.
@@ -37,13 +42,9 @@ export XDG_DATA_HOME=~/.local/share
 # As in other shells, ~ expands to $HOME _at the beginning of a value only._
 ZDOTDIR=${XDG_CONFIG_HOME:=~/.config}/zsh
 
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
 # # https://github.com/sorin-ionescu/prezto - Prezto — Instantly Awesome Zsh
 # # Ensure that a non-login, non-interactive shell has a defined environment.
-# if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zpath" ]]; then
-# #   source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
-#   source "${ZDOTDIR:-$HOME}/.zpath"
-# fi
+if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
+#   source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
+  source "${ZDOTDIR:-$HOME}/.zprofile"
+fi

@@ -36,7 +36,7 @@ vim.opt.title = true -- set the title of window to the value of the titlestring
 vim.opt.titlestring = "%<%F%=%l/%L - nvim" -- what the title of the window will be set to
 vim.opt.undodir = vim.fn.stdpath "cache" .. "/undo"
 vim.opt.undofile = true -- enable persistent undo
-vim.opt.updatetime = 300 -- faster completion
+vim.opt.updatetime = 250 -- faster completion
 vim.opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program) it is not allowed to be edited
 vim.opt.expandtab = true -- convert tabs to spaces
 vim.opt.shiftwidth = 4 -- the number of spaces inserted for each indentation
@@ -193,20 +193,20 @@ lvim.lsp.on_attach_callback = function(client, bufnr)
 
   -- Show line diagnostics automatically in hover windo
   -- https://github.com/neovim/nvim-lspconfig/wiki/UI-customization#show-line-diagnostics-automatically-in-hover-window
-  -- vim.api.nvim_create_autocmd("CursorHold", {
-  --     buffer = bufnr,
-  --     callback = function()
-  --     local opts = {
-  --       focusable = false,
-  --       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-  --       border = 'rounded',
-  --       source = 'always',
-  --       prefix = ' ',
-  --       scope = 'cursor',
-  --     }
-  --     vim.diagnostic.open_float(nil, opts)
-  --   end
-  -- })
+  vim.api.nvim_create_autocmd("CursorHold", {
+      buffer = bufnr,
+      callback = function()
+      local opts = {
+        focusable = false,
+        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+        border = 'rounded',
+        source = 'always',
+        prefix = ' ',
+        scope = 'cursor',
+      }
+      vim.diagnostic.open_float(nil, opts)
+    end
+  })
 end
 
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
@@ -274,6 +274,8 @@ linters.setup {
   },
 }
 
+lvim.lsp.diagnostics.virtual_text = false
+
 -- Additional Plugins
 lvim.plugins = {
     -- {
@@ -283,6 +285,19 @@ lvim.plugins = {
     {
       "catppuccin/nvim",
       name = "catppuccin",
+    },
+    {
+      "ggandor/leap.nvim",
+      name = "leap",
+      config = function()
+        require("leap").add_default_mappings()
+      end,
+    },
+    {
+      "windwp/nvim-ts-autotag",
+      config = function()
+        require("nvim-ts-autotag").setup()
+      end,
     },
   --   {
   --   "max397574/better-escape.nvim",
@@ -301,17 +316,16 @@ lvim.plugins = {
   -- }
 }
 
-
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
 --   -- enable wrap mode for json files only
 --   command = "setlocal wrap",
 -- })
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "zsh",
---   callback = function()
---     -- let treesitter use bash highlight for zsh files as well
---     require("nvim-treesitter.highlight").attach(0, "bash")
---   end,
--- })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "zsh",
+  callback = function()
+    -- let treesitter use bash highlight for zsh files as well
+    require("nvim-treesitter.highlight").attach(0, "bash")
+  end,
+})

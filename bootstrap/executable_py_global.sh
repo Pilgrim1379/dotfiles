@@ -5,12 +5,12 @@ if [ $? -eq 0 ]; then
     pip install -U wheel
     pip install -U pip-autoremove
     pip install -U configparser
-    pip install -U pipx
     pip install -U pipdeptree
     pip install -U debugpy
     pip install -U pynvim
     pip install -U bpyutils
     pip install -U pipupgrade
+    pip install -U pipx
 
     # when using asdf, first reshim python to ensure pipx is available for subsequent commands to work
     # if asdf reshim python; then
@@ -62,8 +62,8 @@ if [ $? -eq 0 ]; then
   		    echo -e "\npipx uninstall-all failed or didn't excute"
   	    fi
     # else
-  	    # echo -e "\npipx installation failed therefore default python packages not installed"
-    fi
+  	#     echo -e "\npipx installation failed therefore default python packages not installed"
+    # fi
 else
     echo -e "\nUpgrading pip failed"
 fi

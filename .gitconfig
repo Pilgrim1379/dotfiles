@@ -94,14 +94,6 @@
 	defaultBranch = main
 
 [maintenance]
-	repo = /Users/nqa/Git/asdf-direnv
-	repo = /Users/nqa/Git/starship
-	repo = /Users/nqa/Git/zsh-autocomplete
-	repo = /Users/nqa/Git/zsh-autosuggestions
-	repo = /Users/nqa/Git/zsh-completions
-	repo = /Users/nqa/Git/zsh-snap
-	repo = /Users/nqa/Git/zsh-syntax-highlighting
-	repo = /Users/nqa/Git/powerlevel10k
 		
 [submodule]
 	recurse = true
@@ -111,20 +103,3 @@
 
 [help]
 	autocorrect = 1
-
-# https://opensource.com/article/20/11/git-aliases
-[alias]
-	opendiff = difftool --no-prompt --tool opendiff --dir-diff
-	cm = commit -m
-	co = checkout -b
-	precommit = diff --cached --diff-algorithm=minimal -w
-	branches = branch -a
-	tags = tag
-	stashes = stash list
-	unstage = reset -q HEAD --
-	discard = checkout --
-	uncommit = reset --mixed HEAD~
-	amend = commit --amend
-	nevermind = !git reset --hard HEAD && git clean -d -f
-	alias = config --get-regexp ^alias\\.
-	graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
