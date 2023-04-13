@@ -21,9 +21,6 @@ esac
 [[ $OSTYPE == linux-gnu ]] &&
     export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
 
-export TERM='xterm-256color'
-export WORKSPACE="$HOME/workspace"
-
 # https://pkg.go.dev/github.com/adrg/xdg#section-readme
 # XDG Base Directories
 export XDG_CONFIG_HOME=$HOME/.config

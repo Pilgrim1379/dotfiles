@@ -9,7 +9,7 @@ golang = { version = "latest" }
 python = { version = "latest" }
 erlang = { version = "25.3" }
 java = { version = "temurin-17.0.6+10" }
-elixir = { version = "1.14.3-otp-25" }
+elixir = { version = "1.14.4-otp-25" }
 ruby = { version = "latest" }
 elm = { version = "latest" }
 nim = { version = "latest" }

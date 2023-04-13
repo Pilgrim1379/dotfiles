@@ -8,3 +8,8 @@
 
 # asdf
 #.tool-versions
+
+# zsh
+.config/zsh/compcache
+.config/zsh/zcompdump
+.config/zsh/.zcompdump
