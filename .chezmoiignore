@@ -13,3 +13,7 @@
 .config/zsh/compcache
 .config/zsh/zcompdump
 .config/zsh/.zcompdump
+
+# Elixir
+.elixir_ls
+.elixir_ls/**/*
