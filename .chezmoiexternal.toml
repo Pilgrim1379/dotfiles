@@ -3,12 +3,14 @@ type = "git-repo"
 url = "https://github.com/romkatv/powerlevel10k.git"
 exact = true
 stripComponents = 1
+clone.args = ["--depth", "1"]
 refreshPeriod = "168h"
 [".config/zsh/plugins/zsh-autocomplete"]
 type = "git-repo"
 url = "https://github.com/marlonrichert/zsh-autocomplete.git"
 exact = true
 stripComponents = 1
+clone.args = ["--depth", "1"]
 refreshPeriod = "168h"
 [".config/zsh/plugins/zsh-autosuggestions"]
 type = "git-repo"
