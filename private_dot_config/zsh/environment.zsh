@@ -131,4 +131,8 @@ export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 #     [[ -f ~/.asdf/plugins/java/set-java-home.zsh ]] && . ~/.asdf/plugins/java/set-java-home.zsh # When using asdf-vm, set JAVA_HOME
 # fi
 
+## RTX config - currently has issues with sublime text path
+if (( $+commands[rtx] )); then
+    eval "$(rtx activate zsh)"
+fi
 # Don't put anything below this line

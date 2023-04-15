@@ -25,4 +25,4 @@ nodejs = 'https://github.com/jdxcode/rtx-nodejs'
 [settings] # project-local settings
 verbose = true
 missing_runtime_behavior = 'warn'
-shims_dir = '~/.local/share/rtx/shims'
+# shims_dir = '~/.rtx/shims'
