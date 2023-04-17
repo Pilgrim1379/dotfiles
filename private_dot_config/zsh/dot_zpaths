@@ -9,11 +9,6 @@ if (( $+commands[brew] )); then
     eval "$(brew shellenv)"
 fi
 
-# +-----+
-# | RTX |
-# +-----+
-export RTX_SHIMS_DIR=$HOME/.local/share/rtx/shims
-export RTX_ASDF_COMPAT=1
 
 # $PATH and $path (and also $FPATH and $fpath, etc.) are "tied" to each other.
 # Modifying one will also modify the other.
@@ -65,14 +60,25 @@ path=(
 #     . $(brew --prefix)/opt/asdf/libexec/asdf.sh # This option for when asdf is installed via homebrew
 # fi
 
+# +--------------------------------------------------+
+# | RTX - currently has issues with sublime text path|
+# +--------------------------------------------------+
+if (( $+commands[rtx] )); then
+    export RTX_SHIMS_DIR=$HOME/.local/share/rtx/shims
+    export RTX_ASDF_COMPAT=1
+    
+    eval "$(rtx activate zsh)"
+    eval "$(rtx hook-env)"
+fi
+
 ################################################################################
 
 # +-----------------------------------------------------+
 # | I need $HOME/.local/bin to be at head of path hence |
 # +----------------------------------------------------+
 path=(
-    # $HOME/bin(N)
-    $HOME/.local/share/rtx/shims
-    $HOME/.local/bin
+    # $HOME/.bin(N)
+    # $HOME/.local/share/rtx/shims(N)
+    $HOME/.local/bin(N)
     $path
 )

@@ -55,6 +55,10 @@
 (defvar nqa/default-font-size 160)
 (defvar nqa/default-variable-font-size 160)
 
-;; initial frame size and positoin
-(setq initial-frame-alist '((top . 0) (left . 0) (width . 123) (height . 75))) ;; left value 748 for regular emacs
-(setq default-frame-alist '((top . 0) (left . 0) (width . 123) (height . 75))) ;; left value 748 for regular emacs
+;; initial frame size and positoin - Left
+;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 123) (height . 75))) ;; left value 748 for regular emacs
+;; (setq default-frame-alist '((top . 0) (left . 0) (width . 123) (height . 75))) ;; left value 748 for regular emacs
+
+;; initial frame size and positoin - Right
+(setq initial-frame-alist '((top . 0) (left . 910) (width . 123) (height . 75))) ;; left value 748 for regular emacs
+(setq default-frame-alist '((top . 0) (left . 910) (width . 123) (height . 75))) ;; left value 748 for regular emacs
