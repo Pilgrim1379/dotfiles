@@ -64,8 +64,8 @@ path=(
 # | RTX - currently has issues with sublime text path|
 # +--------------------------------------------------+
 if (( $+commands[rtx] )); then
-    export RTX_SHIMS_DIR=$HOME/.local/share/rtx/shims
-    export RTX_ASDF_COMPAT=1
+    export RTX_USE_TOML=1
+    # export RTX_ASDF_COMPAT=1
     
     eval "$(rtx activate zsh)"
     eval "$(rtx hook-env)"

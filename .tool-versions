@@ -1,10 +1,10 @@
-nodejs lts
-golang latest
-python latest
-erlang 25.3
-java   temurin-17.0.6+10
-elixir 1.14.4-otp-25
-ruby   latest
-elm    latest
-nim    latest
-zig    latest
+# node lts
+# golang latest
+# python latest
+# erlang 25
+# java temurin-17.0.6+10
+# elixir 1.14.4-otp-25
+# ruby latest
+# elm latest
+# nim latest
+# zig latest

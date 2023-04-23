@@ -1,3 +1,17 @@
+[tools]
+python = "latest"
+golang = "latest"
+erlang = "25"
+elixir = "1.14.4-otp-25"
+java = "temurin-17.0.6+10"
+ruby = "latest"
+elm = "latest"
+zig = "latest"
+nim = "latest"
+node = "lts"
+# global tool versions go here
+# you can set these with `rtx use -g`
+
 [settings]
 # whether to prompt to install plugins and runtimes if they're not already installed
 missing_runtime_behavior = 'warn' # other options: 'ignore', 'warn', 'prompt', 'autoinstall'
@@ -15,9 +29,7 @@ always_keep_download = false # deleted after install by default
 plugin_autoupdate_last_check_duration = '1 week' # set to 0 to disable updates
 
 # config files with these prefixes will be trusted by default
-# trusted_config_paths = [
-#     '~/work/my-trusted-projects',
-# ]
+trusted_config_paths = ['~/workspace']
 
 verbose = false     # set to true to see full installation output, see `RTX_VERBOSE`
 asdf_compat = false # set to true to ensure .tool-versions will be compatible with asdf, see `RTX_ASDF_COMPAT`
@@ -27,6 +39,5 @@ raw = false         # set to true to directly pipe plugins to stdin/stdout/stder
 shorthands_file = '~/.config/rtx/shorthands.toml' # path to the shorthands file, see `RTX_SHORTHANDS_FILE`
 disable_default_shorthands = false                # disable the default shorthands, see `RTX_DISABLE_DEFAULT_SHORTHANDS`
 
-experimental = true                    # enable experimental features such as shims
-shims_dir = '~/.local/share/rtx/shims' # [experimental] directory where shims are stored
-log_level = 'debug'                    # log verbosity, see `RTX_LOG_LEVEL`
+experimental = true # enable experimental features such as shims
+log_level = 'debug' # log verbosity, see `RTX_LOG_LEVEL`
