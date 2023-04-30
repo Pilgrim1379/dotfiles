@@ -62,16 +62,11 @@ alias glol='git log --graph --oneline --decorate'
 
 zstyle ':completion:*:ls:*:options' ignored-patterns --width
 if [ "$OSTYPE" != linux-gnu ]; then  # Is this the macOS system?
-  alias ls='gls -AFvx --group-directories-first --color=auto'
+  alias ls='gls -AFBvx --group-directories-first --color=auto'
 fi
 
-# alias \
-#     ls='gls --group-directories-first --color -AFvx'
-
 ## List all files colorized in long format, including dot files
-alias la='ls -lahF'
 alias ll='ls -lhF'
-alias lls='ls -lahFtr'
 alias lt='du -sh * | sort -h'
 alias lc='ls -CF'
 ## Show hidden files ##
@@ -91,6 +86,12 @@ alias zshplugins="cd ${ZDOTDIR}/plugins"
 
 ## mkdir: create parent directories
 alias mkdir='mkdir -pv' 
+
+# Make and cd into directory
+#  - from: http://alias.sh/make-and-cd-directory
+mkcd() {
+  mkdir "$1" && cd "$1"
+}
 
 ## ping: stop after 5 pings
 alias ping='ping -c 5' 
@@ -183,6 +184,7 @@ alias nvimupd='brew reinstall neovim'
 alias ungz='gunzip -k'
 
 ## Emacs
+# alias emacs="emacs -nw"
 alias emd='emacs --daemon' # run emacs as daemon mode with
 #alias ec="emacsclient -cnqua ''" # the void string '' is IMPORTANT
 
@@ -263,3 +265,8 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 
 # luamake
 alias luamake='~/lang-servers/lua-language-server/3rd/luamake/luamake'
+
+# Improved myip alias. Echoed to avoid strange character at end in ZSH.
+myip() {
+  echo "$(curl -s whatismyip.akamai.com)"
+}

@@ -11,13 +11,34 @@
 (setq native-comp-async-query-on-exit t
       comp-async-query-on-exit t)
 
+;; Prevent native-compiling .dir-locals.el files.
+(let ((deny-list '("\\(?:[/\\\\]\\.dir-locals\\.el$\\)")))
+  (if (boundp 'native-comp-deferred-compilation-deny-list)
+      (setq native-comp-deferred-compilation-deny-list deny-list)
+    (setq comp-deferred-compilation-deny-list deny-list)))
+
+(when (or (boundp 'comp-eln-load-path) (boundp 'native-comp-eln-load-path))
+  (let ((eln-cache-dir (expand-file-name "cache/eln-cache/"
+                                         user-emacs-directory))
+        (find-exec (executable-find "find")))
+
+    (if (boundp 'native-comp-eln-load-path)
+        (setcar native-comp-eln-load-path eln-cache-dir)
+      (setcar comp-eln-load-path eln-cache-dir))
+    ;; Quitting emacs while native compilation in progress can leave zero byte
+    ;; sized *.eln files behind. Hence delete such files during startup.
+    (when find-exec
+      (call-process find-exec nil nil nil eln-cache-dir
+                    "-name" "*.eln" "-size" "0" "-delete" "-or"
+                    "-name" "*.eln.tmp" "-size" "0" "-delete"))))
+
 ;; Increase read max limit to 3 mb
 (setq read-process-output-max (* 3 1024 1024))
 
 ;; In noninteractive sessions, prioritize non-byte-compiled source files to
 ;; prevent the use of stale byte-code. Otherwise, it saves us a little IO time
 ;; to skip the mtime checks on every *.elc file.
-(setq load-prefer-newer noninteractive)
+;; (setq load-prefer-newer noninteractive)
 
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
@@ -29,9 +50,10 @@
 (advice-add #'package--ensure-init-file :override #'ignore)
 
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(tool-bar-lines . 0) default-frame-alist)
-(push '(vertical-scroll-bars) default-frame-alist)
+(setq tool-bar-mode nil
+      menu-bar-mode nil)
+(when (fboundp 'set-scroll-bar-mode)
+  (set-scroll-bar-mode nil))
 
 ;; Resizing the Emacs frame can be a terribly expensive part of changing the
 ;; font. By inhibiting this, we easily halve startup times with fonts that are

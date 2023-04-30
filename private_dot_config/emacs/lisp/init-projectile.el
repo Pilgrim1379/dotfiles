@@ -12,13 +12,14 @@
 (use-package projectile
   :init
   (when (file-directory-p "~/Projects/Code")
-    (setq projectile-project-search-path '("~/Projects/Code/elixir/"
-                                            "~/Projects/Code/python/"
-                                            "~/Projects/Code/elm/"
-                                            "~/Projects/Code/rust/"
-                                            "~/Projects/Code/ai/"
-                                            "~/Projects/Code/c++/"
-                                            "~/Projects/Code/js/")))
+    (setq projectile-project-search-path '("~/workspace/code/elixir/"
+                                            "~/workspace/code/python/"
+                                            "~/workspace/code/elm/"
+                                            "~/workspace/code/rust/"
+                                            "~/workspace/code/ai/"
+                                            "~/workspace/code/c++/"
+                                            "~/workspace/code/exercism/"
+                                            "~/workspace/code/js/")))
   (setq projectile-switch-project-action #'dw/switch-project-action)
   (projectile-mode +1)
   :bind (:map projectile-mode-map

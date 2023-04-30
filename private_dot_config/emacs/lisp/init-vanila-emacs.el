@@ -137,6 +137,22 @@
 
 ;;; Frame Configs
 
+;; Enable mouse support when running in a console
+(unless window-system
+  (require 'mouse)
+  (xterm-mouse-mode t)
+  (defun track-mouse (e))
+  (setq mouse-sel-mode t)
+  (global-set-key [mouse-4] (lambda ()
+                              (interactive)
+                              (scroll-down 1)))
+  (global-set-key [mouse-5] (lambda ()
+                              (interactive)
+                              (scroll-up 1)))
+  ;; (global-set-key [mouse-4] 'scroll-down-line)
+  ;; (global-set-key [mouse-5] 'scroll-up-line)
+  )
+
 ;; Suppress GUI features
 
 (setq use-file-dialog nil)
@@ -156,6 +172,15 @@
     window-resize-pixelwise t
     frame-resize-pixelwise t)
 
+;; the toolbar is just a waste of valuable screen estate
+;; in a tty tool-bar-mode does not properly auto-load, and is
+;; already disabled anyway
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+
+;; disable menu bar when running in console
+(unless window-system
+  (menu-bar-mode -1))
 
 ;; (set-frame-font "PragmataPro Liga-14" nil t)
  ;;; Font Configuration
@@ -166,7 +191,6 @@
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "SF Pro Text" :height nqa/default-variable-font-size :weight 'regular)
-
 
 ;; Save cursor postion between file operations
 (save-place-mode t)

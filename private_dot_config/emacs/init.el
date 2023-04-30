@@ -137,7 +137,7 @@
 (require 'init-misc)
 
 ; Start emacs by default using the following directory
-(setq default-directory (expand-file-name "~/Projects/Code/"))
+(setq default-directory (expand-file-name "~/workspace/"))
 
 ;; Variables configured via the interactive 'customize' interface
 (when (file-exists-p custom-file)
