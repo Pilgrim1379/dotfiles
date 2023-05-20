@@ -110,17 +110,17 @@ source $ZDOTDIR/completion.zsh
 
 # Pipx
 if (( $+commands[pipx] )); then
-    eval "$(register-python-argcomplete pipx)"
+  eval "$(register-python-argcomplete pipx)"
 fi
 
 # Pipenv
 if (( $+commands[pipenv] )); then
-    eval "$(_PIPENV_COMPLETE=zsh_source pipenv)" 
+  eval "$(_PIPENV_COMPLETE=zsh_source pipenv)" 
 fi
 
 # Better cding like z.lua but faster
 if (( $+commands[zoxide] )); then
-    eval "$(zoxide init zsh)"
+  eval "$(zoxide init zsh)"
 fi
 
 # PNPM
@@ -129,9 +129,6 @@ if (( $+commands[pnpm] )); then
   # uninstall by removing these lines
   [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
 fi
-
-
-
 
 
 # +------------------+
@@ -157,12 +154,20 @@ bindkey -M vicmd '^v' edit-command-line
 
 source $ZDOTDIR/keybindings.zsh
 
+
+
+# Direnv
+if (( $+commands[direnv] )); then
+  eval "$(direnv hook zsh)"
+fi
+
+
 # +---------+
 # | ALIASES |
 # +---------+
 # source the alias.zsh files every command to pull in new additions
 precmd(){
-    source $ZDOTDIR/aliases
+  source $ZDOTDIR/aliases
 }
 
 # +--------+

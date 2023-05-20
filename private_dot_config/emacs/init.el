@@ -67,6 +67,7 @@
 
 ; General editing
 (require 'init-editing-utils)
+(require 'init-fonts)
 (require 'init-whitespace)
 
 

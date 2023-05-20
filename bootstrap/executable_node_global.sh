@@ -20,8 +20,9 @@ npm install -g neovim
 ## prettier
 npm install -g prettier prettier-plugin-elm
 
-npm install -g npm-check
-npm install -g npm-check-updates
+npm install -g cliui@latest
+npm install -g npm-check@latest
+npm install -g npm-check-updates@latest
 
 ## Corepack and package managers
 #

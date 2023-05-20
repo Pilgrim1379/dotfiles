@@ -19,8 +19,9 @@ if [ $? -eq 0 ]; then
             pipx install pdm && \
             pipx inject pdm pdm-vscode
             
-            pipx install bpython # cli for python
-            pipx install ptpython # cli for python
+            # pipx install bpython # cli for python
+            pipx install ipython # cli for python
+            # pipx install ptpython # cli for python
             pipx install pgcli # cli for psql
             pipx install litecli # cli for sqlite
 

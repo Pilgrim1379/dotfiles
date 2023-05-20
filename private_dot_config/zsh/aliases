@@ -124,15 +124,13 @@ alias npmup='npm install -g npm'
 alias brewupd="\
 echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && \
 echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
-echo '\nstarting PNPM update ...' && pnpm update -g -L && \
-echo '\nstarting NCU update ...' && ncu -g \
+echo '\nstarting PNPM update ...' && pnpm update -g -L \
 "
 
 alias brweupd="\
 echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && \
 echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
-echo '\nstarting PNPM update ...' && pnpm update -g -L && \
-echo '\nstarting NCU update ...' && ncu -g \
+echo '\nstarting PNPM update ...' && pnpm update -g -L \
 "
 
 ## with asdf

@@ -97,9 +97,7 @@
 		
 [submodule]
 	recurse = true
-
-[credential "https://dev.azure.com"]
-	useHttpPath = true
-
 [help]
 	autocorrect = 1
+[credential "https://dev.azure.com"]
+	useHttpPath = true

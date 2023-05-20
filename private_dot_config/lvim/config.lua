@@ -159,7 +159,10 @@ lvim.lsp.installer.setup.automatic_installation = false
 
 -- ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
 -- ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
--- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { 
+  "elixir-ls" 
+})
+
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("ruff_lsp", opts)
 
@@ -274,7 +277,8 @@ linters.setup {
   },
 }
 
-lvim.lsp.diagnostics.virtual_text = false
+-- lvim.lsp.diagnostics.virtual_text = false -- deprecated
+vim.diagnostic.config({ virtual_text = false })
 
 -- Additional Plugins
 lvim.plugins = {
@@ -314,6 +318,37 @@ lvim.plugins = {
   --     }
   --   end,
   -- }
+  {
+    "elixir-tools/elixir-tools.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local elixir = require("elixir")
+      local elixirls = require("elixir.elixirls")
+  
+      elixir.setup {
+        credo = {
+          enable = true
+        },
+        elixirls = {
+          enabled = true,
+          cmd = "elixir-ls",
+          settings = elixirls.settings {
+            dialyzerEnabled = true,
+            enableTestLenses = false,
+          },
+          on_attach = function(client, bufnr)
+            -- whatever keybinds you want, see below for more suggestions
+            vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
+            vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
+            vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
+          end,
+        }
+      }
+    end,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  }
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)

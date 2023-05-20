@@ -182,19 +182,8 @@
 (unless window-system
   (menu-bar-mode -1))
 
-;; (set-frame-font "PragmataPro Liga-14" nil t)
- ;;; Font Configuration
-(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font" :height nqa/default-font-size)
-
-;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "JetBrainsMono Nerd Font" :height nqa/default-font-size)
-
-;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "SF Pro Text" :height nqa/default-variable-font-size :weight 'regular)
-
 ;; Save cursor postion between file operations
 (save-place-mode t)
-
 
 
 
