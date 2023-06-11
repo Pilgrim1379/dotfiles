@@ -17,3 +17,6 @@
 # Elixir
 .elixir_ls
 .elixir_ls/**/*
+
+# LazyVim
+.config/LazyVim/lazy-lock.json

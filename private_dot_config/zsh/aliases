@@ -102,6 +102,12 @@ alias help='run-help'
 ## Get week number
 alias week='date +%V'
 
+## Neovim switcher
+alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
+# alias nvim-kick="NVIM_APPNAME=kickstart nvim"
+# alias nvim-chad="NVIM_APPNAME=NvChad nvim"
+# alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
+
 ## PNPM
 alias pnpmupg='pnpm up -g -L'
 alias pnpmup='pnpm up'
@@ -114,35 +120,46 @@ alias pnpmoutdated='pnpm outdated -g'
 alias npmlsg='npm ls -g --depth 0'
 alias npmup='npm install -g npm'
 
-## Homebrew
-## Update installed Ruby gems, Homebrew, npm, and their installed packages
-#alias brew_update="brew -v update; brew upgrade --force-bottle; brew cleanup; npm-check -gu"
-# alias brewupd='brew update'
-# alias brweupd='brew update'
+
+## Update all ppackages
+alias updallapps="\
+echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -aqy --no-brew-update --cleanup && \
+echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
+echo '\nstarting PNPM update ...' && pnpm list -g --json | jq '.[] | .dependencies | keys | .[]' -r  | xargs pnpm add -g && \
+echo '\nstarting PIPX update ...' && pipx upgrade-all && \
+echo '\nstarting Ruby update ...' && gem update --system && gem update \
+"
 
 ## without asdf
 alias brewupd="\
-echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && \
-echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
-echo '\nstarting PNPM update ...' && pnpm update -g -L \
+echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -aqy --no-brew-update --cleanup \
+"
+
+alias npmupd="\
+echo 'starting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
+echo '\nstarting PNPM update ...' && pnpm list -g --json | jq '.[] | .dependencies | keys | .[]' -r  | xargs pnpm add -g \
+"
+
+alias pipxupd="echo 'starting PIPX update ...' && pipx upgrade-all"
+
+alias gemupd="\
+echo 'starting Ruby gem update ...' && gem update --system && gem update
 "
 
 alias brweupd="\
-echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && \
-echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
-echo '\nstarting PNPM update ...' && pnpm update -g -L \
+echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula 
 "
 
 ## with asdf
 # alias brewupd="\
-# echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && \
+# echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -ay --no-brew-update --cleanup \
 # echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && asdf reshim nodejs && \
 # echo '\nstarting PNPM update ...' && pnpm update -g -L && \
 # echo '\nstarting NCU update ...' && ncu -g \
 # "
 
 # alias brweupd="\
-# echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && \
+# echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -ay --no-brew-update --cleanup \
 # echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && asdf reshim nodejs && \
 # echo '\nstarting PNPM update ...' && pnpm update -g -L && \
 # echo '\nstarting NCU update ...' && ncu -g \
@@ -152,8 +169,8 @@ alias brewupgc='brew upgrade --cask'
 alias brweupgc='brew upgrade --cask'
 alias brewupgcg='brew upgrade --cask --greedy'
 alias brweupgcg='brew upgrade --cask --greedy'
-alias brewcu='brew cu -a -y --no-brew-update --cleanup'
-alias brwecu='brew cu -a -y --no-brew-update --cleanup'
+alias brewcu='brew cu -ay --no-brew-update --cleanup'
+alias brwecu='brew cu -ay --no-brew-update --cleanup'
 alias brewdoc='brew doctor'
 alias brwedoc='brew doctor'
 alias brewclean='brew cleanup -s'
@@ -172,11 +189,9 @@ alias mongod='mongod --config /usr/local/etc/mongod.conf'
 alias fs="stat -f \"%z bytes\""
 
 ## Vim/Neovim
-alias vim='lvim'
-alias nvim='lvim'
 alias nvimsync="nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
 alias rmnvim="rm -rf ~/.config/local/share/nvim && rm -rf ~/.local/share/nvim && rm -rf ~/.cache/nvim && rm -rf ~/.config/nvim/plugin && echo 'All Neovim configs deleted successfully ...'"
-alias nvimupd='brew reinstall neovim'
+alias updnvim='brew upgrade neovim --fetch-HEAD'
 
 ## zip/unzip
 alias ungz='gunzip -k'

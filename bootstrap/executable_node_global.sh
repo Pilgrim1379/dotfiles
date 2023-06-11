@@ -5,12 +5,6 @@
 ## upgrade npm
 npm install -g npm
 
-## pnpm
-# npm install -g pnpm
-
-## Yarn
-# npm install -g yarn
-
 ## importing helper
 npm install -g import-js
 
@@ -30,19 +24,29 @@ corepack enable
 corepack prepare pnpm@latest --activate
 corepack prepare yarn@stable --activate
 
-## when using asdf, this is required for pnpm commands to work
-# asdf reshim nodejs
+## elm
+npm install -g elm-format
+npm install -g elm-live
+npm install -g elm-oracle
+npm install -g elm-test
+npm install -g elm-review
+
+## language servers
+npm install -g typescript-language-server
+npm install -g bash-language-server
+npm install -g @elm-tooling/elm-language-server
+npm install -g vscode-langservers-extracted ## consolidated for html, css, json and eslint
+npm install -g yaml-language-server
+npm install -g diagnostic-languageserver
+npm install -g pyright
+npm install -g emmet-ls
+
+
+# ## when using asdf, this is required for pnpm commands to work
+# # asdf reshim nodejs
 
 if command -v pnpm &> /dev/null
 then
-    ## elm
-    pnpm add -g elm-analyse
-    pnpm add -g elm-format
-    pnpm add -g elm-live
-    pnpm add -g elm-oracle
-    pnpm add -g elm-test
-    pnpm add -g elm-review
-
     ## typescript
     pnpm add -g typescript
 
@@ -88,16 +92,6 @@ then
 
     ## languages
     # pnpm add -g rescript
-
-
-    ## language servers
-    pnpm add -g typescript-language-server
-    pnpm add -g bash-language-server
-    pnpm add -g @elm-tooling/elm-language-server
-    pnpm add -g vscode-langservers-extracted ## consolidated for html, css, json and eslint
-    pnpm add -g yaml-language-server
-    pnpm add -g diagnostic-languageserver
-    pnpm add -g pyright
 
     ## build tools
     # Not recommended to install webpack globaly (option -D is same as --save-dev for npm)

@@ -17,7 +17,9 @@ export LS_COLORS=$(vivid generate ~/github/ls_colors/vivid/themes/catppuccin-moc
 export \
     HOMEBREW_BAT=1 \
     HOMEBREW_COLOR=1 \
-    HOMEBREW_NO_AUTO_UPDATE=1
+    HOMEBREW_NO_AUTO_UPDATE=1 \
+    HOMEBREW_NO_GOOGLE_ANALYTICS=1 \
+    HOMEBREW_NO_ENV_HINTS=1
 
 export BAT_THEME="Catppuccin-mocha"
 
@@ -119,6 +121,7 @@ fi
 # Pipenv default python
 # export PIPENV_DEFAULT_PYTHON_VERSION=$(command -v python)
 export PIPENV_DEFAULT_PYTHON_VERSION=$(command -v python)
+export PIPENV_VENV_IN_PROJECT=1 
 
 # Rust
 # export RUST_SRC_PATH="${HOME}/github/rust"
