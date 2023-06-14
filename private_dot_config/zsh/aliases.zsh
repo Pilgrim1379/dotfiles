@@ -103,10 +103,10 @@ alias help='run-help'
 alias week='date +%V'
 
 ## Neovim switcher
-alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
-# alias nvim-kick="NVIM_APPNAME=kickstart nvim"
-# alias nvim-chad="NVIM_APPNAME=NvChad nvim"
-# alias nvim-astro="NVIM_APPNAME=AstroNvim nvim"
+alias lazynvim="NVIM_APPNAME=LazyVim nvim"
+# alias kickstnvim="NVIM_APPNAME=kickstart nvim"
+# alias chadnvim="NVIM_APPNAME=NvChad nvim"
+# alias astronvim="NVIM_APPNAME=AstroNvim nvim"
 
 ## PNPM
 alias pnpmupg='pnpm up -g -L'
@@ -122,10 +122,11 @@ alias npmup='npm install -g npm'
 
 
 ## Update all ppackages
+# echo '\nstarting PNPM update ...' && pnpm list -g --json | jq '.[] | .dependencies | keys | .[]' -r  | xargs pnpm add -g && \
 alias updallapps="\
 echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -aqy --no-brew-update --cleanup && \
 echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
-echo '\nstarting PNPM update ...' && pnpm list -g --json | jq '.[] | .dependencies | keys | .[]' -r  | xargs pnpm add -g && \
+echo '\nstarting PNPM update ...' && pnpm update -g --latest && \
 echo '\nstarting PIPX update ...' && pipx upgrade-all && \
 echo '\nstarting Ruby update ...' && gem update --system && gem update \
 "
@@ -137,7 +138,7 @@ echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && 
 
 alias npmupd="\
 echo 'starting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
-echo '\nstarting PNPM update ...' && pnpm list -g --json | jq '.[] | .dependencies | keys | .[]' -r  | xargs pnpm add -g \
+echo '\nstarting PNPM update ...' && pnpm update -g --latest && \
 "
 
 alias pipxupd="echo 'starting PIPX update ...' && pipx upgrade-all"

@@ -14,36 +14,58 @@
 # Load more completions
 fpath=(
     $ZDOTDIR/zfunc(N)
+    $(brew --prefix)/share/zsh-completions(N)
     $ZDOTDIR/plugins/zsh-completions/src(N)
     ~/.local/share/zsh/site-functions(N)
     $fpath
 )
 
+# # +------------------+
+# # | ZSH-Autocomplete |
+# # +------------------+
+# source $ZDOTDIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source $HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 # Should be called before compinit
 # zmodload zsh/complist
+
+# Use hjlk in menu selection (during completion)
+# Doesn't work well with interactive mode
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+
+bindkey -M menuselect '^xg' clear-screen
+bindkey -M menuselect '^xi' vi-insert                      # Insert
+bindkey -M menuselect '^xh' accept-and-hold                # Hold
+bindkey -M menuselect '^xn' accept-and-infer-next-history  # Next
+bindkey -M menuselect '^xu' undo                           # Undo
 
 # autoload -U compinit; compinit
 # _comp_options+=(globdots) # With hidden files
 
-# autoload -U bashcompinit; bashcompinit
+# # Only work with the Zsh function vman
+# # See $DOTFILES/zsh/scripts.zsh
+# compdef vman="man"
 
-# +---------+
-# | Options |
-# +---------+
+# # +---------+
+# # | Options |
+# # +---------+
 
-## setopt GLOB_COMPLETE      # Show autocompletion menu with globs
+# # setopt GLOB_COMPLETE      # Show autocompletion menu with globs
 # setopt MENU_COMPLETE        # Automatically highlight first element of completion menu
 # setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
 # setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
 
-# +---------+
-# | zstyles |
-# +---------+
+# # +---------+
+# # | zstyles |
+# # +---------+
 
-# Ztyle pattern
-# :completion:<function>:<completer>:<command>:<argument>:<tag>
+# # Ztyle pattern
+# # :completion:<function>:<completer>:<command>:<argument>:<tag>
 
-# Define completers
+# # Define completers
 # zstyle ':completion:*' completer _extensions _complete _approximate
 
 # # Use cache for commands using cache
@@ -73,7 +95,7 @@ fpath=(
 # zstyle ':completion:*:*:*:*:warnings' format ' %F{red}-- no matches found --%f'
 # # zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 # # Colors for files and directory
-# zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # # Only display some tags for the command cd
 # zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
@@ -89,24 +111,34 @@ fpath=(
 
 # zstyle ':completion:*' keep-prefix true
 
+# zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
-# +------------------+
-# | ZSH-Autocomplete |
-# +------------------+
-source $ZDOTDIR/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# ## For kubernetes
+# source $DOTFILES/zsh/plugins/kubectl-completion/_kubectl
+# zstyle ':completion:*:*:kubectl:*' list-grouped false
 
-# Colors for files and directory
-zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
 
-# Use hjlk in menu selection (during completion)
-# Doesn't work well with interactive mode
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
+# Additional completions for zsh
+# source $ZDOTDIR/plugins/zsh-completions/zsh-completions.plugin.zsh
 
-bindkey -M menuselect '^xg' clear-screen
-bindkey -M menuselect '^xi' vi-insert                      # Insert
-bindkey -M menuselect '^xh' accept-and-hold                # Hold
-bindkey -M menuselect '^xn' accept-and-infer-next-history  # Next
-bindkey -M menuselect '^xu' undo                           # Undo
+# Pipx
+if (( $+commands[pipx] )); then
+  eval "$(register-python-argcomplete pipx)"
+fi
+
+# Pipenv
+if (( $+commands[pipenv] )); then
+  eval "$(_PIPENV_COMPLETE=zsh_source pipenv)" 
+fi
+
+# Better cding like z.lua but faster
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
+
+# PNPM
+if (( $+commands[pnpm] )); then
+  # tabtab source for packages
+  # uninstall by removing these lines
+  [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+fi
