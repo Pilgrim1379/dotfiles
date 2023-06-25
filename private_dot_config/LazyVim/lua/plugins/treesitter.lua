@@ -31,6 +31,7 @@ return {
 				"clojure",
 				"zig",
 				-- "nim",
+				"astro",
 				"sql"
 			},
 			incremental_selection = {

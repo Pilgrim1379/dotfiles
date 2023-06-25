@@ -9,28 +9,24 @@
 (use-package org
   :defer t
   :config
-  (use-package org-bullets
-    :hook (org-mode . org-bullets-mode)
-    :custom
-    (org-bullets-bullet-list '("⦿" "○" "●" "○" "●" "○" "●")))
-
+  (use-package org-superstar
+    ;; :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+  (use-package org-present
+    ;; :ensure t
+    )
   (setq org-ellipsis " ⏷")
-
   (add-hook 'org-mode-hook 'org-indent-mode)
-
   (add-hook 'org-mode-hook 'auto-fill-mode)
-
   (use-package ob-http)
-
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . t)
                                  (shell . t)
                                  (http . t)
                                  (python . t)
                                  (ruby . t)))
-
   (use-package ob-async)
-
   (setq org-edit-src-content-indentation 0))
 
 

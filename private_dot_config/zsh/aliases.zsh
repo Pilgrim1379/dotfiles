@@ -1,9 +1,18 @@
 #!/bin/zsh
 
-# Commands, funtions and aliases
+# aliases
 #
 # Always set aliases _last,_ so they don't class with function definitions.
 #
+# This lets you change to any dir without having to type `cd`, that is, by just
+# typing its name. Be warned, though: This can misfire if there exists an alias,
+# function, builtin or command with the same name.
+# In general, I would recommend you use only the following without `cd`:
+#   ..  to go one dir up
+#   ~   to go to your home dir
+#   ~-2 to go to the 2nd mostly recently visited dir
+#   /   to go to the root dir
+setopt AUTO_CD
 
 # Note that, unlike Bash, there's no need to inform Zsh's completion system
 # of your aliases. It will figure them out automatically.
@@ -128,6 +137,7 @@ echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && 
 echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
 echo '\nstarting PNPM update ...' && pnpm update -g --latest && \
 echo '\nstarting PIPX update ...' && pipx upgrade-all && \
+echo '\nstarting Rust update ...' && rustup update && \
 echo '\nstarting Ruby update ...' && gem update --system && gem update \
 "
 
@@ -138,7 +148,7 @@ echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && 
 
 alias npmupd="\
 echo 'starting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
-echo '\nstarting PNPM update ...' && pnpm update -g --latest && \
+echo '\nstarting PNPM update ...' && pnpm update -g --latest \
 "
 
 alias pipxupd="echo 'starting PIPX update ...' && pipx upgrade-all"
@@ -148,7 +158,11 @@ echo 'starting Ruby gem update ...' && gem update --system && gem update
 "
 
 alias brweupd="\
-echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula 
+echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula
+"
+
+alias rustupd="\
+echo 'starting Rust update ...' && rustup update
 "
 
 ## with asdf

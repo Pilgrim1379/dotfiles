@@ -9,10 +9,11 @@
 # | VI KEYMAP |
 # +-----------+
 bindkey -v
-export KEYTIMEOUT=1
+# export KEYTIMEOUT=1
+# source $HOMEBREW_PREFIX/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 # Change cursor
-source "$ZDOTDIR/plugins/cursor_mode"
+source "$ZDOTDIR/plugins/cursor_mode.zsh"
 
 # Add Vi text-objects for brackets and quotes
 autoload -Uz select-bracketed select-quoted
@@ -37,8 +38,9 @@ bindkey -M vicmd cs change-surround
 bindkey -M vicmd ds delete-surround
 bindkey -M vicmd ys add-surround
 bindkey -M visual S add-surround
+
 # Use Ctrl-A to start neovim switcher
-# bindkey -s ^a "nvims\n"
+# bindkey -s '^a' "nvims\n"
 
 # +---------+
 # | BINDING |
@@ -48,3 +50,9 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd '^v' edit-command-line
 
+bindkey '^X' autosuggest-execute
+# For example, this would bind ctrl + space to accept the current suggestion.
+bindkey '^ ' autosuggest-accept
+# bindkey '^E' autosuggest-accept
+bindkey '^A' vi-beginning-of-line
+bindkey '^E' vi-end-of-line

@@ -1,13 +1,13 @@
-[".config/zsh/plugins/powerlevel10k"]
-type = "git-repo"
-url = "https://github.com/romkatv/powerlevel10k.git"
-clone.args = ["--depth", "1"]
-refreshPeriod = "168h"
+# [".config/zsh/plugins/powerlevel10k"]
+# type = "git-repo"
+# url = "https://github.com/romkatv/powerlevel10k.git"
+# clone.args = ["--depth", "1"]
+# refreshPeriod = "168h"
 # [".config/zsh/plugins/zsh-autocomplete"]
 # type = "git-repo"
 # url = "https://github.com/marlonrichert/zsh-autocomplete.git"
 # clone.args = ["--depth", "1"]
-# refreshPeriod = "1h"
+# refreshPeriod = "168h"
 # [".config/zsh/plugins/zsh-autosuggestions"]
 # type = "git-repo"
 # url = "https://github.com/zsh-users/zsh-autosuggestions.git"

@@ -11,7 +11,7 @@
 
 (use-package projectile
   :init
-  (when (file-directory-p "~/Projects/Code")
+  (when (file-directory-p "~/workspace")
     (setq projectile-project-search-path '("~/workspace/code/elixir/"
                                             "~/workspace/code/python/"
                                             "~/workspace/code/elm/"
@@ -22,6 +22,8 @@
                                             "~/workspace/code/js/")))
   (setq projectile-switch-project-action #'dw/switch-project-action)
   (projectile-mode +1)
+  :config
+  (setq projectile-completion-system 'default)
   :bind (:map projectile-mode-map
               ("s-p" . projectile-command-map)
               ("C-c p" . projectile-command-map)))

@@ -49,6 +49,7 @@
 ; Update Load Path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (setq custom-file (expand-file-name "etc/custom.el" user-emacs-directory)) ; Keep packages list tucked away in it own file
+;; Straight.el
 (require 'init-straight)      ;; Machinery for installing required packages
 ;; (require 'init-packages)      ;; Machinery for installing required packages
 

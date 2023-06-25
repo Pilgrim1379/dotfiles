@@ -20,3 +20,13 @@
 
 # LazyVim
 .config/LazyVim/lazy-lock.json
+
+# Plugins
+.config/zsh/plugins/marlonrichert/
+.config/zsh/plugins/marlonrichert/**/*
+.config/zsh/plugins/romkatv/
+.config/zsh/plugins/romkatv/**/*
+.config/zsh/plugins/zsh-snap
+.config/zsh/plugins/zsh-snap/**/*
+.config/zsh/plugins/zsh-users
+.config/zsh/plugins/zsh-users/**/*

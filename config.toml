@@ -2,7 +2,7 @@
 python = "latest"
 golang = "latest"
 erlang = "25"
-elixir = "1.14.4-otp-25"
+elixir = "1.15.0-otp-25"
 java = "temurin-17"
 ruby = "latest"
 elm = "latest"

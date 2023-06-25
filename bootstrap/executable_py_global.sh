@@ -16,8 +16,8 @@ if [ $? -eq 0 ]; then
     # if asdf reshim python; then
         # first uninstall previous packages
         if pipx uninstall-all; then
-            pipx install pdm && \
-            pipx inject pdm pdm-vscode
+            # pipx install pdm && \
+            # pipx inject pdm pdm-vscode
             
             # pipx install bpython # cli for python
             pipx install ipython # cli for python

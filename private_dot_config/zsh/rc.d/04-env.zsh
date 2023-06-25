@@ -2,24 +2,40 @@
 
 # Environment variables
 #
+# Add your functions to your $fpath, so you can autoload them.
+fpath=(
+  $ZDOTDIR/functions
+  $fpath
+  ~/.local/share/zsh/site-functions
+)
+
+if command -v brew > /dev/null; then
+  # Add dirs containing completion functions to your $fpath and they will be
+  # picked up automatically when the completion system is initialized.
+  # Here, we add it to the end of $fpath, so that we use brew's completions
+  # only for those commands that zsh doesn't already know how to complete.
+  fpath+=(
+    $HOMEBREW_PREFIX/share/zsh/site-functions
+  )
+fi
 
 # Prefer GB English and use UTF-8
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8 # Not set on macOS.
 
 [[ $OSTYPE == linux-gnu ]] &&
-    export LC_COLLATE=C.UTF-8 # Other UTF-8 locales on Linux give weird whitespace sorting.
+  export LC_COLLATE=C.UTF-8 # Other UTF-8 locales on Linux give weird whitespace sorting.
 
 export TERM='xterm-256color'
 # LS_COLORS Generator
 export LS_COLORS=$(vivid generate ~/github/ls_colors/vivid/themes/catppuccin-mocha.yml)
 
 export \
-    HOMEBREW_BAT=1 \
-    HOMEBREW_COLOR=1 \
-    HOMEBREW_NO_AUTO_UPDATE=1 \
-    HOMEBREW_NO_GOOGLE_ANALYTICS=1 \
-    HOMEBREW_NO_ENV_HINTS=1
+  HOMEBREW_BAT=1 \
+  HOMEBREW_COLOR=1 \
+  HOMEBREW_NO_AUTO_UPDATE=1 \
+  HOMEBREW_NO_GOOGLE_ANALYTICS=1 \
+  HOMEBREW_NO_ENV_HINTS=1
 
 export BAT_THEME="Catppuccin-mocha"
 
@@ -63,10 +79,10 @@ export "MICRO_TRUECOLOR=1"
 
 # Set default editor
 export \
-    EDITOR=nvim \
-    VISUAL="code --wait"
+  EDITOR=nvim \
+  VISUAL="code --wait"
 [[ -v SSH_CONNECTION ]] &&
-    VISUAL=nvim
+  VISUAL=lazyvim
 
 # Fzf
 # Setting fd as the default source for fzf
@@ -75,18 +91,18 @@ export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden'
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="--preview 'bat \
-    --color=always \
-    --line-range :50 {}' \
-    --prompt '∷ ' \
-    --pointer ▶ \
-    --marker ⇒"
+  --color=always \
+  --line-range :50 {}' \
+  --prompt '∷ ' \
+  --pointer ▶ \
+  --marker ⇒"
 
 export \
-    PAGER=less \
-    MANPAGER='bat -l man' \
-    READNULLCMD=bat \
-    LESS='-FiMr -j.5 --incsearch' \
-    LESSHISTFILE=$XDG_DATA_HOME/less/lesshst
+  PAGER=less \
+  MANPAGER='bat -l man' \
+  READNULLCMD=bat \
+  LESS='-FiMr -j.5 --incsearch' \
+  LESSHISTFILE=$XDG_DATA_HOME/less/lesshst
 mkdir -pm 0700 $LESSHISTFILE:h
 
 [[ $VENDOR == apple ]] &&
@@ -106,16 +122,15 @@ export PNPM_HOME=$XDG_DATA_HOME/pnpm # $HOME/.local/share
 # for $HOME in each $path entry.
 
 manpath=(
-    # $HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman(N)
-    # $HOMEBREW_PREFIX/opt/findutils/libexec/gnuman(N)
-    $manpath
+  # $HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman(N)
+  # $HOMEBREW_PREFIX/opt/findutils/libexec/gnuman(N)
+  $manpath
 )
 
 # pdm --pep582
-if (( $+commands[pdm] )); then
-    eval "$(pdm --pep582)"
-fi
-
+# if (( $+commands[pdm] )); then
+#   znap eval pdm "$(pdm --pep582)"
+# fi
 
 ############THESE MUST APPEAR AFTER PATH AND (ASDF/RTX CONFIG)####################
 # Pipenv default python

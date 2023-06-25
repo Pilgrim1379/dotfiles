@@ -9,7 +9,6 @@ if (( $+commands[brew] )); then
     eval "$(brew shellenv)"
 fi
 
-
 # $PATH and $path (and also $FPATH and $fpath, etc.) are "tied" to each other.
 # Modifying one will also modify the other.
 # Note that each value in an array is expanded separately. Thus, we can use ~
@@ -77,7 +76,7 @@ fi
 # | I need $HOME/.local/bin to be at head of path hence |
 # +----------------------------------------------------+
 path=(
-    # $HOME/.bin(N)
+    $HOME/.bin(N)
     # $HOME/.local/share/rtx/shims(N)
     $HOME/.local/bin(N)
     $path
