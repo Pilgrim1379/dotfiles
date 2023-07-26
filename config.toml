@@ -1,8 +1,8 @@
 [tools]
 python = "latest"
 golang = "latest"
-erlang = "25"
-elixir = "1.15.0-otp-25"
+erlang = "26"
+elixir = "1.15.4-otp-26"
 java = "temurin-17"
 ruby = "latest"
 elm = "latest"

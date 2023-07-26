@@ -101,6 +101,7 @@
 	repo = /Users/NQA/.config/zsh/plugins/zsh-users/zsh-autosuggestions
 	repo = /Users/NQA/.config/zsh/plugins/zsh-users/zsh-completions
 	repo = /Users/NQA/.config/zsh/plugins/zsh-users/zsh-syntax-highlighting
+	repo = /Users/NQA/.config/zsh/plugins/ohmyzsh/ohmyzsh
 		
 [submodule]
 	recurse = true

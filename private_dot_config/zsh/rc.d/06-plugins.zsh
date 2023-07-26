@@ -9,8 +9,9 @@ local -a plugins=(
     marlonrichert/zsh-autocomplete      # Real-time type-ahead completion
     romkatv/powerlevel10k
     zsh-users/zsh-autosuggestions       # Inline suggestions
+    # olets/zsh-abbr                      # The zsh manager for auto-expanding abbreviations
+    # marlonrichert/zsh-edit              # Zsh Edit is a set of handy utilities for making life easier on the Zsh command line.
     zsh-users/zsh-syntax-highlighting   # Command-line syntax highlighting
-    g-plane/pnpm-shell-completion
 )
 
 # The Zsh Autocomplete plugin sends *a lot* of characters to your terminal.
@@ -26,7 +27,6 @@ local -a plugins=(
 zstyle ':completion:*:ls:*:options' ignored-patterns --width
 # # Colors for files and directory
 zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
-
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=( main brackets ) # # Command-line syntax highlighting config
 
@@ -44,7 +44,7 @@ done
 rm -f $HOMEBREW_PREFIX/share/zsh/site-functions/_git{,.zwc}
 
 # `znap install` adds new commands and completions.
-znap install zsh-users/zsh-completions
+# znap install zsh-users/zsh-completions
 
 ##
 # Defer initilization code with lazily loaded functions created by

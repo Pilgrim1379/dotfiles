@@ -49,14 +49,33 @@ return {
     ---@type lspconfig.options
     servers = {
       tsserver = { mason = false },
-      -- rust_analyzer = { mason = false }, -- handled by rust-tools
-      -- elixir-ls = { mason = false }, -- handled by elixir-tools
+      rust_analyzer = { mason = false },
+      elixirls = { 
+        mason = false, 
+        cmd = { "language_server.sh" } 
+      },
       bashls = { mason = false },
       clangd = { mason = false },
       gopls = { mason = false },
       ruff_lsp = { mason = false },
       pyright = { mason = false },
       elmls = { mason = false },
+      -- => This package requires additional configuration for use in editors. Install package
+      -- 'user-setup', or manually:
+   
+      -- * for Emacs, add these lines to ~/.emacs:
+      --   (add-to-list 'load-path "/Users/NQA/.opam/default/share/emacs/site-lisp")
+      --   (require 'ocp-indent)
+   
+      -- * for Vim, add this line to ~/.vimrc:
+      --   set rtp^="/Users/NQA/.opam/default/share/ocp-indent/vim"
+      -- ocamllsp = { 
+      --   mason = false
+      -- },
+      hls = { 
+        mason = false,
+        cmd = { "haskell-language-server-wrapper", "--lsp" } 
+      },
       emmet_ls = {
         mason = false,
         filetypes = {
@@ -77,6 +96,10 @@ return {
         },
       },
       html = { mason = false },
+      tailwindcss = { 
+        mason = false ,
+        filetypes_exclude = { "markdown" },
+      },
       julials = { mason = false },
       jsonls = { mason = false },
       lua_ls = {
@@ -104,6 +127,13 @@ return {
       -- end,
       -- Specify * to use this function as a fallback for any server
       -- ["*"] = function(server, opts) end,
+      tailwindcss = function(_, opts)
+        local tw = require("lspconfig.server_configurations.tailwindcss")
+        --- @param ft string
+        opts.filetypes = vim.tbl_filter(function(ft)
+          return not vim.tbl_contains(opts.filetypes_exclude or {}, ft)
+        end, tw.default_config.filetypes)
+      end,  
     },
   },
   ---@param opts PluginLspOpts

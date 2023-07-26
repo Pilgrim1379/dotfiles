@@ -22,13 +22,6 @@ setopt AUTO_CD
 ## Use `< file` to quickly view the contents of any file.
 READNULLCMD=$PAGER  # Set the program to use for this.
 
-alias \
-    diff='diff --color' \
-    grep='grep --color' \
-    egrep='egrep --color' \
-    make='make -j' \
-    {\$,%}=  # For pasting command line examples
-
 ## Pattern matching support for `cp`, `ln` and `mv`
 ## See http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#index-zmv
 ## Tip: Use -n for no execution. (Print what would happen, but don’t do it.)
@@ -38,43 +31,6 @@ alias \
     zcp='zmv -Cv' \
     zln='zmv -Lv'
 
-## Paging & colors for `ls`
-# ls() {
-#   command ${${OSTYPE:#linux-gnu}:+g}ls --width=$COLUMNS "$@" | $PAGER
-#   return $pipestatus[1]  # Return exit status of ls, not $PAGER
-# }
-# 
-
-# Git
-alias gs='git status'
-alias ga='git add'
-alias gp='git push'
-alias gpo='git push origin'
-alias gtd='git tag --delete'
-alias gtdr='git tag --delete origin'
-alias gr='git branch -r'
-alias gplo='git pull origin'
-alias gb='git branch'
-alias gc='git commit'
-alias gd='git diff'
-alias gco='git checkout '
-alias gl='git log'
-alias gr='git remote'
-alias grs='git remote show'
-alias glo='git log --pretty="oneline"'
-alias glol='git log --graph --oneline --decorate'
-
-if [ "$OSTYPE" != linux-gnu ]; then  # Is this the macOS system?
-  alias ls='gls -AFBvx --group-directories-first --color=auto'
-fi
-
-## List all files colorized in long format, including dot files
-alias ll='ls -lhF'
-alias lt='du -sh * | sort -h'
-alias lc='ls -CF'
-## Show hidden files ##
-alias l.='ls -dF .*'
-alias left='ls -t -1' # find where you left off:
 
 ## Easier navigation: .., ..., ...., ....., ~ and -
 alias ..='cd ..'
@@ -85,7 +41,7 @@ alias ~='cd ~' # `cd` is probably faster to type though
 alias -- -='cd -'
 
 ## Neovim switcher
-alias lazynvim="NVIM_APPNAME=LazyVim nvim"
+alias lazyvim="NVIM_APPNAME=LazyVim nvim"
 # alias kickstnvim="NVIM_APPNAME=kickstart nvim"
 # alias chadnvim="NVIM_APPNAME=NvChad nvim"
 # alias astronvim="NVIM_APPNAME=AstroNvim nvim"
@@ -104,7 +60,7 @@ alias npmlsg='npm ls -g --depth 0'
 
 ## Update all ppackages
 # echo '\nstarting PNPM update ...' && pnpm list -g --json | jq '.[] | .dependencies | keys | .[]' -r  | xargs pnpm add -g && \
-alias updallapps="\
+alias updallapps="caffeinate \
 echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -aqy --no-brew-update --cleanup && \
 echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
 echo '\nstarting PNPM update ...' && pnpm update -g --latest && \
@@ -152,17 +108,6 @@ echo 'starting Rust update ...' && rustup update
 # echo '\nstarting NCU update ...' && ncu -g \
 # "
 
-alias brewupgc='brew upgrade --cask'
-alias brweupgc='brew upgrade --cask'
-alias brewupgcg='brew upgrade --cask --greedy'
-alias brweupgcg='brew upgrade --cask --greedy'
-alias brewcu='brew cu -ay --no-brew-update --cleanup'
-alias brwecu='brew cu -ay --no-brew-update --cleanup'
-alias brewdoc='brew doctor'
-alias brwedoc='brew doctor'
-alias brewclean='brew cleanup -s'
-alias brweclean='brew cleanup -s'
-
 ## Vim/Neovim
 alias nvimsync="nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
 alias rmnvim="rm -rf ~/.config/local/share/nvim && rm -rf ~/.local/share/nvim && rm -rf ~/.cache/nvim && rm -rf ~/.config/nvim/plugin && echo 'All Neovim configs deleted successfully ...'"
@@ -183,15 +128,6 @@ alias emd='emacs --daemon' # run emacs as daemon mode with
 alias pipuninstallall="pip uninstall -y -r <(pip freeze)"
 alias pipupgradeall="pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
 
-## Gnu command replacement
-alias tar='gtar'
-alias indent='gindent'
-alias getopt='/usr/local/opt/gnu-getopt/bin/getopt'
-
-## Disk usage (find size of folder or disk)
-alias dus='du -sh'
-alias duas='du -ash'
-
 ## Lances/htop
 alias htop='glances'
 
@@ -208,4 +144,4 @@ alias cmapply='chezmoi apply'
 alias cmdiff='chezmoi diff'
 alias cmadd='chezmoi add'
 alias cmdoc='chezmoi doctor'
-alias cmforget='chezmoi forget'
+alias cmfget='chezmoi forget'

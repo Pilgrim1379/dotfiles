@@ -9,7 +9,7 @@
 # | VI KEYMAP |
 # +-----------+
 bindkey -v
-# export KEYTIMEOUT=1
+export KEYTIMEOUT=1
 # source $HOMEBREW_PREFIX/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 # Change cursor
@@ -56,3 +56,12 @@ bindkey '^ ' autosuggest-accept
 # bindkey '^E' autosuggest-accept
 bindkey '^A' vi-beginning-of-line
 bindkey '^E' vi-end-of-line
+
+
+# # zsh-edit
+# # Bind shell commands directly to keyboard shortcuts. What's more, when using these, your current command line will be left intact.
+# bindkey '^[:' 'cd ..'
+# bindkey '^[-' 'pushd -1' \
+#         '^[=' 'pushd +0'
+# bindkey '^[q' push-line-or-edit
+# bindkey -r '^Q' '^[Q'

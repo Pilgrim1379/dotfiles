@@ -1,30 +1,62 @@
 [[language]]
 name = "python"
-formatter = { command = "black", args = ["--quiet", "-"] }
 auto-format = true
+diagnostic-severity = "Hint"
+formatter = { command = "black", args = ["--quiet", "-"] }
 
 [[language]]
 name = "elixir"
+auto-format = true
 scope = "source.elixir"
-injection-regex = "(elixir|ex)"
-file-types = ["ex", "exs", "mix.lock"]
+injection-regex = "(elixir)"
+file-types = ["ex", "exs", "heex", "eex", "mix.lock"]
 shebangs = ["elixir"]
-roots = ["mix.exs", "mix.lock"]
+roots = ["mix.exs"]
 comment-token = "#"
+diagnostic-severity = "Hint"
 language-server = { command = "elixir-ls" }
 config = { elixirLS.dialyzerEnabled = true }
-indent = { tab-width = 2, unit = "  " }
-formatter = { command = "mix", args = [
-    "format",
-    "--stdin-filename",
-    "$FILENAME",
-    "-",
-] }
-auto-format = true
+indent = { tab-width = 2, unit = " " }
 
 [[language]]
 name = "rust"
 auto-format = true
+diagnostic-severity = "Hint"
 
 [language.config]
 checkOnSave = { command = "clippy" }
+
+[[language]]
+name = "elm"
+auto-format = true
+diagnostic-severity = "Hint"
+
+[[language]]
+name = "julia"
+auto-format = true
+diagnostic-severity = "Hint"
+
+[[language]]
+name = "javascript"
+auto-format = true
+diagnostic-severity = "Hint"
+
+[[language]]
+name = "haskell"
+auto-format = true
+diagnostic-severity = "Hint"
+
+[[language]]
+name = "ocaml"
+auto-format = true
+diagnostic-severity = "Hint"
+
+[[language]]
+name = "lua"
+auto-format = true
+diagnostic-severity = "Hint"
+
+[[language]]
+name = "html"
+auto-format = true
+diagnostic-severity = "Hint"

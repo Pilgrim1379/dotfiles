@@ -39,6 +39,11 @@ path=(
 # +-------------------+
 [ -f ~/.ghcup/env ] && source ~/.ghcup/env
 
+# +-------------------+
+# | Ocaml |
+# +-------------------+
+[[ ! -r ~/.opam/opam-init/init.zsh ]] || source ~/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
 # +-----+
 # | PNPM |
 # +-----+
@@ -64,10 +69,11 @@ path=(
 # +--------------------------------------------------+
 if (( $+commands[rtx] )); then
     export RTX_USE_TOML=1
+    export RTX_DATA_DIR=$XDG_DATA_HOME/rtx
     # export RTX_ASDF_COMPAT=1
     
     eval "$(rtx activate zsh)"
-    eval "$(rtx hook-env)"
+    # eval "$(rtx hook-env)"  # enable this if not using rtx shims
 fi
 
 ################################################################################
@@ -76,8 +82,8 @@ fi
 # | I need $HOME/.local/bin to be at head of path hence |
 # +----------------------------------------------------+
 path=(
-    $HOME/.bin(N)
-    # $HOME/.local/share/rtx/shims(N)
+    # $HOME/.bin(N)
+    $HOME/.local/share/rtx/shims(N)
     $HOME/.local/bin(N)
     $path
 )

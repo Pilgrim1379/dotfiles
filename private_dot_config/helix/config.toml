@@ -2,6 +2,8 @@ theme = "catppuccin_mocha"
 
 [editor]
 line-number = "relative"
+auto-save = true
+bufferline = 'always'
 
 [editor.cursor-shape]
 insert = "bar"
@@ -10,3 +12,11 @@ select = "underline"
 
 [editor.file-picker]
 hidden = false
+
+[editor.statusline]
+left = ["mode", "spinner", "version-control", "file-name"]
+right = ["diagnostics", "selections", "file-encoding", "file-type"]
+separator = "│"
+mode.normal = "NOR"
+mode.insert = "INS"
+mode.select = "SEL"

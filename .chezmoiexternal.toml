@@ -16,6 +16,26 @@
 # type = "git-repo"
 # url = "https://github.com/zsh-users/zsh-completions.git"
 # refreshPeriod = "168h"
+# [".local/share/zsh/site-functions/_yarn"]
+# type = "file"
+# url = "https://github.com/zsh-users/zsh-completions/blob/master/src/_yarn"
+# refreshPeriod = "720h"
+# [".local/share/zsh/site-functions/_node"]
+# type = "file"
+# url = "https://github.com/zsh-users/zsh-completions/blob/master/src/_node"
+# refreshPeriod = "720h"
+# [".local/share/zsh/site-functions/_direnv"]
+# type = "file"
+# url = "https://github.com/zsh-users/zsh-completions/blob/master/src/_direnv"
+# refreshPeriod = "720h"
+# [".local/share/zsh/site-functions/_golang"]
+# type = "file"
+# url = "https://github.com/zsh-users/zsh-completions/blob/master/src/_golang"
+# refreshPeriod = "720h"
+# [".local/share/zsh/site-functions/_mix"]
+# type = "file"
+# url = "https://github.com/zsh-users/zsh-completions/blob/master/src/_mix"
+# refreshPeriod = "720h"
 # [".config/zsh/plugins/zsh-syntax-highlighting"]
 # type = "git-repo"
 # url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"

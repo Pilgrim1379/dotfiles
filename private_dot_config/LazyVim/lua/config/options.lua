@@ -7,7 +7,7 @@ local env = vim.env
 
 -- Set Python Provider/Skip some remote provider loading
 g.loaded_python_provider = 0
-g.python3_host_prog = '~/workspace/py3nvim/.venv/bin/python'
+g.python3_host_prog = 'python'
 g.python_host_prog = '/usr/bin/python2'
 
 -- Markdown highlight
@@ -20,6 +20,8 @@ g.markdown_fenced_languages = {
 	"rust",
 	"sh",
 	"elixir",
+	"haskell",
+	"ocaml",
 	"elm"
 }
 

@@ -1,31 +1,47 @@
 return {
-	{
-		"elixir-tools/elixir-tools.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			local elixir = require("elixir")
-			local elixirls = require("elixir.elixirls")
+	-- -- config for built in elixir lsp 
+	-- {
+	-- 	config = function()
+	-- 		require('lspconfig').elixirls.setup {
+	-- 			cmd = { "/Users/NQA/github/language-servers/elixir-ls/release/language_server.sh" },
+	-- 		}
+	-- 	end
+	-- }
+	-- config for elixir-tools lsp
+	-- {
+	-- 	"elixir-tools/elixir-tools.nvim",
+	-- 	event = { "BufReadPre", "BufNewFile" },
+	-- 	config = function()
+	-- 		local elixir = require("elixir")
+	-- 		local elixirls = require("elixir.elixirls")
+	-- 		local wk = require("which-key")
 
-			elixir.setup {
-				credo = {},
-				elixirls = {
-					enabled = true,
-					cmd = "elixir-ls",
-					settings = elixirls.settings {
-						dialyzerEnabled = true,
-						enableTestLenses = false,
-					},
-					on_attach = function(client, bufnr)
-						vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
-						vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
-						vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
-					end,
-				},
-				-- capabilities = capabilities
-			}
-		end,
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-	}
+	-- 		elixir.setup {
+	-- 			credo = {},
+	-- 			elixirls = {
+	-- 				enabled = true,
+	-- 				cmd = "language_server.sh",
+	-- 				settings = elixirls.settings {
+	-- 					dialyzerEnabled = true,
+	-- 					enableTestLenses = false,
+	-- 				},
+	-- 				on_attach = require("lazyvim.util").on_attach(function(_, buffer)
+	-- 					wk.register({
+	-- 						e = {
+	-- 							name = "elixir",
+	-- 							p = { ":ElixirToPipe<cr>", "Convert to pipe", noremap = true, buffer = buffer },
+	-- 							P = { ":ElixirFromPipe<cr>", "Convert from pipe", noremap = true, buffer = buffer },
+	-- 							m = { ":ElixirExpandMacro<cr>", "Expand macro", noremap = true, buffer = buffer },
+	-- 						},
+	-- 					}, { prefix = "<leader>c" })
+	-- 				end),
+	-- 			},
+	-- 			-- capabilities = capabilities
+	-- 		}
+	-- 	end,
+	-- 	dependencies = {
+	-- 		"folke/which-key.nvim",
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- }
 }

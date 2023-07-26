@@ -35,6 +35,7 @@ npm install -g elm-review
 npm install -g typescript-language-server
 npm install -g bash-language-server
 npm install -g @elm-tooling/elm-language-server
+npm install -g @tailwindcss/language-server
 npm install -g vscode-langservers-extracted ## consolidated for html, css, json and eslint
 npm install -g yaml-language-server
 npm install -g diagnostic-languageserver
