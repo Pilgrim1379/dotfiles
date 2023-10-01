@@ -19,7 +19,7 @@ path=(
     $HOME/.cargo/bin(N) # Rust
     # $HOME/.local/share/solana/install/active_release/bin(N) # Solana
     $HOME/go/bin(N) # Golang
-    # /Applications/Sublime\ Text.app/Contents/SharedSupport/bin(N) # Sublime Text
+    /Applications/Sublime\ Text.app/Contents/SharedSupport/bin(N) # Sublime Text
     /Applications/Postgres.app/Contents/Versions/latest/bin(N) # Postgress app
     $HOME/Library/Android/sdk/{emulator,platform-tools,tools}(N)
     $HOMEBREW_PREFIX/opt/{mariadb@10.3,ncurses,tomcat@9}/bin(N)
@@ -73,7 +73,7 @@ if (( $+commands[rtx] )); then
     # export RTX_ASDF_COMPAT=1
     
     eval "$(rtx activate zsh)"
-    # eval "$(rtx hook-env)"  # enable this if not using rtx shims
+    eval "$(rtx hook-env)"  # enable this if not using rtx shims
 fi
 
 ################################################################################
@@ -83,7 +83,7 @@ fi
 # +----------------------------------------------------+
 path=(
     # $HOME/.bin(N)
-    $HOME/.local/share/rtx/shims(N)
+    # $HOME/.local/share/rtx/shims(N)
     $HOME/.local/bin(N)
     $path
 )

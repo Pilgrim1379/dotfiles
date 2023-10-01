@@ -110,7 +110,8 @@ echo 'starting Rust update ...' && rustup update
 
 ## Vim/Neovim
 alias nvimsync="nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
-alias rmnvim="rm -rf ~/.config/local/share/nvim && rm -rf ~/.local/share/nvim && rm -rf ~/.cache/nvim && rm -rf ~/.config/nvim/plugin && echo 'All Neovim configs deleted successfully ...'"
+alias resetnvim="rm -rf ~/.local/share/nvim && rm -rf ~/.local/state/nvim && rm -rf ~/.cache/nvim && echo 'All Neovim data deleted successfully ...'"
+alias resetlazyvim="rm -rf ~/.local/share/LazyVim && rm -rf ~/.local/state/LazyVim && rm -rf ~/.cache/LazyVim && echo 'All LazyVim data deleted successfully ...'"
 alias updnvim='brew upgrade neovim --fetch-HEAD'
 
 ## Emacs

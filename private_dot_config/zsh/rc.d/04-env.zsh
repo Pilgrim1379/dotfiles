@@ -71,9 +71,9 @@ export \
   ERL_AFLAGS
 
 # Vim Exports
-export \
-  VIMCONFIG=$HOME/.config/nvim \
-  VIMDATA=$HOME/.local/share/nvim
+# export \
+#   VIMCONFIG=$HOME/.config/nvim \
+#   VIMDATA=$HOME/.local/share/nvim
 
 # Micro
 export "MICRO_TRUECOLOR=1"

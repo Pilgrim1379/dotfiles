@@ -9,6 +9,8 @@ elm = "latest"
 zig = "latest"
 nim = "latest"
 node = "lts"
+bun = "latest"
+neovim = "nightly"
 # global tool versions go here
 # you can set these with `rtx use -g`
 

@@ -28,6 +28,9 @@ zstyle ':completion:*:ls:*:options' ignored-patterns --width
 # # Colors for files and directory
 zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
 
+# Make zsh know about hosts already accessed by SSH
+zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
+
 ZSH_HIGHLIGHT_HIGHLIGHTERS=( main brackets ) # # Command-line syntax highlighting config
 
 # Speed up the first startup by cloning all plugins in parallel.
@@ -64,6 +67,10 @@ complete -o nospace -o default -o bashdefault \
 
 znap function _pipenv pipenv  'eval "$( _PIPENV_COMPLETE=zsh_source pipenv )"'
 compdef       _pipenv pipenv
+
+znap function _ngrok ngrok  'eval "$(ngrok completion)"'
+compctl -K _ngrok ngrok
+
 
 znap eval zoxide 'zoxide init zsh'
 
