@@ -22,9 +22,13 @@ end
 config.color_scheme = scheme_for_appearance(wezterm.gui.get_appearance())
 
 -- Font Config
-config.font = wezterm.font_with_fallback({
-    "JetBrains Mono", {family = "Symbols Nerd Font", scale = 0.75}
-})
+-- config.font = wezterm.font("MesloLGL Nerd Font")
+
+config.font = wezterm.font("JetBrainsMono NF")
+
+-- config.font = wezterm.font_with_fallback({
+--     "JetBrains Mono", {family = "Symbols Nerd Font Mono", scale = 0.75}
+-- })
 
 -- font size
 config.font_size = 16

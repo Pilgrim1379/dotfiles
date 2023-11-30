@@ -2,20 +2,15 @@
     "workbench.startupEditor": "newUntitledFile",
     "editor.fontSize": 15,
     "editor.fontFamily": "'JetBrainsMono Nerd Font', 'Cascadia Code PL', 'SF Mono', Menlo, Monaco, monospace",
-    "workbench.colorTheme": "Dracula",
+    "workbench.colorTheme": "Catppuccin Mocha",
     "workbench.iconTheme": "vscode-icons",
     "css.validate": false,
     "scss.validate": false,
     "less.validate": false,
     "python.languageServer": "Pylance",
-    "django.snippets.exclude": [
-        "cms"
-    ],
+    "django.snippets.exclude": ["cms"],
     "editor.formatOnSave": true,
-    "editor.rulers": [
-        80,
-        120
-    ],
+    "editor.rulers": [80, 120],
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -23,14 +18,11 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         ".vscode": true,
-        "**/*.pyc": true,
+        "**/*.pyc": true
     },
     "workbench.editor.enablePreview": false,
     "editor.minimap.enabled": false,
-    "python.linting.pylintArgs": [
-        "--load-plugins",
-        "pylint_django"
-    ],
+    "python.linting.pylintArgs": ["--load-plugins", "pylint_django"],
     "files.associations": {
         "**/*.html": "html",
         "**/templates/**/*.html": "django-html",
@@ -53,9 +45,7 @@
     "[dart]": {
         "editor.formatOnSave": true,
         "editor.formatOnType": true,
-        "editor.rulers": [
-            80
-        ],
+        "editor.rulers": [80],
         "editor.selectionHighlight": false,
         "editor.suggest.snippetsPreventQuickSuggestions": false,
         "editor.suggestSelection": "first",
@@ -85,11 +75,7 @@
         "^class",
         "^.*=\""
     ],
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "vue"
-    ],
+    "eslint.validate": ["javascript", "javascriptreact", "vue"],
     "eslint.nodePath": "${env:HOME}/.asdf/shims/node",
     "terminal.integrated.fontSize": 15,
     "[jsonc]": {

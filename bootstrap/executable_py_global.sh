@@ -22,8 +22,8 @@ if [ $? -eq 0 ]; then
             # pipx install bpython # cli for python
             pipx install ipython # cli for python
             # pipx install ptpython # cli for python
-            pipx install pgcli # cli for psql
-            pipx install litecli # cli for sqlite
+            # pipx install pgcli # cli for psql
+            # pipx install litecli # cli for sqlite
 
             pipx install pyinstaller
             pipx install sphinx
@@ -49,7 +49,7 @@ if [ $? -eq 0 ]; then
             pipx install pyflakes
             
             pipx install jupyterlab && \
-            pipx inject jupyterlab JLDracula && \
+            pipx inject jupyterlab catppuccin-jupyterlab && \
             pipx inject jupyterlab ipywidgets && \
             pipx inject jupyterlab jupyter-dash && \
             pipx inject jupyterlab black
@@ -57,7 +57,7 @@ if [ $? -eq 0 ]; then
             pipx install jill
             pipx install xxh-xxh
             pipx install asciinema
-            pipx install streamlit
+            # pipx install streamlit
             pipx install kaggle
         else
   		    echo -e "\npipx uninstall-all failed or didn't excute"
