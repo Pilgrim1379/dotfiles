@@ -7,7 +7,15 @@ return {
                 cs = {"csharpier"},
                 elixir = {"mix"},
                 -- Conform will run multiple formatters sequentially
-                python = {"isort", "black"},
+                -- You can use a function here to determine the formatters dynamically
+                python = function(bufnr)
+                    if require("conform").get_formatter_info("ruff_format",
+                                                             bufnr).available then
+                        return {"ruff_format"}
+                    else
+                        return {"isort", "black"}
+                    end
+                end,
                 lua = {"stylua"},
                 sh = {"shfmt"},
                 rust = {"rustfmt"},
