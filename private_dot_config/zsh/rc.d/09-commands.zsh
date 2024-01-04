@@ -51,12 +51,23 @@ command -v sha1sum >/dev/null || alias sha1sum='shasum'
 
 # Search through all man pages
 function fman() {
-    man -k . | fzf -q "$1" --prompt='man> '  --preview $'echo {} | tr -d \'()\' | awk \'{printf "%s ", $2} {print $1}\' | xargs -r man' | tr -d '()' | awk '{printf "%s ", $2} {print $1}' | xargs -r man
+  man -k . | fzf -q "$1" --prompt='man> '  --preview $'echo {} | tr -d \'()\' | awk \'{printf "%s ", $2} {print $1}\' | xargs -r man' | tr -d '()' | awk '{printf "%s ", $2} {print $1}' | xargs -r man
 }
 
 # Improved myip alias. Echoed to avoid strange character at end in ZSH.
 myip() {
   echo "$(curl -s whatismyip.akamai.com)"
+}
+
+# Python PDM 
+pdm() {
+  local command=$1
+
+  if [[ "$command" == "shell" ]]; then
+    eval $(pdm venv activate)
+  else
+    command pdm $@
+  fi
 }
 
 # System maintainance aliases
@@ -171,10 +182,10 @@ fi
 # alias lsr='ls -lARFh' #Recursive list of files and directories
 # alias lsn='ls -1'     #A column contains name of files and directories
 
-alias ls="exa"
-alias ll="exa -lh"
-alias la="exa -lhaa"
-alias ltree="exa -lhT"
+alias ls="eza"
+alias ll="eza -lh"
+alias la="eza -lhaa"
+alias ltree="eza -lhT"
 
 alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc' # Quick access to the .zshrc file
 

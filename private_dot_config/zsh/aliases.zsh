@@ -41,6 +41,7 @@ alias ~='cd ~' # `cd` is probably faster to type though
 alias -- -='cd -'
 
 ## Neovim switcher
+alias v="NVIM_APPNAME=LazyVim nvim"
 alias lazyvim="NVIM_APPNAME=LazyVim nvim"
 # alias kickstnvim="NVIM_APPNAME=kickstart nvim"
 # alias chadnvim="NVIM_APPNAME=NvChad nvim"

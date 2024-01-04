@@ -19,6 +19,7 @@ path=(
     $HOME/.cargo/bin(N) # Rust
     # $HOME/.local/share/solana/install/active_release/bin(N) # Solana
     $HOME/go/bin(N) # Golang
+    $HOME/github/language-servers/elixir-ls(N) # Elixir
     /Applications/Sublime\ Text.app/Contents/SharedSupport/bin(N) # Sublime Text
     /Applications/Postgres.app/Contents/Versions/latest/bin(N) # Postgress app
     $HOME/Library/Android/sdk/{emulator,platform-tools,tools}(N)
@@ -65,17 +66,19 @@ path=(
 # fi
 
 # +--------------------------------------------------+
-# | RTX - currently has issues with sublime text path|
+# | MISE - currently has issues with sublime text path|
 # +--------------------------------------------------+
-if (( $+commands[rtx] )); then
-    export RTX_USE_TOML=1
-    export RTX_DATA_DIR=$XDG_DATA_HOME/rtx
-    # export RTX_ASDF_COMPAT=1
-    # export RTX_DEBUG=1
-    # export RTX_LOG_LEVEL=debug
+if (( $+commands[mise] )); then
+    export MISE_USE_TOML=1
+    export MISE_DATA_DIR=$XDG_DATA_HOME/mise
+    export MISE_EXPERIMENTAL=1
+    # export MISE_ASDF_COMPAT=1
+    # export MISE_DEBUG=1
+    # export MISE_LOG_LEVEL=debug
+    # export RUST_BACKTRACE=1
     
-    eval "$(rtx activate zsh)"
-    eval "$(rtx hook-env)"  # enable this if not using rtx shims for sublime text to work
+    eval "$(mise activate zsh)"
+    eval "$(mise hook-env)"  # enable this if not using mise shims for sublime text to work
 fi
 
 ########################################################################################################
@@ -84,7 +87,7 @@ fi
 # | I need $HOME/.local/bin to be at head of path hence |
 # +----------------------------------------------------+
 path=(
-    # $HOME/.local/share/rtx/shims(N)
+    # $HOME/.local/share/mise/shims(N)
     $HOME/.local/bin(N)
     $path
 )

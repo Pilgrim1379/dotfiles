@@ -4,7 +4,7 @@
 #
 path=(
     $HOME/.bin(N)
-    # $HOME/.local/share/rtx/shims(N)
+    # $HOME/.local/share/mise/shims(N)
     # $HOME/.local/bin(N)
     $path
 )
@@ -35,7 +35,10 @@ export LANG=en_GB.UTF-8 # Not set on macOS.
 
 export TERM='xterm-256color'
 # LS_COLORS Generator
-export LS_COLORS=$(vivid generate ~/github/ls_colors/vivid/themes/catppuccin-mocha.yml)
+if (( $+commands[vivid] )); then
+  export LS_COLORS=$(vivid generate catppuccin-mocha)
+fi
+
 
 # Workspace
 export WORKSPACE=$HOME/workspace
@@ -110,7 +113,7 @@ mkdir -pm 0700 $LESSHISTFILE:h
 
 export QUOTING_STYLE=escape # Used by GNU ls
 
-############THESE MUST APPEAR AFTER PATH AND (ASDF/RTX CONFIG)####################
+############THESE MUST APPEAR AFTER PATH AND (ASDF/MISE CONFIG)####################
 # Python Exports
 # Pipenv default python
 # export PIPENV_DEFAULT_PYTHON_VERSION=$(command -v python)
@@ -119,8 +122,8 @@ export \
   PIPENV_VENV_IN_PROJECT=1 \
   PNPM_HOME=$XDG_DATA_HOME/pnpm \
   PYTHON_CONFIGURE_OPTS="--enable-framework" \
-  PIPX_BIN_DIR=~/.local/bin \
-  WORKON_HOME=$HOME/.virtualenvs
+  PIPX_BIN_DIR=~/.local/bin 
+  # WORKON_HOME=$HOME/.virtualenvs
 
 # Rust
 # export RUST_SRC_PATH="${HOME}/github/rust"

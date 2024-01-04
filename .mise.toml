@@ -1,4 +1,4 @@
-#:schema ./schema/rtx.json
+#:schema ./schema/mise.json
 #dotenv = '.env'
 # [env]
 
@@ -19,10 +19,10 @@
 # [plugins]
 # specify a custom repo url
 # note this will only be used if the plugin does not already exist
-# python = 'https://github.com/jdxcode/rtx-python'
-# nodejs = 'https://github.com/jdxcode/rtx-nodejs'
+# python = 'https://github.com/jdxcode/mise-python'
+# nodejs = 'https://github.com/jdxcode/mise-nodejs'
 
 # [settings] # project-local settings
 # verbose = true
 # missing_runtime_behavior = 'warn'
-# shims_dir = '~/.rtx/shims'
+# shims_dir = '~/.mise/shims'

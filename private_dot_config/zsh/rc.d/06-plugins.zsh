@@ -24,6 +24,16 @@ local -a plugins=(
 # autocompletion completely and use only tab completion instead:
 #   zstyle ':autocomplete:*' async no
 
+# First insert the common substring
+# all Tab widgets
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
+
+# all history widgets
+zstyle ':autocomplete:*history*:*' insert-unambiguous yes
+
+# ^S
+zstyle ':autocomplete:menu-search:*' insert-unambiguous yes
+
 zstyle ':completion:*:ls:*:options' ignored-patterns --width
 # # Colors for files and directory
 zstyle ':completion:*:*:*:*:default' list-colors ${(s.:.)LS_COLORS}
@@ -57,24 +67,18 @@ rm -f $HOMEBREW_PREFIX/share/zsh/site-functions/_git{,.zwc}
 # For each of the examples below, the `eval` statement on the right is not
 # executed until you try to execute the associated command or try to use
 # completion on it.
-
 znap function _pip_completion pip 'eval "$( pip completion --zsh )"'
-compctl -K    _pip_completion pip
 
-znap function _python_argcomplete pipx  'eval "$( register-python-argcomplete pipx )"'
-complete -o nospace -o default -o bashdefault \
-           -F _python_argcomplete pipx
+# znap function _pipenv pipenv 'eval "$( _PIPENV_COMPLETE=zsh_source pipenv )"'
+# compdef _pipenv pipenv
 
-znap function _pipenv pipenv  'eval "$( _PIPENV_COMPLETE=zsh_source pipenv )"'
-compdef       _pipenv pipenv
-
-znap function _ngrok ngrok  'eval "$(ngrok completion)"'
+znap function _ngrok ngrok 'eval "$( ngrok completion )"'
 compctl -K _ngrok ngrok
 
-
 znap eval zoxide 'zoxide init zsh'
+znap eval pipx-completions 'register-python-argcomplete pipx'
 
 # Some commands generate output that should be loaded as a function.
-# znap fpath _pdm 'pdm completion zsh'
-znap fpath _rustup  'rustup  completions zsh'
-znap fpath _cargo   'rustup  completions zsh cargo'
+znap fpath _pdm 'pdm completion zsh'
+znap fpath _rustup 'rustup completions zsh'
+znap fpath _cargo 'rustup completions zsh cargo'

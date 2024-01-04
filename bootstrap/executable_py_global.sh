@@ -16,28 +16,27 @@ if [ $? -eq 0 ]; then
     # if asdf reshim python; then
         # first uninstall previous packages
         if pipx uninstall-all; then
-            # pipx install pdm && \
-            # pipx inject pdm pdm-vscode
+            pipx install pdm
+            # pipx install virtualenv
+            # pipx install pipenv
+            # pipx install --pip-args='--pre' pipenv
             
-            # pipx install bpython # cli for python
             pipx install ipython # cli for python
+            # pipx install bpython # cli for python
             # pipx install ptpython # cli for python
             # pipx install pgcli # cli for psql
             # pipx install litecli # cli for sqlite
 
             pipx install pyinstaller
             pipx install sphinx
-            pipx install virtualenv
-            pipx install pipenv
-            # pipx install --pip-args='--pre' pipenv
-            pipx install isort
             pipx install mypy
-            pipx install black
-            pipx install jedi-language-server
-            pipx install flake8
+            # pipx install isort
+            # pipx install black
+            # pipx install flake8
             pipx install ruff
             pipx install codespell
 
+            pipx install jedi-language-server
             pipx install cmake-language-server
             pipx install ruff-lsp
 
@@ -48,11 +47,11 @@ if [ $? -eq 0 ]; then
             pipx install pycodestyle
             pipx install pyflakes
             
-            pipx install jupyterlab && \
-            pipx inject jupyterlab catppuccin-jupyterlab && \
-            pipx inject jupyterlab ipywidgets && \
-            pipx inject jupyterlab jupyter-dash && \
-            pipx inject jupyterlab black
+            # pipx install jupyterlab && \
+            # pipx inject jupyterlab catppuccin-jupyterlab && \
+            # pipx inject jupyterlab ipywidgets && \
+            # pipx inject jupyterlab jupyter-dash && \
+            # pipx inject jupyterlab-code-formatter
             
             pipx install jill
             pipx install xxh-xxh
