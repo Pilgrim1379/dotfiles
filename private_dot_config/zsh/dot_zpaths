@@ -17,6 +17,7 @@ fi
 path=(
     $HOME/.nimble/bin(N) # Nim
     $HOME/.cargo/bin(N) # Rust
+    $HOME/.juliaup/bin(N) # Julia
     # $HOME/.local/share/solana/install/active_release/bin(N) # Solana
     $HOME/go/bin(N) # Golang
     $HOME/github/language-servers/elixir-ls(N) # Elixir

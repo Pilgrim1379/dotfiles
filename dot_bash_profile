@@ -1,2 +1,17 @@
 
 if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/Users/NQA/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/Users/NQA/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<

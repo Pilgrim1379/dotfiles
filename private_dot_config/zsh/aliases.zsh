@@ -47,6 +47,9 @@ alias lazyvim="NVIM_APPNAME=LazyVim nvim"
 # alias chadnvim="NVIM_APPNAME=NvChad nvim"
 # alias astronvim="NVIM_APPNAME=AstroNvim nvim"
 
+alias vim="echo 'Just use v'"
+alias vi="echo 'Just use v'"
+
 ## PNPM
 alias pnpmupg='pnpm up -g -L'
 alias pnpmup='pnpm up'

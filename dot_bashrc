@@ -4,7 +4,7 @@
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.private can be used for other settings you don’t want to commit.
 if shopt -q login_shell; then
-	for file in ${HOME}/dotfiles/bash/{exports,paths,private}; do
+	for file in ${HOME}/bootstrap/dotbash/{exports,paths,private}; do
 		[ -r "$file" ] && [ -f "$file" ] && source "$file";
 	done;
 	unset file;
@@ -12,7 +12,7 @@ if shopt -q login_shell; then
   neofetch # neofetch
 fi;
 
-for file in ${HOME}/dotfiles/bash/{bash_prompt,aliases,functions}; do
+for file in ${HOME}/bootstrap/dotbash/{bash_prompt,aliases,functions}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
