@@ -12,8 +12,6 @@ if [ $? -eq 0 ]; then
     pip install -U pipupgrade
     pip install -U pipx
 
-    # when using asdf, first reshim python to ensure pipx is available for subsequent commands to work
-    # if asdf reshim python; then
         # first uninstall previous packages
         if pipx uninstall-all; then
             pipx install pdm
@@ -21,7 +19,7 @@ if [ $? -eq 0 ]; then
             # pipx install pipenv
             # pipx install --pip-args='--pre' pipenv
             
-            pipx install ipython # cli for python
+            # pipx install ipython # cli for python
             # pipx install bpython # cli for python
             # pipx install ptpython # cli for python
             # pipx install pgcli # cli for psql
@@ -36,9 +34,11 @@ if [ $? -eq 0 ]; then
             pipx install ruff
             pipx install codespell
 
-            pipx install jedi-language-server
             pipx install cmake-language-server
             pipx install ruff-lsp
+            # pipx install jedi-language-server
+            pipx install python-lsp-server && \
+                pipx inject python-lsp-server python-lsp-ruff
 
             pipx install neovim-remote
             pipx install pytest
@@ -46,12 +46,17 @@ if [ $? -eq 0 ]; then
             pipx install nose
             pipx install pycodestyle
             pipx install pyflakes
-            
-            # pipx install jupyterlab && \
-            # pipx inject jupyterlab catppuccin-jupyterlab && \
-            # pipx inject jupyterlab ipywidgets && \
-            # pipx inject jupyterlab jupyter-dash && \
-            # pipx inject jupyterlab-code-formatter
+
+            pipx install jupyterlab --include-deps && \
+                pipx inject jupyterlab jupyterlab-lsp && \
+                pipx inject jupyterlab jupyter-lsp && \
+                pipx inject jupyterlab jupyterlab-git && \
+                pipx inject jupyterlab jupyterlab_code_formatter && \
+                pipx inject jupyterlab jupyterlab_templates && \
+                pipx inject jupyterlab ipywidgets && \
+                pipx inject jupyterlab catppuccin-jupyterlab && \
+                pipx inject jupyterlab catppuccin-matplotlib
+                # pipx inject jupyterlab 'catppuccin[pygments]'
             
             pipx install jill
             pipx install xxh-xxh
@@ -61,9 +66,10 @@ if [ $? -eq 0 ]; then
         else
   		    echo -e "\npipx uninstall-all failed or didn't excute"
   	    fi
-    # else
-  	#     echo -e "\npipx installation failed therefore default python packages not installed"
-    # fi
+    # mise
+    if (( $+commands[mise] )); then
+        mise reshim
+    fi
 else
     echo -e "\nUpgrading pip failed"
 fi

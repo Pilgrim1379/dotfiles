@@ -42,6 +42,7 @@ npm install -g yaml-language-server
 npm install -g diagnostic-languageserver
 npm install -g pyright
 npm install -g emmet-ls
+# npm install -g vscode-markdown-languageserver
 
 
 # ## when using asdf, this is required for pnpm commands to work
@@ -99,6 +100,11 @@ then
     # Not recommended to install webpack globaly (option -D is same as --save-dev for npm)
     #pnpm add -D webpack
     #pnpm add -D webpack-cli
+fi
+
+# mise
+if (( $+commands[mise] )); then
+    mise reshim
 fi
 
 # echo -e "\nPackage installation complete - Don't forget to reshim so that new packages can be recognised"

@@ -15,6 +15,11 @@ return {
                 python = {"mypy", "ruff"},
                 sh = {"shellcheck"},
                 sql = {"sqlfluff"},
+                c = {"clangtidy"},
+                cpp = {"clangtidy"},
+                elm = {"elm-analyse"},
+                nim = {"nimcheck"},
+                javascript = {"eslint_d"},
                 -- yaml = { "yamllint" },
                 elixir = {"credo"}
             }

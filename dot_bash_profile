@@ -6,11 +6,11 @@ if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 # !! Contents within this block are managed by juliaup !!
 
 case ":$PATH:" in
-    *:/Users/NQA/.juliaup/bin:*)
+    *:$HOME/.juliaup/bin:*)
         ;;
 
     *)
-        export PATH=/Users/NQA/.juliaup/bin${PATH:+:${PATH}}
+        export PATH=$HOME/.juliaup/bin${PATH:+:${PATH}}
         ;;
 esac
 

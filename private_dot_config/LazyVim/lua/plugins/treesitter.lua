@@ -10,8 +10,7 @@ return {
                 "python", "ninja", "rst", "toml", "query", "regex", "tsx",
                 "typescript", "vim", "vimdoc", "yaml", "elixir", "heex", "eex",
                 "elm", "rust", "julia", "erlang", "clojure", "zig", "ocaml",
-                "haskell", -- "nim",
-                "astro", "sql"
+                "haskell", "nim", "astro", "sql"
             },
             incremental_selection = {
                 enable = true,

@@ -1,28 +1,3 @@
 #:schema ./schema/mise.json
 #dotenv = '.env'
 # [env]
-
-
-# [tools]
-# node = 'lts'
-# golang = { version = "latest" }
-# python = { version = "latest" }
-# erlang = { version = "25" }
-# java = { version = "temurin-17.0.6+10" }
-# elixir = { version = "1.14.4-otp-25" }
-# ruby = { version = "latest" }
-# elm = { version = "latest" }
-# nim = { version = "latest" }
-# zig = { version = "latest" }
-# direnv = { version = "latest" }
-
-# [plugins]
-# specify a custom repo url
-# note this will only be used if the plugin does not already exist
-# python = 'https://github.com/jdxcode/mise-python'
-# nodejs = 'https://github.com/jdxcode/mise-nodejs'
-
-# [settings] # project-local settings
-# verbose = true
-# missing_runtime_behavior = 'warn'
-# shims_dir = '~/.mise/shims'

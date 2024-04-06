@@ -10,7 +10,7 @@ always_keep_install = false  # deleted on failure by default
 # configure how frequently (in minutes) to fetch updated plugin repository changes
 # this is updated whenever a new runtime is installed
 # (note: this isn't currently implemented but there are plans to add it: https://github.com/jdx/mise/issues/128)
-plugin_autoupdate_last_check_duration = '1 week' # set to 0 to disable updates
+plugin_autoupdate_last_check_duration = '0' # set to 0 to disable updates
 
 # config files with these prefixes will be trusted by default
 trusted_config_paths = ['~/workspace']
@@ -31,6 +31,7 @@ disable_default_shorthands = false                 # disable the default shortha
 
 env_file = '.env' # load env vars from a dotenv file, see `MISE_ENV_FILE`
 
-experimental = true # enable experimental features
+experimental = true    # enable experimental features
+python_compile = false
 
 # log_level = 'debug' # log verbosity, see `MISE_LOG_LEVEL`

@@ -5,7 +5,13 @@ return {
         opts = {
             formatters_by_ft = {
                 cs = {"csharpier"},
+                elm = {"elm-format"},
+                c = {"clang-format"},
+                cpp = {"clang-format"},
+                zig = {"zig fmt"},
+                nim = {"nimpretty"},
                 elixir = {"mix"},
+                tailwind = {"prettier"},
                 -- Conform will run multiple formatters sequentially
                 -- You can use a function here to determine the formatters dynamically
                 python = function(bufnr)

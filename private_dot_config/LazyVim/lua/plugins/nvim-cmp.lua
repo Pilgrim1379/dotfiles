@@ -1,7 +1,6 @@
 return {
     {"L3MON4D3/LuaSnip", keys = function() return {} end}, {
         "hrsh7th/nvim-cmp",
-        dependencies = {"hrsh7th/cmp-emoji"},
         ---@param opts cmp.ConfigSchema
         opts = function(_, opts)
             local has_words_before = function()
@@ -15,9 +14,15 @@ return {
             local luasnip = require("luasnip")
             local cmp = require("cmp")
 
+            opts.sources = vim.tbl_filter(function(path)
+                return not vim.tbl_contains({"path"}, path.name)
+            end, opts.sources)
+
+            --- SuperTab
             opts.mapping = vim.tbl_extend("force", opts.mapping, {
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
+                        -- You could replace select_next_item() with confirm({ select = true }) to get VS Code autocompletion behavior
                         cmp.select_next_item()
                         -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
                         -- this way you will only jump inside the snippet region
