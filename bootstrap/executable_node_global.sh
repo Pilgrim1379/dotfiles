@@ -9,7 +9,7 @@ npm install -g npm
 npm install -g import-js
 
 ## neovim
-npm install -g neovim
+# npm install -g neovim
 
 ## prettier
 npm install -g prettier prettier-plugin-elm
@@ -70,7 +70,7 @@ then
     pnpm add -g git-recent
 
     ## ghost
-    pnpm add -g ghost-cli@latest
+    # pnpm add -g ghost-cli@latest
 
     ## dev frameworks
     # pnpm add -g @quasar/cli

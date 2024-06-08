@@ -1,5 +1,5 @@
 -l zsh
 --color=always
---style=plain
+--style="numbers,changes,header"
 --map-syntax ".ignore:Git Ignore"
 --theme="Catppuccin-mocha"

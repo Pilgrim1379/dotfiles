@@ -6,7 +6,7 @@
 bun add -g import-js
 
 ## neovim
-bun add -g neovim
+# bun add -g neovim
 
 ## prettier
 bun add -g prettier prettier-plugin-elm
@@ -25,7 +25,8 @@ bun add -g typescript-language-server
 bun add -g bash-language-server
 bun add -g @elm-tooling/elm-language-server
 bun add -g @tailwindcss/language-server
-bun add -g vscode-langservers-extracted ## consolidated for html, css, json and eslint
+# bun add -g vscode-langservers-extracted ## consolidated for html, css, json and eslint
+bun add -g vscode-languageserver
 bun add -g yaml-language-server
 bun add -g diagnostic-languageserver
 bun add -g pyright
@@ -33,7 +34,6 @@ bun add -g emmet-ls
 
 ## typescript
 bun add -g typescript
-
 
 ## working with npm
 #bun add -g npx
@@ -51,7 +51,7 @@ bun add -g git-open
 bun add -g git-recent
 
 ## ghost
-bun add -g ghost-cli@latest
+# bun add -g ghost-cli@latest
 
 ## dev frameworks
 # bun add -g @quasar/cli

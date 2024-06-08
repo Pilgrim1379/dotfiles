@@ -13,5 +13,10 @@ case ":$PATH:" in
         export PATH=$HOME/.juliaup/bin${PATH:+:${PATH}}
         ;;
 esac
-
 # <<< juliaup initialize <<<
+
+# >>> coursier install directory >>>
+export PATH="$PATH:/Users/NQA/Library/Application Support/Coursier/bin"
+# <<< coursier install directory <<<
+# Fabric
+if [ -f "/Users/NQA/.config/fabric/fabric-bootstrap.inc" ]; then . "/Users/NQA/.config/fabric/fabric-bootstrap.inc"; fi

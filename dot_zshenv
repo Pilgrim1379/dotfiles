@@ -1,11 +1,7 @@
-#!/bin/zsh
-# Note: The shebang #!/bin/zsh is strictly necessary for executable scripts
-# only, but without it, you might not always get correct syntax highlighting
-# when viewing the code.
-#
+#!/usr/bin/env zsh
+
 # This file, .zshenv, is the first file sourced by zsh for EACH shell, whether
 # it's interactive or not.
-# This includes non-interactive sub-shells!
 # So, put as little in this file as possible, to avoid performance impact.
 ## REF: https://github.com/Phantas0s/.dotfiles/tree/master/zsh
 
@@ -18,8 +14,7 @@ case $VENDOR in
     export skip_global_compinit=1
   ;;
 esac
-[[ $OSTYPE == linux-gnu ]] &&
-    export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
+[[ $OSTYPE == linux-gnu ]] && export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
 
 # https://pkg.go.dev/github.com/adrg/xdg#section-readme
 # XDG Base Directories
@@ -30,18 +25,19 @@ export XDG_CACHE_HOME=$HOME/.cache
 # export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
 # Tell zsh where to look for our dotfiles.
-# By default, Zsh will look for dotfiles in $HOME (and find this file), but
-# once $ZDOTDIR is defined, it will start looking in that dir instead.
-# ${X:=Y} specifies a default value Y to use for parameter X, if X has not been
-# set or is null. This will actually create X, if necessary, and assign the
-# value to it.
-# To set a default value that is returned *without* setting X, use ${X:-Y}
-# As in other shells, ~ expands to $HOME _at the beginning of a value only._
 ZDOTDIR=${XDG_CONFIG_HOME:=~/.config}/zsh
 
+# Prefer GB English and use UTF-8
+export LC_ALL=en_GB.UTF-8
+export LANG=en_GB.UTF-8 # Not set on macOS.
+
+[[ $OSTYPE == linux-gnu ]] &&
+  export LC_COLLATE=C.UTF-8 # Other UTF-8 locales on Linux give weird whitespace sorting.
+
+################################################################################
 # # https://github.com/sorin-ionescu/prezto - Prezto — Instantly Awesome Zsh
 # # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
-#   source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
+  # source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi

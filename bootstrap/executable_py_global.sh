@@ -10,11 +10,11 @@ if [ $? -eq 0 ]; then
     pip install -U pynvim
     pip install -U bpyutils
     pip install -U pipupgrade
-    pip install -U pipx
+    # pip install -U pipx
 
         # first uninstall previous packages
         if pipx uninstall-all; then
-            pipx install pdm
+            # pipx install pdm
             # pipx install virtualenv
             # pipx install pipenv
             # pipx install --pip-args='--pre' pipenv
@@ -55,8 +55,8 @@ if [ $? -eq 0 ]; then
                 pipx inject jupyterlab jupyterlab_templates && \
                 pipx inject jupyterlab ipywidgets && \
                 pipx inject jupyterlab catppuccin-jupyterlab && \
-                pipx inject jupyterlab catppuccin-matplotlib
-                # pipx inject jupyterlab 'catppuccin[pygments]'
+                pipx inject jupyterlab catppuccin-matplotlib && \
+                pipx inject jupyterlab 'catppuccin[pygments]'
             
             pipx install jill
             pipx install xxh-xxh

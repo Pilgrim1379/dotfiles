@@ -22,9 +22,11 @@ end
 config.color_scheme = scheme_for_appearance(wezterm.gui.get_appearance())
 
 --- Font Config
--- config.font = wezterm.font("MesloLGL Nerd Font")
+config.font = wezterm.font("MonaspiceNe NF")
 
-config.font = wezterm.font("JetBrainsMono NF")
+-- config.font = wezterm.font("MonaspiceAr NF")
+
+-- config.font = wezterm.font("JetBrainsMono NF")
 
 -- config.font = wezterm.font_with_fallback({
 --     "JetBrains Mono", {family = "Symbols Nerd Font Mono", scale = 0.75}
@@ -38,8 +40,11 @@ config.harfbuzz_features = {'calt=0', 'clig=0', 'liga=0'}
 
 --- Window Config
 -- initial window size
-config.initial_rows = 48
-config.initial_cols = 92
+config.initial_rows = 54 -- for MonaspiceX NF
+config.initial_cols = 88 -- for MonaspiceX NF
+
+-- config.initial_rows = 48 -- for JetbrainsMono NF
+-- config.initial_cols = 92 -- for JetbrainsMono NF
 
 -- initial window position - maximized
 -- wezterm.on('gui-startup', function(cmd)
@@ -72,6 +77,9 @@ config.automatically_reload_config = false
 -- don't check for updates - don't the distraction of being notified of updates
 config.check_for_updates = false
 -- config.check_for_updates_interval_seconds = 86400
+
+-- default cursor style
+config.default_cursor_style = "SteadyBar"
 
 -- and finally, return the configuration to wezterm
 return config
