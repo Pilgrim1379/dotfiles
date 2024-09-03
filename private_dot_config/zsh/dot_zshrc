@@ -47,8 +47,7 @@ fi
 # PNPM BUN
 # +-----+
 path=(
-  # $XDG_DATA_HOME/pnpm(N)
-  $HOME/.bun/bin(N) # Bun
+  $XDG_DATA_HOME/pnpm(N)
   $path
 )
 

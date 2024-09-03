@@ -4,10 +4,10 @@
 
 
  ;;; Font Configuration
-(set-face-attribute 'default nil :font "MonaspiceAr NF" :height nqa/default-font-size)
+(set-face-attribute 'default nil :font "MonaspiceNe NF" :height nqa/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "MonaspiceAr NF" :height nqa/default-font-size)
+(set-face-attribute 'fixed-pitch nil :font "MonaspiceNe NF" :height nqa/default-font-size)
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "SF Pro Text" :height nqa/default-variable-font-size :weight 'regular)

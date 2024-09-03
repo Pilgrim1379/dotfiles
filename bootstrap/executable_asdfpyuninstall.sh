@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 pipx uninstall-all
 if [ $? -eq 0 ]; then

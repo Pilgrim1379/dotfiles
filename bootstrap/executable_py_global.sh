@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 pip install -U pip
 if [ $? -eq 0 ]; then
@@ -25,6 +25,7 @@ if [ $? -eq 0 ]; then
             # pipx install pgcli # cli for psql
             # pipx install litecli # cli for sqlite
 
+            pipx install cmakelang
             pipx install pyinstaller
             pipx install sphinx
             pipx install mypy
@@ -49,7 +50,6 @@ if [ $? -eq 0 ]; then
 
             pipx install jupyterlab --include-deps && \
                 pipx inject jupyterlab jupyterlab-lsp && \
-                pipx inject jupyterlab jupyter-lsp && \
                 pipx inject jupyterlab jupyterlab-git && \
                 pipx inject jupyterlab jupyterlab_code_formatter && \
                 pipx inject jupyterlab jupyterlab_templates && \

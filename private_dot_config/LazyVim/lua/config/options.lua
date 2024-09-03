@@ -12,19 +12,11 @@ g.python_host_prog = "/usr/bin/python2"
 
 -- Markdown highlight
 g.markdown_fenced_languages = {
-    "bash",
-    "c",
-    "json",
-    "lua",
-    "python",
-    "rust",
-    "sh",
-    "elixir",
-    "haskell",
-    "ocaml",
-    "elm",
+    "bash", "c", "json", "lua", "python", "rust", "sh", "elixir", "haskell",
+    "ocaml", "elm"
 }
 
 -- GUI font
 opt.guifont = "MonaspiceNe Nerd Font:h16"
 -- opt.guifont = "JetBrainsMono Nerd Font:h16"
+-- vim.g.lazyvim_prettier_needs_config = false

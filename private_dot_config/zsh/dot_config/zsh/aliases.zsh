@@ -54,6 +54,8 @@ alias npmlsg='npm ls -g --depth 0'
 # echo '\nstarting PNPM update ...' && pnpm update -g --latest && \
 alias updallapps="caffeinate \
 echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -aqy --no-brew-update --cleanup && \
+echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
+echo '\nstarting PNPM update ...' && pnpm update -g --latest && \
 echo '\nstarting BUN update ...' && bun update -g && \
 echo '\nstarting PIPX update ...' && pipx upgrade-all && \
 echo '\nstarting Rust update ...' && rustup update && \
@@ -93,7 +95,6 @@ alias gupd="\
 echo 'starting Go update ...' && gup update
 "
 
-
 ## Vim/Neovim
 alias nvimsync="nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
 alias resetnvim="rm -rf ~/.local/share/nvim && rm -rf ~/.local/state/nvim && rm -rf ~/.cache/nvim && echo 'All Neovim data deleted successfully ...'"
@@ -124,6 +125,16 @@ alias cmfget='chezmoi forget'
 
 ## brew
 alias brewc='brew cleanup -s'
+alias brewcc='brew cleanup --prune=all'
+
+# npm cache clean
+alias npmcc='npm cache clean --force && npm cache verify'
+
+# clean all caches
+alias cleancaches="\
+echo 'cleaning homebrew cache ...' && brewcc && \
+echo 'cleaning npm cache ...' && npmcc
+"
 
 # +----+
 # | cp |

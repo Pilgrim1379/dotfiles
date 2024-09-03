@@ -1,15 +1,17 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 ## Install default global package for bun
+# https://github.com/oven-sh/bun/issues/6928
 
 ## importing helper
 bun add -g import-js
 
 ## neovim
-# bun add -g neovim
+bun add -g neovim
 
 ## prettier
 bun add -g prettier prettier-plugin-elm
+bun add -g @fsouza/prettierd
 
 bun add -g cliui@latest
 
@@ -22,18 +24,15 @@ bun add -g elm-review
 
 ## language servers
 bun add -g typescript-language-server
+bun add -g @vtsls/language-server
 bun add -g bash-language-server
 bun add -g @elm-tooling/elm-language-server
 bun add -g @tailwindcss/language-server
-# bun add -g vscode-langservers-extracted ## consolidated for html, css, json and eslint
-bun add -g vscode-languageserver
+bun add -g vscode-langservers-extracted
 bun add -g yaml-language-server
 bun add -g diagnostic-languageserver
 bun add -g pyright
 bun add -g emmet-ls
-
-## typescript
-bun add -g typescript
 
 ## working with npm
 #bun add -g npx
@@ -75,6 +74,7 @@ bun add -g live-server
 
 ## languages
 # bun add -g rescript
+bun add -g typescript
 
 # echo -e "\nPackage installation complete - Don't forget to reshim so that new packages can be recognised"
 echo -e "\nIf required run 'bun completions' to get completions working."
