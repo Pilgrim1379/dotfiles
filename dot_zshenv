@@ -1,43 +1,46 @@
-#!/usr/bin/env zsh
+ZDOTDIR=~/.config/zsh
+source -- "$ZDOTDIR"/.zshenv
 
-# This file, .zshenv, is the first file sourced by zsh for EACH shell, whether
-# it's interactive or not.
-# So, put as little in this file as possible, to avoid performance impact.
-## REF: https://github.com/Phantas0s/.dotfiles/tree/master/zsh
+# #!/usr/bin/env zsh
 
-# These are used in /etc/zshrc
-case $VENDOR in
-  ( apple )
-    export SHELL_SESSIONS_DISABLE=1
-  ;;
-  ( ubuntu )
-    export skip_global_compinit=1
-  ;;
-esac
-[[ $OSTYPE == linux-gnu ]] && export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
+# # This file, .zshenv, is the first file sourced by zsh for EACH shell, whether
+# # it's interactive or not.
+# # So, put as little in this file as possible, to avoid performance impact.
+# ## REF: https://github.com/Phantas0s/.dotfiles/tree/master/zsh
 
-# https://pkg.go.dev/github.com/adrg/xdg#section-readme
-# XDG Base Directories
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_STATE_HOME=$HOME/.local/state
-export XDG_CACHE_HOME=$HOME/.cache
-# export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+# # These are used in /etc/zshrc
+# case $VENDOR in
+#   ( apple )
+#     export SHELL_SESSIONS_DISABLE=1
+#   ;;
+#   ( ubuntu )
+#     export skip_global_compinit=1
+#   ;;
+# esac
+# [[ $OSTYPE == linux-gnu ]] && export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
 
-# Tell zsh where to look for our dotfiles.
-ZDOTDIR=${XDG_CONFIG_HOME:=~/.config}/zsh
+# # https://pkg.go.dev/github.com/adrg/xdg#section-readme
+# # XDG Base Directories
+# export XDG_CONFIG_HOME=$HOME/.config
+# export XDG_DATA_HOME=$HOME/.local/share
+# export XDG_STATE_HOME=$HOME/.local/state
+# export XDG_CACHE_HOME=$HOME/.cache
+# # export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
-# Prefer GB English and use UTF-8
-export LC_ALL=en_GB.UTF-8
-export LANG=en_GB.UTF-8 # Not set on macOS.
+# # Tell zsh where to look for our dotfiles.
+# ZDOTDIR=${XDG_CONFIG_HOME:=~/.config}/zsh
 
-[[ $OSTYPE == linux-gnu ]] &&
-  export LC_COLLATE=C.UTF-8 # Other UTF-8 locales on Linux give weird whitespace sorting.
+# # Prefer GB English and use UTF-8
+# export LC_ALL=en_GB.UTF-8
+# export LANG=en_GB.UTF-8 # Not set on macOS.
 
-################################################################################
-# # https://github.com/sorin-ionescu/prezto - Prezto — Instantly Awesome Zsh
-# # Ensure that a non-login, non-interactive shell has a defined environment.
-if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
-  # source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
-  source "${ZDOTDIR:-$HOME}/.zprofile"
-fi
+# [[ $OSTYPE == linux-gnu ]] &&
+#   export LC_COLLATE=C.UTF-8 # Other UTF-8 locales on Linux give weird whitespace sorting.
+
+# ################################################################################
+# # # https://github.com/sorin-ionescu/prezto - Prezto — Instantly Awesome Zsh
+# # # Ensure that a non-login, non-interactive shell has a defined environment.
+# if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
+#   # source /etc/zprofile # Without this emacs doesn't work properly. Tramp: Sending Password then emacs freezes
+#   source "${ZDOTDIR:-$HOME}/.zprofile"
+# fi

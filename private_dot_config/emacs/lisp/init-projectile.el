@@ -11,15 +11,15 @@
 
 (use-package projectile
   :init
-  (when (file-directory-p "~/workspace")
-    (setq projectile-project-search-path '("~/workspace/code/elixir/"
-                                            "~/workspace/code/python/"
-                                            "~/workspace/code/elm/"
-                                            "~/workspace/code/rust/"
-                                            "~/workspace/code/ai/"
-                                            "~/workspace/code/c++/"
-                                            "~/workspace/code/exercism/"
-                                            "~/workspace/code/js/")))
+  (when (file-directory-p "~/Workspace")
+    (setq projectile-project-search-path '("~/Workspace/learning/elixir/"
+                                            "~/Workspace/learning/python/"
+                                            "~/Workspace/learning/elm/"
+                                            "~/Workspace/learning/rust/"
+                                            "~/Workspace/learning/ai/"
+                                            "~/Workspace/learning/c++/"
+                                            "~/Workspace/learning/exercism/"
+                                            "~/Workspace/learning/js/")))
   (setq projectile-switch-project-action #'dw/switch-project-action)
   (projectile-mode +1)
   :config

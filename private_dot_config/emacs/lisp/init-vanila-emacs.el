@@ -2,6 +2,7 @@
 ;;; Commentary: hhow emacs should behave without external packages
 ;;; Code:
 
+
 ;; My sane defaults
 (setq-default
     ;; read-process-output-max (* 1024 1024) ;; 1mb moved this to early-init

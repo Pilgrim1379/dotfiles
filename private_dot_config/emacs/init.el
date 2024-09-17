@@ -55,7 +55,10 @@
 
 
 ;;; Setup System Path
-(require 'init-exec-path) ;; Set up $PATH
+;; (require 'init-exec-path) ;; Set up $PATH
+
+(use-package use-package-ensure-system-package)
+  ;; :after exec-path-from-shell) ;;extend use-package, put after exec-path-from-shell
 
 ;;; Configure Vanila Emacs / Sane Defaults
 (require 'init-vanila-emacs)
@@ -129,8 +132,6 @@
 (require 'init-org-mode)
 
 
-
-
 ;;; Misc Configurations
 
 (when (fboundp 'global-eldoc-mode)
@@ -139,7 +140,7 @@
 (require 'init-misc)
 
 ; Start emacs by default using the following directory
-(setq default-directory (expand-file-name "~/workspace/"))
+(setq default-directory (expand-file-name "~/Workspace/"))
 
 ;; Variables configured via the interactive 'customize' interface
 (when (file-exists-p custom-file)

@@ -24,17 +24,8 @@
   (when (memq window-system '(mac ns x pgtk))
     (exec-path-from-shell-initialize)))
 
-;; Set temporary-file-directory to match TMPDIR environment variable
-(let ((tmpdir (getenv "TMPDIR")))
-  (when (and tmpdir (not (string-blank-p tmpdir)))
-    (setq temporary-file-directory tmpdir)))
-
 ;; Add bin directory within emacs configuration dir to `exec-path'.
 ;; (add-to-list 'exec-path (expand-file-name "bin" siren-dir))
-
-(use-package use-package-ensure-system-package
-  :after exec-path-from-shell) ;;extend use-package, put after exec-path-from-shell
-
 
 
 (provide 'init-exec-path)

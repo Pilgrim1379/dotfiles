@@ -62,6 +62,11 @@
   (setq auto-save-file-name-transforms
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
 
+;; Set temporary-file-directory to match TMPDIR environment variable
+(let ((tmpdir (getenv "TMPDIR")))
+  (when (and tmpdir (not (string-blank-p tmpdir)))
+    (setq temporary-file-directory tmpdir)))
+
 
 (provide 'init-straight)
 ;;; init-straight.el ends here
