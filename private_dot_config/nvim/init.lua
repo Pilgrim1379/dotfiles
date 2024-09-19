@@ -211,6 +211,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function() vim.highlight.on_yank() end
 })
 
+-- revert terminal cursor to vertical bar upon exit or suspend
+vim.cmd([[
+    augroup RestoreCursorShapeOnExit
+        autocmd!
+        autocmd VimLeave,VimSuspend * set guicursor=a:ver1
+    augroup END
+]])
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
