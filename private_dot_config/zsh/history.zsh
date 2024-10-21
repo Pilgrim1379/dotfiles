@@ -34,7 +34,7 @@ SAVEHIST=$(( 100 * 1000 ))      # Use multiplication for readability.
 # Max number of history entries to keep in memory.
 HISTSIZE=$(( 1.2 * SAVEHIST ))  # Zsh recommended value
 
-HISTORY_IGNORE="(ls|pwd|exit)*"
+HISTORY_IGNORE="(ls|pwd|exit|..|...)*"
 HIST_STAMPS="dd-mm-yyyy"
 
 setopt APPEND_HISTORY

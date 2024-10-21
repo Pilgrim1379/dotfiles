@@ -1,11 +1,10 @@
 [tools]
 # global tool versions go here
 # you can set these with `mise use -g`
-python = "latest"
+python = ["3.12", "latest"]
 # golang = "latest"
 erlang = "latest"
 elixir = "latest"
-java = "temurin-21"
 ruby = "latest"
 elm = "latest"
 # zig = "latest"
@@ -16,3 +15,4 @@ bun = "latest"
 # opam = "latest"
 usage = "latest"
 neovim = "nightly"
+java = "temurin-21"

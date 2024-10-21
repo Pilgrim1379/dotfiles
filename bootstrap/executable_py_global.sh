@@ -36,7 +36,7 @@ if [ $? -eq 0 ]; then
             pipx install codespell
 
             pipx install cmake-language-server
-            pipx install ruff-lsp
+            # pipx install ruff-lsp
             # pipx install jedi-language-server
             pipx install python-lsp-server && \
                 pipx inject python-lsp-server python-lsp-ruff

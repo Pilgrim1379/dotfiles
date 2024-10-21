@@ -25,18 +25,23 @@ function myip() {
 }
 
 # Python PDM
-function pdm() {
-	local command=$1
+# function pdm() {
+# 	local command=$1
 
-	if [[ "$command" == "shell" ]]; then
-		eval $(pdm venv activate)
-	else
-		command pdm $@
-	fi
-}
+# 	if [[ "$command" == "shell" ]]; then
+# 		eval $(pdm venv activate)
+# 	else
+# 		command pdm $@
+# 	fi
+# }
 
 # Make and cd into directory
 #  - from: http://alias.sh/make-and-cd-directory
 function mkcd() {
 	mkdir "$1" && cd "$1" || exit
+}
+
+# Activate virtualenvs
+function activate(){
+	source .venv/bin/activate
 }

@@ -33,8 +33,8 @@ export VISUAL="code --wait"
 # Fzf
 # Setting fd as the default source for fzf
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_CTRL_T_OPTS="--preview 'bat --line-range :500 {}' --prompt '∷ ' --pointer ▶ --marker ⇒"
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# export FZF_CTRL_T_OPTS="--preview 'bat --line-range :500 {}' --prompt '∷ ' --pointer ▶ --marker ⇒"
 
 export PAGER=${PAGER:-less}
 # export MANPAGER='bat -l man'
@@ -73,10 +73,15 @@ export ERL_AFLAGS
 export PNPM_HOME=$XDG_DATA_HOME/pnpm
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 export PIPX_BIN_DIR=~/.local/bin
-export BUN_INSTALL=$HOME/.bun # Bun
 # export WORKON_HOME=$HOME/.virtualenvs
 #
+export UV_PYTHON_PREFERENCE="only-system" # Whether to prefer only-managed, managed or system Python installations
+export UV_PYTHON_DOWNLOADS="never" # Automatic downloads of Python
+
+# Bun
+export BUN_INSTALL=$HOME/.bun # Bun
 
 # Rust
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 # Don't put anything below this line
+################################################################################

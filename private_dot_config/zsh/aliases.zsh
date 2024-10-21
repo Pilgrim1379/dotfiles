@@ -46,19 +46,23 @@ alias npmlsg='npm ls -g --depth 0'
 # echo '\nstarting PNPM update ...' && pnpm list -g --json | jq '.[] | .dependencies | keys | .[]' -r  | xargs pnpm add -g && \
 # echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
 # echo '\nstarting PNPM update ...' && pnpm update -g --latest && \
+# echo '\nstarting Julia update ...' && juliaup self update && juliaup update && juliaup gc &&\
 alias updallapps="caffeinate \
 echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -aqy --no-brew-update --cleanup && \
 echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
 echo '\nstarting PNPM update ...' && pnpm update -g --latest && \
 echo '\nstarting BUN update ...' && bun update -g && \
-echo '\nstarting PIPX update ...' && pipx upgrade-all && \
+echo '\nstarting UV update ...' && uv self update && uv tool upgrade --all && \
 echo '\nstarting Rust update ...' && rustup update && \
 echo '\nstarting Ruby update ...' && gem update --system && gem update && \
-echo '\nstarting Julia update ...' && juliaup self update && juliaup update && juliaup gc &&\
 echo '\nstarting Go update ...' && gup update \
 "
 
+
 ## App updates
+alias miseupd="\
+echo 'starting MISE update ...' && mise self-update && mise upgrade \
+"
 alias brewupd="\
 echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -aqy --no-brew-update --cleanup \
 "
@@ -68,7 +72,7 @@ echo 'starting NPM update ...' && npm -g update && corepack prepare pnpm@latest 
 echo '\nstarting PNPM update ...' && pnpm update -g --latest \
 "
 
-alias pipxupd="echo 'starting PIPX update ...' && pipx upgrade-all"
+# alias pipxupd="echo 'starting PIPX update ...' && pipx upgrade-all"
 
 alias gemupd="\
 echo 'starting Ruby gem update ...' && gem update --system && gem update

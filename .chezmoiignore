@@ -18,8 +18,10 @@
 .elixir_ls
 .elixir_ls/**/*
 
-# LazyVim
+# LazyVim/Neovim
 .config/LazyVim/lazy-lock.json
+.config/nvim/lazy-lock.json
+.config/lvim/lazy-lock.json
 
 # Plugins
 .config/zsh/plugins/marlonrichert/

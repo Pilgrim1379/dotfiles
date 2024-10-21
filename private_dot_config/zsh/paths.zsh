@@ -9,6 +9,11 @@
 # Note that each value in an array is expanded separately. Thus, we can use ~
 # for $HOME in each $path entry.
 
+fpath=(
+	~/.zfunc(N)
+	$fpath
+)
+
 path=(
     $HOME/.nimble/bin(N) # Nim
     $HOME/.cargo/bin(N) # Rust
@@ -19,7 +24,7 @@ path=(
     $HOME/github/language-servers/next-ls(N) # Nextls
     /Applications/Postgres.app/Contents/Versions/latest/bin(N) # Postgress app
     $HOME/Library/Application\ Support/Coursier/bin(N) # Scala
-    $HOME/Library/Android/sdk/{emulator,platform-tools,tools}(N)
+    $HOME/Library/Android/sdk/{emulator,platform-tools,tools}(N) # Android
     $HOMEBREW_PREFIX/opt/{mariadb@10.3,ncurses,tomcat@9}/bin(N)
     $HOMEBREW_PREFIX/opt/{coreutils/libexec/gnubin,findutils/libexec/gnubin,grep/libexec/gnubin}/bin(N)
     $HOMEBREW_PREFIX/opt/{curl,gettext,sqlite,llvm}/bin(N)
@@ -30,12 +35,12 @@ path=(
 # +-------------------+
 # | Ocaml |
 # +-------------------+
-[[ ! -r ~/.opam/opam-init/init.zsh ]] || source ~/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+# [[ ! -r ~/.opam/opam-init/init.zsh ]] || source ~/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 # +-------------------+
 # | Haskell ghcup-env |
 # +-------------------+
-[ -f ~/.ghcup/env ] && source ~/.ghcup/env
+# [ -f ~/.ghcup/env ] && source ~/.ghcup/env
 
 # Bun path
 path=(
@@ -46,7 +51,7 @@ path=(
 ########################################################################################################
 ## This should come after all essential PATHs has been set unless you know what you're doing          ##
 ########################################################################################################
-if (( $+commands[mise] )); then
+if [ -e ~/.local/bin/mise ]; then
     export MISE_USE_TOML=1
     # export MISE_DATA_DIR=$XDG_DATA_HOME/mise
     export MISE_EXPERIMENTAL=1
@@ -57,7 +62,7 @@ if (( $+commands[mise] )); then
     # export RUST_BACKTRACE=1
 
     # eval "$(mise activate zsh --shims)" # should be first if using mise shims and disable line with mise hook-env
-    eval "$(mise activate zsh)"
-    eval "$(mise hook-env -s zsh)" # enable this if not using mise shims for sublime text to work
+    eval "$($HOME/.local/bin/mise activate zsh --shims)"
+    # eval "$($HOME/.local/bin/mise hook-env -s zsh)" # enable this if not using mise shims for sublime text to work
 fi
 ########################################################################################################

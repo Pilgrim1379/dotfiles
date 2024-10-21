@@ -162,12 +162,6 @@ vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev,
-               {desc = 'Go to previous [D]iagnostic message'})
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next,
-               {desc = 'Go to next [D]iagnostic message'})
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float,
-               {desc = 'Show diagnostic [E]rror messages'})
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist,
                {desc = 'Open diagnostic [Q]uickfix list'})
 
@@ -211,23 +205,37 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function() vim.highlight.on_yank() end
 })
 
+-- Diagnostic windows behaviour
+vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
+    callback = function() vim.diagnostic.open_float(nil, {focus = false}) end
+})
+
 -- revert terminal cursor to vertical bar upon exit or suspend
-vim.cmd([[
-    augroup RestoreCursorShapeOnExit
-        autocmd!
-        autocmd VimLeave,VimSuspend * set guicursor=a:ver1
-    augroup END
-]])
+vim.api.nvim_create_autocmd({"VimLeave", "VimSuspend"},
+                            {command = "set guicursor=a:ver1"})
+-- vim.cmd([[
+--     augroup RestoreCursorShapeOnExit
+--         autocmd!
+--         autocmd VimLeave,VimSuspend * set guicursor=a:ver1
+--     augroup END
+-- ]])
+
+-- [[ Basic Commands ]]
+vim.cmd("silent! Copilot disable") -- Disable Copilot on startup
+
+-- Configure diagnostics
+vim.diagnostic.config({virtual_text = false, float = {border = BORDER_STYLE}})
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-    vim.fn.system {
+    local out = vim.fn.system {
         'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo,
         lazypath
     }
+    if vim.v.shell_error ~= 0 then error('Error cloning lazy.nvim:\n' .. out) end
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
@@ -310,32 +318,55 @@ require('lazy').setup({
                 wo = {
                     -- winblend = 10, -- value between 0-100 0 for fully opaque and 100 for fully transparent
                 }
-            }
-        },
-        config = function(_, opts) -- This is the function that runs, AFTER loading
-            require('which-key').setup(opts)
+            },
+            icons = {
+                -- set icon mappings to true if you have a Nerd Font
+                mappings = vim.g.have_nerd_font,
+                -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
+                -- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
+                keys = vim.g.have_nerd_font and {} or {
+                    Up = '<Up> ',
+                    Down = '<Down> ',
+                    Left = '<Left> ',
+                    Right = '<Right> ',
+                    C = '<C-…> ',
+                    M = '<M-…> ',
+                    D = '<D-…> ',
+                    S = '<S-…> ',
+                    CR = '<CR> ',
+                    Esc = '<Esc> ',
+                    ScrollWheelDown = '<ScrollWheelDown> ',
+                    ScrollWheelUp = '<ScrollWheelUp> ',
+                    NL = '<NL> ',
+                    BS = '<BS> ',
+                    Space = '<Space> ',
+                    Tab = '<Tab> ',
+                    F1 = '<F1>',
+                    F2 = '<F2>',
+                    F3 = '<F3>',
+                    F4 = '<F4>',
+                    F5 = '<F5>',
+                    F6 = '<F6>',
+                    F7 = '<F7>',
+                    F8 = '<F8>',
+                    F9 = '<F9>',
+                    F10 = '<F10>',
+                    F11 = '<F11>',
+                    F12 = '<F12>'
+                }
+            },
 
             -- Document existing key chains
-            require('which-key').add {
-                {"<leader>c", group = "[C]ode"}, {"<leader>c_", hidden = true},
-                {"<leader>d", group = "[D]ocument"},
-                {"<leader>d_", hidden = true},
-                {"<leader>h", group = "Git [H]unk"},
-                {"<leader>h_", hidden = true},
-                {"<leader>r", group = "[R]ename"},
-                {"<leader>r_", hidden = true},
-                {"<leader>s", group = "[S]earch"},
-                {"<leader>s_", hidden = true},
-                {"<leader>t", group = "[T]oggle"},
-                {"<leader>t_", hidden = true},
-                {"<leader>w", group = "[W]orkspace"},
-                {"<leader>w_", hidden = true}
+            spec = {
+                {'<leader>c', group = '[C]ode', mode = {'n', 'x'}},
+                {'<leader>d', group = '[D]ocument'},
+                {'<leader>r', group = '[R]ename'},
+                {'<leader>s', group = '[S]earch'},
+                {'<leader>w', group = '[W]orkspace'},
+                {'<leader>t', group = '[T]oggle'},
+                {'<leader>h', group = 'Git [H]unk', mode = {'n', 'v'}}
             }
-            -- visual mode
-            require('which-key').add({
-                {"<leader>h", desc = "Git [H]unk", mode = "v"}
-            })
-        end
+        }
     }, -- NOTE: Plugins can specify dependencies.
     --
     -- The dependencies are proper plugin specifications as well - anything
@@ -453,7 +484,19 @@ require('lazy').setup({
                 builtin.find_files {cwd = vim.fn.stdpath 'config'}
             end, {desc = '[S]earch [N]eovim files'})
         end
-    }, { -- LSP Configuration & Plugins
+    }, -- LSP Plugins
+    {
+        -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
+        -- used for completion, annotations and signatures of Neovim apis
+        'folke/lazydev.nvim',
+        ft = 'lua',
+        opts = {
+            library = {
+                -- Load luvit types when the `vim.uv` word is found
+                {path = 'luvit-meta/library', words = {'vim%.uv'}}
+            }
+        }
+    }, {'Bilal2453/luvit-meta', lazy = true}, { -- Main LSP Configuration
         'neovim/nvim-lspconfig',
         dependencies = {
             -- Automatically install LSPs and related tools to stdpath for Neovim
@@ -465,17 +508,10 @@ require('lazy').setup({
             -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
             {'j-hui/fidget.nvim', opts = {}},
 
-            -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-            -- used for completion, annotations and signatures of Neovim apis
-            {'folke/neodev.nvim', opts = {}}
+            -- Allows extra capabilities provided by nvim-cmp
+            'hrsh7th/cmp-nvim-lsp'
         },
         config = function()
-            -- Configure lsp servers without Mason
-            local lspconfig = require("lspconfig")
-
-            require("lspconfig.ui.windows").default_options.border =
-                BORDER_STYLE
-
             -- Brief aside: **What is LSP?**
             --
             -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -501,6 +537,12 @@ require('lazy').setup({
             -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
             -- and elegantly composed help section, `:help lsp-vs-treesitter`
 
+            -- Configure lsp servers without Mason
+            local lspconfig = require("lspconfig")
+
+            require("lspconfig.ui.windows").default_options.border =
+                BORDER_STYLE
+
             --  This function gets run when an LSP attaches to a particular buffer.
             --    That is to say, every time a new file is opened that is associated with
             --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -514,8 +556,9 @@ require('lazy').setup({
                     --
                     -- In this case, we create a function that lets us more easily define mappings specific
                     -- for LSP related items. It sets the mode, buffer and description for us each time.
-                    local map = function(keys, func, desc)
-                        vim.keymap.set('n', keys, func, {
+                    local map = function(keys, func, desc, mode)
+                        mode = mode or 'n'
+                        vim.keymap.set(mode, keys, func, {
                             buffer = event.buf,
                             desc = 'LSP: ' .. desc
                         })
@@ -561,11 +604,8 @@ require('lazy').setup({
 
                     -- Execute a code action, usually your cursor needs to be on top of an error
                     -- or a suggestion from your LSP for this to activate.
-                    map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-                    -- Opens a popup that displays documentation about the word under your cursor
-                    --  See `:help K` for why this keymap.
-                    map('K', vim.lsp.buf.hover, 'Hover Documentation')
+                    map('<leader>ca', vim.lsp.buf.code_action,
+                        '[C]ode [A]ction', {'n', 'x'})
 
                     -- WARN: This is not Goto Definition, this is Goto Declaration.
                     --  For example, in C this would take you to the header.
@@ -612,15 +652,18 @@ require('lazy').setup({
                         })
                     end
 
-                    -- The following autocommand is used to enable inlay hints in your
+                    -- The following code creates a keymap to toggle inlay hints in your
                     -- code, if the language server you are using supports them
                     --
                     -- This may be unwanted, since they displace some of your code
-                    if client and client.server_capabilities.inlayHintProvider and
-                        vim.lsp.inlay_hint then
+                    if client and
+                        client.supports_method(
+                            vim.lsp.protocol.Methods.textDocument_inlayHint) then
                         map('<leader>th', function()
                             vim.lsp.inlay_hint.enable(
-                                not vim.lsp.inlay_hint.is_enabled())
+                                not vim.lsp.inlay_hint.is_enabled {
+                                    bufnr = event.buf
+                                })
                         end, '[T]oggle Inlay [H]ints')
                     end
                 end
@@ -634,12 +677,6 @@ require('lazy').setup({
             capabilities = vim.tbl_deep_extend('force', capabilities, require(
                                                    'cmp_nvim_lsp').default_capabilities())
 
-            -- LSP settings (for overriding per client)
-            -- local handlers = {
-            --     ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = BORDER_STYLE }),
-            --     ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = BORDER_STYLE }),
-            -- }
-
             -- Enable the following language servers
             --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
             --
@@ -652,7 +689,22 @@ require('lazy').setup({
             local servers = {
                 clangd = {},
                 gopls = {},
-                pyright = {},
+                pyright = {
+                    -- If you'd like to use Ruff exclusively for linting, formatting, and organizing imports,
+                    -- you can disable those capabilities for Pyright:
+                    settings = {
+                        pyright = {
+                            -- Using Ruff's import organizer
+                            disableOrganizeImports = true
+                        },
+                        python = {
+                            analysis = {
+                                -- Ignore all files for analysis to exclusively use Ruff for linting
+                                -- ignore = { '*' },
+                            }
+                        }
+                    }
+                },
                 rust_analyzer = {},
                 ruff = {},
                 elmls = {},
@@ -758,6 +810,7 @@ require('lazy').setup({
             -- }
             --
 
+            -- [[ custom config ]]
             -- Loop through each server in the servers table and set it up
             for server_name, config in pairs(servers) do
                 -- config.handlers = handlers
@@ -788,10 +841,13 @@ require('lazy').setup({
                 -- have a well standardized coding style. You can add additional
                 -- languages here or re-enable it for the disabled ones.
                 local disable_filetypes = {c = true, cpp = true}
-                return {
-                    timeout_ms = 500,
-                    lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype]
-                }
+                local lsp_format_opt
+                if disable_filetypes[vim.bo[bufnr].filetype] then
+                    lsp_format_opt = 'never'
+                else
+                    lsp_format_opt = 'fallback'
+                end
+                return {timeout_ms = 500, lsp_format = lsp_format_opt}
             end,
             formatters_by_ft = {
                 c = {"clang-format"},
@@ -890,9 +946,9 @@ require('lazy').setup({
 
                     -- If you prefer more traditional completion keymaps,
                     -- you can uncomment the following lines
-                    -- ['<CR>'] = cmp.mapping.confirm { select = true },
-                    -- ['<Tab>'] = cmp.mapping.select_next_item(),
-                    -- ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+                    ['<CR>'] = cmp.mapping.confirm {select = true},
+                    ['<Tab>'] = cmp.mapping.select_next_item(),
+                    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
                     -- Manually trigger a completion from nvim-cmp.
                     --  Generally you don't need this, because nvim-cmp will display
@@ -953,7 +1009,6 @@ require('lazy').setup({
         opts = {signs = false}
     }, { -- Collection of various small independent plugins/modules
         'echasnovski/mini.nvim',
-        version = false,
         config = function()
             -- Better Around/Inside textobjects
             --
@@ -970,31 +1025,124 @@ require('lazy').setup({
             -- - sr)'  - [S]urround [R]eplace [)] [']
             require('mini.surround').setup()
 
-            -- Simple and easy statusline.
-            --  You could remove this setup call if you don't like it,
-            --  and try some other statusline plugin
-            local statusline = require 'mini.statusline'
-            -- set use_icons to true if you have a Nerd Font
-            statusline.setup {use_icons = vim.g.have_nerd_font}
+            -- -- Simple and easy statusline.
+            -- --  You could remove this setup call if you don't like it,
+            -- --  and try some other statusline plugin
+            -- local statusline = require 'mini.statusline'
+            -- -- set use_icons to true if you have a Nerd Font
+            -- statusline.setup { use_icons = vim.g.have_nerd_font }
 
-            -- You can configure sections in the statusline by overriding their
-            -- default behavior. For example, here we set the section for
-            -- cursor location to LINE:COLUMN
-            ---@diagnostic disable-next-line: duplicate-set-field
-            statusline.section_location = function()
-                return '%2l:%-2v'
-            end
+            -- -- You can configure sections in the statusline by overriding their
+            -- -- default behavior. For example, here we set the section for
+            -- -- cursor location to LINE:COLUMN
+            -- ---@diagnostic disable-next-line: duplicate-set-field
+            -- statusline.section_location = function()
+            --     return '%2l:%-2v'
+            -- end
 
             -- ... and there is more!
             --  Check out: https://github.com/echasnovski/mini.nvim
         end
+    }, -- { -- 🎉 Python Venv Selector
+    --     "linux-cultist/venv-selector.nvim",
+    --     dependencies = {
+    --         "neovim/nvim-lspconfig",
+    --         "mfussenegger/nvim-dap", "mfussenegger/nvim-dap-python", --optional
+    --         { "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = { "nvim-lua/plenary.nvim" } },
+    --     },
+    --     lazy = false,
+    --     branch = "regexp", -- This is the regexp branch, use this for the new version
+    --     config = function()
+    --         require("venv-selector").setup()
+    --     end,
+    --     --  Call config for python files and load the cached venv automatically
+    --     ft = "python",
+    --     keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = "python" } },
+    -- },
+    { -- Lualine
+        'nvim-lualine/lualine.nvim',
+        dependencies = {'nvim-tree/nvim-web-devicons'},
+        config = function()
+            -- Function to get the virtual environment name
+            local function get_venv(variable)
+                local venv = os.getenv(variable)
+                if venv ~= nil then
+                    -- Handle conda directly since it provides the environment name
+                    if variable == "CONDA_DEFAULT_ENV" then
+                        return venv
+                    end
+
+                    -- If it's a virtual environment (VIRTUAL_ENV), extract the parent directory if the path ends with '.venv'
+                    if variable == "VIRTUAL_ENV" then
+                        local parent_dir = venv:match("(.+)/[^/]+$") -- Get the parent directory path
+                        local venv_name = parent_dir:match("([^/]+)$") -- Get the last part of the parent directory (the project name)
+                        return venv_name
+                    end
+                end
+                return nil -- Return nil if no virtual environment is found
+            end
+
+            -- Lualine setup
+            require('lualine').setup {
+                options = {
+                    icons_enabled = true,
+                    theme = 'auto',
+                    component_separators = {left = '', right = ''},
+                    section_separators = {left = '', right = ''},
+                    disabled_filetypes = {statusline = {}, winbar = {}},
+                    ignore_focus = {},
+                    always_divide_middle = true,
+                    globalstatus = false,
+                    refresh = {statusline = 1000, tabline = 1000, winbar = 1000}
+                },
+                sections = {
+                    lualine_a = {'mode'},
+                    lualine_b = {'branch', 'diff', 'diagnostics'},
+                    lualine_c = {'filename'},
+                    lualine_x = {
+                        -- Add the virtual environment display here
+                        {
+                            function()
+                                local venv =
+                                    get_venv("CONDA_DEFAULT_ENV") or
+                                        get_venv("VIRTUAL_ENV")
+                                if venv then
+                                    return " " .. venv -- Return virtual environment with Python icon
+                                else
+                                    return "" -- Return nothing if no virtual environment is found
+                                end
+                            end,
+                            cond = function()
+                                return vim.bo.filetype == "python"
+                            end -- Only show in Python files
+                        }, 'filetype'
+                    },
+                    lualine_y = {'progress'},
+                    lualine_z = {'location'}
+                },
+                inactive_sections = {
+                    lualine_a = {},
+                    lualine_b = {},
+                    lualine_c = {'filename'},
+                    lualine_x = {'location', 'encoding', 'fileformat'},
+                    lualine_y = {},
+                    lualine_z = {}
+                },
+                tabline = {},
+                winbar = {},
+                inactive_winbar = {},
+                extensions = {}
+            }
+        end
     }, { -- Highlight, edit, and navigate code
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
+        main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+        -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
         opts = {
             ensure_installed = {
-                'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim',
-                'vimdoc'
+                'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown',
+                'markdown_inline', 'query', 'vim', 'vimdoc'
             },
             -- Autoinstall languages that are not installed
             auto_install = true,
@@ -1006,22 +1154,13 @@ require('lazy').setup({
                 additional_vim_regex_highlighting = {'ruby'}
             },
             indent = {enable = true, disable = {'ruby'}}
-        },
-        config = function(_, opts)
-            -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-            -- Prefer git instead of curl in order to improve connectivity in some environments
-            require('nvim-treesitter.install').prefer_git = true
-            ---@diagnostic disable-next-line: missing-fields
-            require('nvim-treesitter.configs').setup(opts)
-
-            -- There are additional nvim-treesitter modules that you can use to interact
-            -- with nvim-treesitter. You should go explore a few and see what interests you:
-            --
-            --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-            --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-            --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-        end
+        }
+        -- There are additional nvim-treesitter modules that you can use to interact
+        -- with nvim-treesitter. You should go explore a few and see what interests you:
+        --
+        --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
+        --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
+        --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     }, { -- Better escape
         "max397574/better-escape.nvim",
         config = function() require("better_escape").setup() end
