@@ -20,13 +20,13 @@ if [ $? -eq 0 ]; then
     #     uv pip install -U --system jupyterlab catppuccin-matplotlib
     # uv pip install -U --system pipupgrade
 
-    #[#########################################################################
+    #[##########################################################################
     # pipx install visidata
     # pipx inject visidata psycopg2
-
+    
     # # uv
     # uv tool install --with psycopg2 visidata
-    #]#########################################################################
+    #]##########################################################################
     
     uv tool install --with catppuccin ipython
 

@@ -20,6 +20,7 @@ function scheme_for_appearance(appearance)
 end
 
 config.color_scheme = scheme_for_appearance(wezterm.gui.get_appearance())
+config.colors = {indexed = {[16] = "#000000"}} -- required for ipython completion
 
 --- Font Config
 config.font = wezterm.font("MonaspiceNe NF")

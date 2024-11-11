@@ -29,6 +29,8 @@ corepack use pnpm@latest
 # corepack enable yarn
 # corepack use yarn@latest
 
+npm install -g less
+
 ## elm
 npm install -g elm-format
 npm install -g elm-live
@@ -53,7 +55,6 @@ npm install -g @vue/language-server
 # languages
 npm install -g typescript
 
-
 # ## when using asdf, this is required for pnpm commands to work
 # # asdf reshim nodejs
 
@@ -66,11 +67,7 @@ then
     pnpm add -g npm-name-cli
 
     # misc
-    pnpm add -g spoof # Easily spoof your MAC address in macOS, Windows, & Linux!
     pnpm add -g wscat # Permits connecting to, sending data to, and receiving data from a WebSocket
-
-    # Type `git open` to open the GitHub page or website for a repository.
-    pnpm add -g git-open
 
     # fancy listing of recent branches
     pnpm add -g git-recent
@@ -83,7 +80,6 @@ then
     # pnpm add -g cordova
     # pnpm add -g framework7-cli
     
-    pnpm add -g less
     pnpm add -g stylus
 
     # formatter and linters
@@ -91,16 +87,13 @@ then
     pnpm add -g js-beautify
     pnpm add -g stylelint
 
-    # live server
-    pnpm add -g live-server
-
     echo -e "Finished installing PNPM packages"
 fi
 
 # mise
-# if (( $+commands[mise] )); then
-    # mise reshim
-# fi
+if (( $+commands[mise] )); then
+    mise reshim
+fi
 
 # echo -e "\nPackage installation complete - Don't forget to reshim so that new packages can be recognised"
 echo -e "\nIf required run 'pnpm install-completion' to get completions working or pnpm."

@@ -22,6 +22,7 @@ path=(
     $HOME/github/language-servers/lexical/bin(N) # Lexical
     $HOME/github/language-servers/elixir-ls(N) # Elixir
     $HOME/github/language-servers/next-ls(N) # Nextls
+    /Applications/Sublime\ Text.app/Contents/SharedSupport/bin(N) # Sublime Text
     /Applications/Postgres.app/Contents/Versions/latest/bin(N) # Postgress app
     $HOME/Library/Application\ Support/Coursier/bin(N) # Scala
     $HOME/Library/Android/sdk/{emulator,platform-tools,tools}(N) # Android
@@ -43,10 +44,10 @@ path=(
 # [ -f ~/.ghcup/env ] && source ~/.ghcup/env
 
 # Bun path
-path=(
-    $HOME/.bun/bin(N)
-    $path
-)
+# path=(
+#     $HOME/.bun/bin(N)
+#     $path
+# )
 
 ########################################################################################################
 ## This should come after all essential PATHs has been set unless you know what you're doing          ##

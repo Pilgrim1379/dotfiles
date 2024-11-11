@@ -117,7 +117,7 @@ setopt MENU_COMPLETE
 setopt EXTENDED_GLOB
 setopt INTERACTIVE_COMMENTS
 
-# PNPM BUN
+# PNPM BUN DENO
 # +-----+
 path=(
   $XDG_DATA_HOME/pnpm(N)

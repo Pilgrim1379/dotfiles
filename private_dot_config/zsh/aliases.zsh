@@ -50,16 +50,18 @@ alias npmlsg='npm ls -g --depth 0'
 alias updallapps="caffeinate \
 echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -aqy --no-brew-update --cleanup && \
 echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
-echo '\nstarting PNPM update ...' && pnpm update -g --latest && \
-echo '\nstarting BUN update ...' && bun update -g && \
 echo '\nstarting UV update ...' && uv self update && uv tool upgrade --all && \
 echo '\nstarting Rust update ...' && rustup update && \
 echo '\nstarting Ruby update ...' && gem update --system && gem update && \
 echo '\nstarting Go update ...' && gup update \
 "
 
-
 ## App updates
+
+alias bunupd="\
+echo '\nstarting BUN update ...' && bun update -g \
+"
+
 alias miseupd="\
 echo 'starting MISE update ...' && mise self-update && mise upgrade \
 "

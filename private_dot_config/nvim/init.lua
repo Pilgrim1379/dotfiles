@@ -226,6 +226,9 @@ vim.cmd("silent! Copilot disable") -- Disable Copilot on startup
 -- Configure diagnostics
 vim.diagnostic.config({virtual_text = false, float = {border = BORDER_STYLE}})
 
+-- To appropriately highlight codefences returned from denols
+vim.g.markdown_fenced_languages = {"ts=typescript"}
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -717,6 +720,7 @@ require('lazy').setup({
                 --
                 -- But for many setups, the LSP (``) will work just fine
                 ts_ls = {},
+                denols = {},
                 -- lexical = {
                 --     filetypes = {"elixir", "eelixir", "heex"},
                 --     cmd = {

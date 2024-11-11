@@ -78,8 +78,9 @@ export PIPX_BIN_DIR=~/.local/bin
 export UV_PYTHON_PREFERENCE="only-system" # Whether to prefer only-managed, managed or system Python installations
 export UV_PYTHON_DOWNLOADS="never" # Automatic downloads of Python
 
-# Bun
-export BUN_INSTALL=$HOME/.bun # Bun
+# Bun / Deno
+# export BUN_INSTALL=$HOME/.bun # Bun
+export DENO_INSTALL_ROOT=$HOME/.deno # Deno
 
 # Rust
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
