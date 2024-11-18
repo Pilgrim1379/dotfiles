@@ -19,15 +19,15 @@ path=(
     $HOME/.cargo/bin(N) # Rust
     $HOME/.juliaup/bin(N) # Julia
     $HOME/go/bin(N) # Golang
-    $HOME/github/language-servers/lexical/bin(N) # Lexical
-    $HOME/github/language-servers/elixir-ls(N) # Elixir
-    $HOME/github/language-servers/next-ls(N) # Nextls
+    $HOME/github/language_servers/lexical/bin(N) # Lexical
+    $HOME/github/language_servers/elixir-ls(N) # Elixir
+    $HOME/github/language_servers/next-ls(N) # Nextls
     /Applications/Sublime\ Text.app/Contents/SharedSupport/bin(N) # Sublime Text
     /Applications/Postgres.app/Contents/Versions/latest/bin(N) # Postgress app
     $HOME/Library/Application\ Support/Coursier/bin(N) # Scala
     $HOME/Library/Android/sdk/{emulator,platform-tools,tools}(N) # Android
     $HOMEBREW_PREFIX/opt/{mariadb@10.3,ncurses,tomcat@9}/bin(N)
-    $HOMEBREW_PREFIX/opt/{coreutils/libexec/gnubin,findutils/libexec/gnubin,grep/libexec/gnubin}/bin(N)
+    $HOMEBREW_PREFIX/opt/{coreutils/libexec/gnubin,findutils/libexec/gnubin,grep/libexec/gnubin}(N)
     $HOMEBREW_PREFIX/opt/{curl,gettext,sqlite,llvm}/bin(N)
     # /home/linuxbrew/.linuxbrew/bin(N)
     $path

@@ -52,8 +52,7 @@ echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && 
 echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
 echo '\nstarting UV update ...' && uv self update && uv tool upgrade --all && \
 echo '\nstarting Rust update ...' && rustup update && \
-echo '\nstarting Ruby update ...' && gem update --system && gem update && \
-echo '\nstarting Go update ...' && gup update \
+echo '\nstarting Ruby update ...' && gem update --system && gem update \
 "
 
 ## App updates
