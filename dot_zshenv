@@ -3,40 +3,6 @@ source -- "$ZDOTDIR"/.zshenv
 
 # #!/usr/bin/env zsh
 
-# # This file, .zshenv, is the first file sourced by zsh for EACH shell, whether
-# # it's interactive or not.
-# # So, put as little in this file as possible, to avoid performance impact.
-# ## REF: https://github.com/Phantas0s/.dotfiles/tree/master/zsh
-
-# # These are used in /etc/zshrc
-# case $VENDOR in
-#   ( apple )
-#     export SHELL_SESSIONS_DISABLE=1
-#   ;;
-#   ( ubuntu )
-#     export skip_global_compinit=1
-#   ;;
-# esac
-# [[ $OSTYPE == linux-gnu ]] && export DEBIAN_PREVENT_KEYBOARD_CHANGES=1
-
-# # https://pkg.go.dev/github.com/adrg/xdg#section-readme
-# # XDG Base Directories
-# export XDG_CONFIG_HOME=$HOME/.config
-# export XDG_DATA_HOME=$HOME/.local/share
-# export XDG_STATE_HOME=$HOME/.local/state
-# export XDG_CACHE_HOME=$HOME/.cache
-# # export ZDOTDIR=$XDG_CONFIG_HOME/zsh
-
-# # Tell zsh where to look for our dotfiles.
-# ZDOTDIR=${XDG_CONFIG_HOME:=~/.config}/zsh
-
-# # Prefer GB English and use UTF-8
-# export LC_ALL=en_GB.UTF-8
-# export LANG=en_GB.UTF-8 # Not set on macOS.
-
-# [[ $OSTYPE == linux-gnu ]] &&
-#   export LC_COLLATE=C.UTF-8 # Other UTF-8 locales on Linux give weird whitespace sorting.
-
 # ################################################################################
 # # # https://github.com/sorin-ionescu/prezto - Prezto — Instantly Awesome Zsh
 # # # Ensure that a non-login, non-interactive shell has a defined environment.

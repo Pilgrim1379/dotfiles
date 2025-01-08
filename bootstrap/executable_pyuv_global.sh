@@ -37,13 +37,15 @@ if [ $? -eq 0 ]; then
                     --with ipywidgets \
                     --with catppuccin-jupyterlab \
                     --with catppuccin-matplotlib \
+                    --with python-lsp-server \
+                    --with python-lsp-ruff \
+                    --with ruff \
                     jupyterlab
 
     uv tool install cmakelang
     uv tool install pyinstaller
     uv tool install sphinx
     uv tool install mypy
-
     uv tool install ruff
     uv tool install codespell
 
@@ -51,16 +53,11 @@ if [ $? -eq 0 ]; then
 
     uv tool install neovim-remote
     uv tool install pytest
-
     uv tool install nose
-    uv tool install pycodestyle
-    uv tool install pyflakes
     
     uv tool install jill
     uv tool install xxh-xxh
     uv tool install asciinema
- 
-    uv tool install kaggle
 else
     echo -e "\nUpgrading pip failed"
 fi

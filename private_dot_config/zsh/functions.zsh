@@ -24,17 +24,6 @@ function myip() {
 	echo "$(curl -s whatismyip.akamai.com)"
 }
 
-# Python PDM
-# function pdm() {
-# 	local command=$1
-
-# 	if [[ "$command" == "shell" ]]; then
-# 		eval $(pdm venv activate)
-# 	else
-# 		command pdm $@
-# 	fi
-# }
-
 # Make and cd into directory
 #  - from: http://alias.sh/make-and-cd-directory
 function mkcd() {

@@ -18,29 +18,16 @@ fi
 
 alias la='ll -a'
 alias tree='ll --tree --level=3'
-# alias tree='tree -a -I .git'
 
 ## Neovim switcher
 alias v="NVIM_APPNAME=LazyVim nvim"
 alias lazyvim="NVIM_APPNAME=LazyVim nvim"
-# alias kickstnvim="NVIM_APPNAME=kickstart nvim"
-# alias chadnvim="NVIM_APPNAME=NvChad nvim"
-# alias astronvim="NVIM_APPNAME=AstroNvim nvim"
 
 alias vim="echo 'Just use v'"
 alias vi="echo 'Just use v'"
 
-## PNPM
-# alias pnpmupg='pnpm up -g -L'
-# alias pnpmup='pnpm up'
-# alias pnpmupdev='pnpm up --dev'
-# alias pnpmlsg='pnpm ls -g --depth 0'
-# alias pnpmiupg='pnpm up -g -i -L'
-# alias pnpmoutdated='pnpm outdated -g'
-
 ## NPM
 alias npmlsg='npm ls -g --depth 0'
-# alias npmup='npm install -g npm'
 
 ## Update all ppackages
 # echo '\nstarting PNPM update ...' && pnpm list -g --json | jq '.[] | .dependencies | keys | .[]' -r  | xargs pnpm add -g && \
@@ -50,9 +37,10 @@ alias npmlsg='npm ls -g --depth 0'
 alias updallapps="caffeinate \
 echo 'starting HOMEBREW update ...' && brew update && brew upgrade --formula && brew cu -aqy --no-brew-update --cleanup && \
 echo '\nstarting NPM update ...' && npm -g update && corepack prepare pnpm@latest --activate && \
-echo '\nstarting UV update ...' && uv self update && uv tool upgrade --all && \
 echo '\nstarting Rust update ...' && rustup update && \
-echo '\nstarting Ruby update ...' && gem update --system && gem update \
+echo '\nstarting Ruby update ...' && gem update --system && gem update && \
+echo '\nstarting Go update ...' && gup update &&\
+echo '\nstarting UV update ...' && uv self update && uv tool upgrade --all \
 "
 
 ## App updates
