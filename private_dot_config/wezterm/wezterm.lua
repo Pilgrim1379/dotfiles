@@ -42,7 +42,7 @@ config.harfbuzz_features = {'calt=0', 'clig=0', 'liga=0'}
 --- Window Config
 -- initial window size
 config.initial_rows = 54 -- for MonaspiceX NF
-config.initial_cols = 88 -- for MonaspiceX NF
+config.initial_cols = 84 -- for MonaspiceX NF
 
 -- config.initial_rows = 48 -- for JetbrainsMono NF
 -- config.initial_cols = 92 -- for JetbrainsMono NF
