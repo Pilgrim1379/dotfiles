@@ -69,14 +69,6 @@
 	defaultBranch = main
 
 [maintenance]
-	repo = /Users/NQA/.config/zsh/plugins/zsh-snap
-	repo = /Users/NQA/.config/zsh/plugins/g-plane/pnpm-shell-completion
-	repo = /Users/NQA/.config/zsh/plugins/marlonrichert/zsh-autocomplete
-	repo = /Users/NQA/.config/zsh/plugins/romkatv/powerlevel10k
-	repo = /Users/NQA/.config/zsh/plugins/zsh-users/zsh-autosuggestions
-	repo = /Users/NQA/.config/zsh/plugins/zsh-users/zsh-completions
-	repo = /Users/NQA/.config/zsh/plugins/zsh-users/zsh-syntax-highlighting
-	repo = /Users/NQA/.config/zsh/plugins/ohmyzsh/ohmyzsh
 		
 [submodule]
 	recurse = true
