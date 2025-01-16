@@ -728,7 +728,7 @@ require('lazy').setup({
                         }
                     }
                 },
-                ruff = {init_options = {settings = {logLevel = 'debug'}}},
+                ruff = {init_options = {settings = {logLevel = 'info'}}},
                 rust_analyzer = {},
                 elmls = {},
                 nim_langserver = {},
