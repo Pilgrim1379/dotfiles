@@ -3,12 +3,6 @@ return {
         "stevearc/conform.nvim",
         -- https://github.com/stevearc/conform.nvim
         opts = {
-            format = {
-                timeout_ms = 3000,
-                async = false, -- not recommended to change
-                quiet = false, -- not recommended to change
-                lsp_fallback = true -- not recommended to change
-            },
             formatters_by_ft = {
                 c = {"clang-format"},
                 cpp = {"clang-format"},

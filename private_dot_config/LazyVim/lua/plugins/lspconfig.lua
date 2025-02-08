@@ -101,8 +101,16 @@ return {
                 bashls = {mason = false},
                 clangd = {mason = false},
                 gopls = {mason = false},
-                ruff_lsp = {mason = false},
-                pyright = {mason = false},
+                ruff = {mason = false},
+                basedpyright = {
+                    mason = false,
+                    settings = {
+                        basedpyright = {
+                            analysis = {typeCheckingMode = "standard"}
+                        }
+                    }
+                },
+                -- pyright = {mason = false},
                 elmls = {mason = false, cmd = {"elm-language-server"}},
                 yamlls = {mason = false},
                 hls = {mason = false},

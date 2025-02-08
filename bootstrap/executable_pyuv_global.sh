@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 uv pip install -U --system pip
+uv tool uninstall --all
 if [ $? -eq 0 ]; then
     uv pip install -U --system wheel
     # uv pip install -U --system pip-autoremove
@@ -50,6 +51,7 @@ if [ $? -eq 0 ]; then
     uv tool install codespell
 
     uv tool install cmake-language-server
+    uv tool install python-lsp-server
 
     uv tool install neovim-remote
     uv tool install pytest
@@ -59,5 +61,5 @@ if [ $? -eq 0 ]; then
     uv tool install xxh-xxh
     uv tool install asciinema
 else
-    echo -e "\nUpgrading pip failed"
+    echo -e "\nUpgrading pip or uninstalling tools failed"
 fi

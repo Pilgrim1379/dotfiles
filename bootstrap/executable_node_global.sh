@@ -47,7 +47,8 @@ npm install -g vscode-langservers-extracted ## consolidated for html, css, json 
 # npm install -g vscode-languageserver
 npm install -g yaml-language-server
 npm install -g diagnostic-languageserver
-npm install -g pyright
+# npm install -g pyright
+npm install -g basedpyright
 npm install -g emmet-ls
 npm install -g vscode-markdown-languageserver
 npm install -g @vue/language-server

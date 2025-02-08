@@ -1,18 +1,7 @@
 -- Set border of some LazyVim plugins to rounded
 return {
     -- lazyvim.plugins.coding
-    {
-        "nvim-cmp",
-        opts = function(_, opts)
-            local bordered = require("cmp.config.window").bordered
-            return vim.tbl_deep_extend("force", opts, {
-                window = {
-                    completion = bordered(BORDER_STYLE),
-                    documentation = bordered(BORDER_STYLE)
-                }
-            })
-        end
-    }, -- lazyvim.plugins.editor
+    -- lazyvim.plugins.editor
     {"which-key.nvim", opts = {win = {border = BORDER_STYLE}}},
     {"gitsigns.nvim", opts = {preview_config = {border = BORDER_STYLE}}},
     -- lazyvim.plugins.lsp
@@ -25,5 +14,15 @@ return {
             return opts
         end
     }, -- {"none-ls.nvim", opts = {border = BORDER_STYLE}},
-    {"mason.nvim", opts = {ui = {border = BORDER_STYLE}}}
+    {"mason.nvim", opts = {ui = {border = BORDER_STYLE}}},
+    {"snacks.nvim", opts = {win = {border = BORDER_STYLE}}}, {
+        "saghen/blink.cmp",
+        opts = {
+            completion = {
+                menu = {border = 'single'},
+                documentation = {window = {border = 'single'}}
+            },
+            signature = {window = {border = 'single'}}
+        }
+    }
 }
