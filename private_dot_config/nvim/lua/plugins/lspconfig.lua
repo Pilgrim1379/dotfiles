@@ -101,7 +101,14 @@ return {
                 bashls = {mason = false},
                 clangd = {mason = false},
                 gopls = {mason = false},
-                ruff = {mason = false},
+                ruff = {
+                    mason = false,
+                    settings = {
+                        lineLength = 80,
+                        showSyntaxErrors = true,
+                        logLevel = "info"
+                    }
+                },
                 basedpyright = {
                     mason = false,
                     settings = {

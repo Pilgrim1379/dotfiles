@@ -1,84 +1,156 @@
 {
-    "workbench.startupEditor": "newUntitledFile",
-    "editor.fontSize": 15,
-    "editor.fontFamily": "'JetBrainsMono Nerd Font', 'Cascadia Code PL', 'SF Mono', Menlo, Monaco, monospace",
+    "update.mode": "manual",
+    "workbench.startupEditor": "none",
+    "workbench.colorCustomizations": {
+        "tab.activeBorder": "#fab387"
+    },
     "workbench.colorTheme": "Catppuccin Mocha",
     "workbench.iconTheme": "vscode-icons",
-    "css.validate": false,
-    "scss.validate": false,
-    "less.validate": false,
-    "python.languageServer": "Pylance",
-    "django.snippets.exclude": ["cms"],
+    "workbench.sideBar.location": "left",
+    "workbench.editor.highlightModifiedTabs": true,
+
+    "terminal.integrated.fontFamily": "'Symbols Nerd Font Mono'",
+    "editor.fontFamily": "'Maple Mono', 'Monaspace Neon', Monaco, monospace",
+    "editor.fontSize": 16,
+    "editor.fontLigatures": false,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.guides.bracketPairsHorizontal": true,
+    "editor.guides.highlightActiveBracketPair": true,
     "editor.formatOnSave": true,
-    "editor.rulers": [80, 120],
+    "editor.linkedEditing": true,
+    "editor.rulers": [80],
+    "editor.snippetSuggestions": "top",
+    "editor.tabCompletion": "on",
+
+    "explorer.confirmDelete": false,
+
+    "debug.console.fontSize": 16,
+    "markdown.preview.fontSize": 16,
+    "terminal.integrated.fontSize": 16,
+    "scm.inputFontSize": 16,
+    "notebook.markup.fontSize": 16,
+    "vsicons.dontShowNewVersionMessage": true,
+
+    "prettier.tabWidth": 4,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+
+    "files.autoSave": "onFocusChange",
+    "files.associations": {
+        "*.heex": "phoenix-heex"
+    },
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
-        ".vscode": true,
-        "**/*.pyc": true
+        "**/Thumbs.db": true,
+        "**/_build": true,
+        "**/deps": true,
+        "**/priv/static": true,
+        "**/.elixir_ls": true
     },
-    "workbench.editor.enablePreview": false,
-    "editor.minimap.enabled": false,
-    "python.linting.pylintArgs": ["--load-plugins", "pylint_django"],
-    "files.associations": {
-        "**/*.html": "html",
-        "**/templates/**/*.html": "django-html",
-        "**/templates/**/*": "django-txt",
-        "**/requirements{/**,*}.{txt,in}": "pip-requirements"
-    },
+
+    "html.autoClosingTags": true,
+
+    "emmet.excludeLanguages": [],
     "emmet.includeLanguages": {
-        "django-html": "html"
+        "vue-html": "html",
+        "javascript": "javascriptreact",
+        "markdown": "html",
+        "elixir": "html",
+        "phoenix-heex": "html"
     },
-    "python.formatting.provider": "black",
-    "python.formatting.blackPath": "${env:HOME}/.local/bin/black",
-    "tailwindCSS.includeLanguages": {
-        "plaintext": "html"
+    "emmet.triggerExpansionOnTab": true,
+
+    "typescript.autoClosingTags": true,
+    "typescript.suggest.autoImports": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+
+    "javascript.suggest.autoImports": true,
+    "javascript.autoClosingTags": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "tailwindCSS.emmetCompletions": true,
-    "python.showStartPage": false,
-    "python.testing.pytestPath": "${env:HOME}/.local/bin/pytest",
-    "vsicons.dontShowNewVersionMessage": true,
-    "go.useLanguageServer": true,
-    "[dart]": {
+
+    "json.format.enable": false,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    "terminal.integrated.commandsToSkipShell": ["language-julia.interrupt"],
+    "julia.symbolCacheDownload": true,
+    "julia.enableTelemetry": false,
+
+    "[python]": {
         "editor.formatOnSave": true,
-        "editor.formatOnType": true,
-        "editor.rulers": [80],
-        "editor.selectionHighlight": false,
-        "editor.suggest.snippetsPreventQuickSuggestions": false,
-        "editor.suggestSelection": "first",
-        "editor.tabCompletion": "onlySnippets",
-        "editor.wordBasedSuggestions": false
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
     },
-    "[sass]": {
-        "editor.tabSize": 2
+
+    "[elixir]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "JakeBecker.elixir-ls"
     },
-    "update.mode": "manual",
-    "python.defaultInterpreterPath": "${env:HOME}/.asdf/shims/python",
-    "insertnum.start": 1,
-    "splitHTMLAttributes.closingBracketOnNewLine": true,
-    "splitHTMLAttributes.sortOrder": [
-        "^v-if",
-        "^v-else",
-        "^v-show",
-        "^v-model",
-        "^v-for",
-        "^:key",
-        "^key",
-        "^v-",
-        "^:",
-        "^@click",
-        "^@",
-        "^id",
-        "^class",
-        "^.*=\""
-    ],
-    "eslint.validate": ["javascript", "javascriptreact", "vue"],
-    "eslint.nodePath": "${env:HOME}/.asdf/shims/node",
-    "terminal.integrated.fontSize": 15,
+
+    "[phoenix-heex]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "JakeBecker.elixir-ls"
+    },
+    "git.enableSmartCommit": true,
+    "editor.minimap.enabled": false,
+    "[lua]": {
+        "editor.defaultFormatter": "sumneko.lua"
+    },
+    "git.confirmSync": false,
+    "editor.accessibilitySupport": "off",
+    "editor.fontWeight": "normal",
+    "ruff.lint.extendSelect": ["I"],
+    "[yaml]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "terminal.integrated.cursorStyle": "line",
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    // Python Settings
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingImports": "none"
+    },
+    "python.analysis.extraPaths": ["${workspaceFolder}/src"],
+    "python.envFile": "${workspaceFolder}/.env",
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    // Python Testing
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.cwd": "${workspaceFolder}/test",
+    "python.testing.pytestPath": "pytest",
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "mise.checkForNewMiseVersion": false,
+    "remote.defaultExtensionsIfInstalledLocally": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "GitHub.vscode-pull-request-github"
+    ]
 }

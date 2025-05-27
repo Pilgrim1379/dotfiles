@@ -1,28 +1,58 @@
 [tools]
 # global tool versions go here
 # you can set these with `mise use -g`
-python = ["latest", "3.12"]
+python = ["latest", "3.12", "3.10"]
 erlang = "latest"
 elixir = "latest"
 ruby = "latest"
 elm = "latest"
 nim = "latest"
-node = "lts"
+node = "latest"
 deno = "latest"
 usage = "latest"
 java = "temurin-21"
-# zig = "latest"
-# zigmod = "latest"
-# neovim = "nightly"
-# opam = "latest"
-# bun = "latest"
-# golang = "latest"
+"npm:elm-oracle" = "latest"
+"npm:elm-review" = "latest"
+"npm:elm-live" = "latest"
+"npm:cliui" = "latest"
+"npm:vscode-markdown-languageserver" = "latest"
+"npm:eslint" = "latest"
+"npm:npm-name-cli" = "latest"
+"npm:np" = "latest"
+"npm:@tailwindcss/language-server" = "latest"
+"npm:npm-check" = "latest"
+"npm:yaml-language-server" = "latest"
+"npm:npm-check-updates" = "latest"
+"npm:stylus" = "latest"
+"npm:less" = "latest"
+"npm:basedpyright" = "latest"
+"npm:js-beautify" = "latest"
+"npm:pnpm" = "latest"
+"npm:emmet-ls" = "latest"
+"npm:prettier" = "latest"
+"npm:typescript" = "latest"
+"npm:git-recent" = "latest"
+"npm:@fsouza/prettierd" = "latest"
+"npm:neovim" = "latest"
+"npm:stylelint" = "latest"
+"npm:prettier-plugin-elm" = "latest"
+"npm:wscat" = "latest"
+"npm:bash-language-server" = "latest"
+"npm:typescript-language-server" = "latest"
+"npm:import-js" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
+"npm:diagnostic-languageserver" = "latest"
+"npm:elm-test" = "latest"
+"npm:@elm-tooling/elm-language-server" = "latest"
+"npm:@vue/language-server" = "latest"
+"npm:elm-format" = "latest"
 
 [settings]
 # plugins can read the versions files used by other version managers (if enabled by the plugin)
 # for example, .nvmrc in the case of node's nvm
-idiomatic_version_file = true                     # enabled by default (unlike asdf)
-idiomatic_version_file_disable_tools = [] # disable for specific tools
+idiomatic_version_file = false            # enabled by default (unlike asdf)
+# idiomatic_version_file_disable_tools = [] # disable for specific tools
+idiomatic_version_file_enable_tools = [] # enable for specific tools
 
 # configure `mise install` to always keep the downloaded archive
 always_keep_download = false        # deleted after install by default

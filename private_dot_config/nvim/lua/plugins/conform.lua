@@ -28,6 +28,7 @@ return {
             },
             formatters = {
                 black = {
+                    prepend_args = {"--line-length", "80"},
                     command = "dotnet-csharpier",
                     args = {"--write-stdout"}
                 }

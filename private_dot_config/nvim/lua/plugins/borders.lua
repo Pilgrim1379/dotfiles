@@ -2,6 +2,7 @@
 return {
     -- lazyvim.plugins.coding
     -- lazyvim.plugins.editor
+    {"mason.nvim", opts = {ui = {border = BORDER_STYLE}}},
     {"which-key.nvim", opts = {win = {border = BORDER_STYLE}}},
     {"gitsigns.nvim", opts = {preview_config = {border = BORDER_STYLE}}},
     -- lazyvim.plugins.lsp
@@ -14,7 +15,6 @@ return {
             return opts
         end
     }, -- {"none-ls.nvim", opts = {border = BORDER_STYLE}},
-    {"mason.nvim", opts = {ui = {border = BORDER_STYLE}}},
     {"snacks.nvim", opts = {win = {border = BORDER_STYLE}}}, {
         "saghen/blink.cmp",
         opts = {

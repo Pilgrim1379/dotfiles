@@ -20,11 +20,11 @@ alias la='ll -a'
 alias tree='ll --tree --level=3'
 
 ## Neovim switcher
-alias v="NVIM_APPNAME=LazyVim nvim"
-alias lazyvim="NVIM_APPNAME=LazyVim nvim"
+# alias v="NVIM_APPNAME=LazyVim nvim"
+# alias lazyvim="NVIM_APPNAME=LazyVim nvim"
 
-alias vim="echo 'Just use v'"
-alias vi="echo 'Just use v'"
+# alias vim="echo 'Just use v'"
+# alias vi="echo 'Just use v'"
 
 ## NPM
 alias npmlsg='npm ls -g --depth 0'

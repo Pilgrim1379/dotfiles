@@ -1,5 +1,5 @@
 return {
-    { -- add gruvbox
+    { -- add catppuccin
         "catppuccin/nvim",
         lazy = true,
         name = "catppuccin",
@@ -41,7 +41,8 @@ return {
                 telescope = true,
                 treesitter = true,
                 treesitter_context = true,
-                which_key = true
+                which_key = true,
+                blink_cmp = true
             }
         }
     }, { -- Configure LazyVim to load catppuccin

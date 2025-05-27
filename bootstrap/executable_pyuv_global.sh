@@ -10,6 +10,7 @@ if [ $? -eq 0 ]; then
     uv pip install -U --system debugpy
     uv pip install -U --system pynvim
     uv pip install -U --system bpyutils
+    uv pip install -U --system "camoufox[geoip]"
 
     # uv pip install -U --system jupyterlab && \
     #     uv pip install -U --system jupyterlab jupyterlab-lsp && \
@@ -49,6 +50,7 @@ if [ $? -eq 0 ]; then
     uv tool install mypy
     uv tool install ruff
     uv tool install codespell
+    uv tool install black
 
     uv tool install cmake-language-server
     uv tool install python-lsp-server

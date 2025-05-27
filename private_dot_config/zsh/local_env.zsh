@@ -1,5 +1,8 @@
 # Environment variables
-export TERM='xterm-256color'
+# ghostty provides TERM=xterm-ghostty. https://ghostty.org/docs/help/terminfo
+if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+  export TERM=xterm-256color
+fi
 
 # Workspace
 export WORKSPACE=$HOME/workspace

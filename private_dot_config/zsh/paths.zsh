@@ -10,6 +10,7 @@ zinit as"program" make'!' atclone'./direnv hook zsh > zhook.zsh' \
 
 path=(
     $HOME/.nimble/bin(N) # Nim
+    $XDG_DATA_HOME/pnpm(N) # PNPM
     $HOME/.cargo/bin(N) # Rust
     $HOME/.juliaup/bin(N) # Julia
     $GOPATH/bin(N) # Golang
@@ -26,6 +27,26 @@ path=(
     $HOMEBREW_PREFIX/opt/{curl,gettext,sqlite,llvm}/bin(N)
     $path
 )
+
+# Reset manpath to avoid errors from broken paths
+unset MANPATH
+
+# Rebuild default MANPATH
+export MANPATH="$(manpath 2>/dev/null)"
+
+# Append Homebrew and Zinit plugin manpages
+[[ -d "$HOME/.local/share/zinit/plugins/direnv---direnv/man" ]] && \
+  MANPATH="$HOME/.local/share/zinit/plugins/direnv---direnv/man:$MANPATH"
+
+for extra in \
+  "/opt/homebrew/opt/ncurses/share/man" \
+  "/opt/homebrew/opt/coreutils/libexec/gnubin/man" \
+  "/opt/homebrew/opt/findutils/libexec/gnubin/man" \
+  "/opt/homebrew/opt/grep/libexec/gnubin/man" \
+  "/opt/homebrew/opt/curl/share/man" \
+  "/opt/homebrew/opt/gettext/share/man"; do
+  [[ -d $extra ]] && MANPATH="$extra:$MANPATH"
+done
 
 # Rust
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
@@ -73,8 +94,7 @@ if [ -e ~/.local/bin/mise ]; then
     # export MISE_LOG_LEVEL=debug
     # export RUST_BACKTRACE=1
 
-    # eval "$(mise activate zsh --shims)" # should be first if using mise shims and disable line with mise hook-env
-    eval "$($HOME/.local/bin/mise activate zsh --shims)"
-    # eval "$($HOME/.local/bin/mise hook-env -s zsh)" # enable this if not using mise shims for sublime text to work
+    # eval "$($HOME/.local/bin/mise activate zsh)" #
+    eval "$($HOME/.local/bin/mise activate zsh --shims)" # Use shims instead
 fi
 ########################################################################################################

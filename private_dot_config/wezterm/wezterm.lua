@@ -2,15 +2,13 @@
 local wezterm = require 'wezterm'
 local mux = wezterm.mux
 
--- This table will hold the configuration.
+-- Use config_builder for better error messages (if available)
 local config = {}
+if wezterm.config_builder then
+    config = wezterm.config_builder()
+end
 
--- In newer versions of wezterm, use the config_builder which will
--- help provide clearer error messages
-if wezterm.config_builder then config = wezterm.config_builder() end
-
---- This is where you actually apply your config choices
---- Color scheme
+-- Theme switching based on system appearance
 function scheme_for_appearance(appearance)
     if appearance:find "Dark" then
         return "Catppuccin Mocha"
@@ -20,68 +18,57 @@ function scheme_for_appearance(appearance)
 end
 
 config.color_scheme = scheme_for_appearance(wezterm.gui.get_appearance())
-config.colors = {indexed = {[16] = "#000000"}} -- required for ipython completion
 
---- Font Config
-config.font = wezterm.font("MonaspiceNe NF")
+-- Needed for better iPython color support
+config.colors = {
+    indexed = {
+        [16] = "#000000" -- Used for iPython background fix
+    }
+}
 
--- config.font = wezterm.font("MonaspiceAr NF")
-
--- config.font = wezterm.font("JetBrainsMono NF")
-
+-- Font config: primary font with fallback to icon font
 -- config.font = wezterm.font_with_fallback({
---     "JetBrains Mono", {family = "Symbols Nerd Font Mono", scale = 0.75}
+--     "Monaspace Neon",
+--     { family = "Symbols Nerd Font Mono", scale = 1 } -- Ensures correct rendering of Nerd Font icons
 -- })
 
--- font size
+config.font = wezterm.font_with_fallback({
+    "Maple Mono NF",
+    { family = "Symbols Nerd Font Mono", scale = 1 } -- Ensures correct rendering of Nerd Font icons
+})
+
 config.font_size = 16
 
--- disable ligatures for all fonts
-config.harfbuzz_features = {'calt=0', 'clig=0', 'liga=0'}
+-- Disable all ligatures (optional: can be relaxed if you like `==`, `->`, etc. ligatures)
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
---- Window Config
--- initial window size
-config.initial_rows = 54 -- for MonaspiceX NF
-config.initial_cols = 84 -- for MonaspiceX NF
+-- Initial window size in cells
+config.initial_rows = 54
+config.initial_cols = 89
 
--- config.initial_rows = 48 -- for JetbrainsMono NF
--- config.initial_cols = 92 -- for JetbrainsMono NF
-
--- initial window position - maximized
--- wezterm.on('gui-startup', function(cmd)
---     local tab, pane, window = mux.spawn_window(cmd or {})
---     -- window:gui_window():maximize()
--- end)
-
--- initial window position - top right
--- wezterm.on('gui-startup', function(cmd)
---     local tab, pane, window = mux.spawn_window(cmd or {})
---     -- window:gui_window():maximize()
---     -- window:gui_window():set_position(1798, 106)
---     window:gui_window():set_position(1798,
---                                      wezterm.gui.screens()['active']['height'] -
---                                          2134)
--- end)
-
--- initial window position - top left
+-- Place window on screen top right (exact placement tailored to your resolution)
 wezterm.on('gui-startup', function(cmd)
     local tab, pane, window = mux.spawn_window(cmd or {})
-    -- window:gui_window():maximize()
-    window:gui_window():set_position(0, 0)
+    window:gui_window():set_position(
+        1736,
+        wezterm.gui.screens()['active']['height'] - 2134
+    )
 end)
 
--- disable audible beep
+-- Optional alternative positions (you’ve commented them out — nice for quick testing)
+-- e.g., top left:
+-- wezterm.on('gui-startup', function(cmd)
+--   local tab, pane, window = mux.spawn_window(cmd or {})
+--   window:gui_window():set_position(0, 0)
+-- end)
+
+-- Disable bell, auto-reload, and update checks for minimal distraction
 config.audible_bell = "Disabled"
--- don't auto reload config
 config.automatically_reload_config = false
-
--- don't check for updates - don't the distraction of being notified of updates
 config.check_for_updates = false
--- config.check_for_updates_interval_seconds = 86400
 
--- default cursor style
+-- Default cursor style
 config.default_cursor_style = "SteadyBar"
 
--- and finally, return the configuration to wezterm
+-- Final return
 return config
--- Nothing To See Here --

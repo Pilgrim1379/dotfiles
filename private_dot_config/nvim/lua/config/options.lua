@@ -5,6 +5,11 @@ local g = vim.g
 local opt = vim.opt
 local env = vim.env
 
+vim.opt.timeoutlen = 300 -- how long to wait for key strokes before executing
+
+-- vim.opt.wrap = true -- auto line wrap
+-- vim.opt.textwidth = 80 -- max line length
+
 -- Set Python Provider/Skip some remote provider loading
 g.loaded_python_provider = 0
 g.python3_host_prog = "python"
@@ -17,7 +22,7 @@ g.markdown_fenced_languages = {
 }
 
 -- GUI font
-opt.guifont = "MonaspiceNe Nerd Font:h16"
+-- opt.guifont = "Maple Mono:h16"
 -- opt.guifont = "JetBrainsMono Nerd Font:h16"
 -- vim.g.lazyvim_prettier_needs_config = false
 

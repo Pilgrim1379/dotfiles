@@ -8,7 +8,7 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 vim.cmd(
     [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
-vim.cmd("silent! Copilot disable") -- Disable Copilot on startup
+-- vim.cmd("silent! Copilot disable") -- Disable Copilot on startup
 -- revert terminal cursor to vertical bar upon exit or suspend
 vim.cmd([[
     augroup RestoreCursorShapeOnExit

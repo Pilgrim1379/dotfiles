@@ -20,7 +20,27 @@ return {
                 -- experimental auto-brackets support
                 auto_brackets = {enabled = true}
             },
-            menu = {draw = {treesitter = {"lsp"}}},
+            menu = {
+                draw = {
+                    -- We don't need label_description now because label and label_description are already
+                    -- combined together in label by colorful-menu.nvim.
+                    columns = {{"kind_icon"}, {"label", gap = 1}, {"kind"}},
+                    components = {
+                        label = {
+                            text = function(ctx)
+                                return
+                                    require("colorful-menu").blink_components_text(
+                                        ctx)
+                            end,
+                            highlight = function(ctx)
+                                return
+                                    require("colorful-menu").blink_components_highlight(
+                                        ctx)
+                            end
+                        }
+                    }
+                }
+            },
             documentation = {auto_show = true, auto_show_delay_ms = 200},
             ghost_text = {enabled = vim.g.ai_cmp}
         },
@@ -32,8 +52,7 @@ return {
             -- adding any nvim-cmp sources here will enable them
             -- with blink.compat
             compat = {},
-            default = {"lsp", "path", "snippets", "buffer"},
-            cmdline = {}
+            default = {"lsp", "path", "snippets", "buffer"}
         },
 
         keymap = {preset = "enter", ["<C-y>"] = {"select_and_accept"}}
