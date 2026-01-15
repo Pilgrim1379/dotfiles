@@ -1,33 +1,34 @@
 -- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
+-- Default options:
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
+
 local g = vim.g
 local opt = vim.opt
-local env = vim.env
 
-vim.opt.timeoutlen = 300 -- how long to wait for key strokes before executing
+-- Key timing
+opt.timeoutlen = 300
 
--- vim.opt.wrap = true -- auto line wrap
--- vim.opt.textwidth = 80 -- max line length
+-- Formatting
+g.autoformat = true
 
--- Set Python Provider/Skip some remote provider loading
-g.loaded_python_provider = 0
-g.python3_host_prog = "python"
-g.python_host_prog = "/usr/bin/python2"
+-- UI
+opt.showtabline = 2 -- always show bufferline
 
--- Markdown highlight
+-- Indentation (safe defaults)
+opt.expandtab = true
+opt.shiftwidth = 4
+opt.tabstop = 4
+opt.smartindent = true
+
+-- Python provider (modern)
+g.python3_host_prog = vim.fn.exepath("python3")
+
+-- Markdown fenced code highlighting
 g.markdown_fenced_languages = {
-    "bash", "c", "json", "lua", "python", "rust", "sh", "elixir", "haskell",
-    "ocaml", "elm"
+    "bash", "c", "json", "lua", "python", "rust", "sh",
+    "elixir", "haskell", "ocaml", "elm",
 }
 
--- GUI font
--- opt.guifont = "Maple Mono:h16"
--- opt.guifont = "JetBrainsMono Nerd Font:h16"
--- vim.g.lazyvim_prettier_needs_config = false
-
--- LSP Server to use for Python.
--- Set to "basedpyright" to use basedpyright instead of pyright.
-vim.g.lazyvim_python_lsp = "basedpyright"
--- Set to "ruff_lsp" to use the old LSP implementation version.
-vim.g.lazyvim_python_ruff = "ruff"
+-- LazyVim Python tooling
+g.lazyvim_python_lsp = "basedpyright"
+g.lazyvim_python_ruff = "ruff"

@@ -8,7 +8,6 @@
     "lazyvim.plugins.extras.editor.snacks_explorer",
     "lazyvim.plugins.extras.editor.snacks_picker",
     "lazyvim.plugins.extras.lang.clangd",
-    "lazyvim.plugins.extras.lang.clojure",
     "lazyvim.plugins.extras.lang.cmake",
     "lazyvim.plugins.extras.lang.elixir",
     "lazyvim.plugins.extras.lang.elm",
@@ -32,7 +31,7 @@
   ],
   "install_version": 7,
   "news": {
-    "NEWS.md": "10960"
+    "NEWS.md": "11866"
   },
   "version": 8
 }

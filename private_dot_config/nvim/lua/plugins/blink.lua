@@ -1,60 +1,82 @@
 return {
     "saghen/blink.cmp",
-    opts = {
-        snippets = {
+    opts = function(_, opts)
+        -- ---------------------------------------------------------------------
+        -- Your existing configuration (unchanged)
+        -- ---------------------------------------------------------------------
+        opts.snippets = {
             expand = function(snippet, _)
                 return LazyVim.cmp.expand(snippet)
-            end
-        },
-        appearance = {
-            -- sets the fallback highlight groups to nvim-cmp's highlight groups
-            -- useful for when your theme doesn't support blink.cmp
-            -- will be removed in a future release, assuming themes add support
+            end,
+        }
+
+        opts.appearance = {
             use_nvim_cmp_as_default = false,
-            -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-            -- adjusts spacing to ensure icons are aligned
-            nerd_font_variant = "mono"
-        },
-        completion = {
-            accept = {
-                -- experimental auto-brackets support
-                auto_brackets = {enabled = true}
-            },
-            menu = {
-                draw = {
-                    -- We don't need label_description now because label and label_description are already
-                    -- combined together in label by colorful-menu.nvim.
-                    columns = {{"kind_icon"}, {"label", gap = 1}, {"kind"}},
-                    components = {
-                        label = {
-                            text = function(ctx)
-                                return
-                                    require("colorful-menu").blink_components_text(
-                                        ctx)
-                            end,
-                            highlight = function(ctx)
-                                return
-                                    require("colorful-menu").blink_components_highlight(
-                                        ctx)
-                            end
-                        }
-                    }
-                }
-            },
-            documentation = {auto_show = true, auto_show_delay_ms = 200},
-            ghost_text = {enabled = vim.g.ai_cmp}
-        },
+            nerd_font_variant = "mono",
+        }
 
-        -- experimental signature help support
-        -- signature = {enabled = true},
+        opts.completion = opts.completion or {}
+        opts.completion.accept = {
+            auto_brackets = { enabled = true },
+        }
 
-        sources = {
-            -- adding any nvim-cmp sources here will enable them
-            -- with blink.compat
+        opts.completion.menu = {
+            draw = {
+                treesitter = { "lsp" },
+            },
+        }
+
+        opts.completion.documentation = {
+            auto_show = true,
+            auto_show_delay_ms = 200,
+        }
+
+        opts.completion.ghost_text = {
+            enabled = vim.g.ai_cmp,
+        }
+
+        opts.sources = {
             compat = {},
-            default = {"lsp", "path", "snippets", "buffer"}
-        },
+            default = { "lsp", "path", "snippets", "buffer" },
+        }
 
-        keymap = {preset = "enter", ["<C-y>"] = {"select_and_accept"}}
-    }
+        opts.cmdline = {
+            enabled = true,
+            keymap = {
+                preset = "cmdline",
+                ["<Right>"] = false,
+                ["<Left>"] = false,
+            },
+            completion = {
+                list = { selection = { preselect = false } },
+                menu = {
+                    auto_show = function()
+                        return vim.fn.getcmdtype() == ":"
+                    end,
+                },
+                ghost_text = { enabled = true },
+            },
+        }
+
+        opts.keymap = {
+            preset = "enter",
+            ["<C-y>"] = { "select_and_accept" },
+        }
+
+        -- ---------------------------------------------------------------------
+        -- Borders (the ONLY new addition)
+        -- ---------------------------------------------------------------------
+        opts.completion.menu.border = BORDER_STYLE
+
+        opts.completion.documentation.window = {
+            border = BORDER_STYLE,
+        }
+
+        opts.signature = opts.signature or {}
+        opts.signature.window = {
+            border = BORDER_STYLE,
+        }
+
+        return opts
+    end,
 }

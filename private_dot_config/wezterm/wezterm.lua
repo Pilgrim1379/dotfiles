@@ -20,15 +20,16 @@ end
 config.color_scheme = scheme_for_appearance(wezterm.gui.get_appearance())
 
 -- Needed for better iPython color support
-config.colors = {
-    indexed = {
-        [16] = "#000000" -- Used for iPython background fix
-    }
-}
+-- REMOVE this entire block
+-- config.colors = {
+--     indexed = {
+--         [16] = "#000000"
+--     }
+-- }
 
 -- Font config: primary font with fallback to icon font
 -- config.font = wezterm.font_with_fallback({
---     "Monaspace Neon",
+--     "Monaspace Neon NF",
 --     { family = "Symbols Nerd Font Mono", scale = 1 } -- Ensures correct rendering of Nerd Font icons
 -- })
 

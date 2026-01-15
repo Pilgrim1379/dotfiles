@@ -7,7 +7,9 @@ elixir = "latest"
 ruby = "latest"
 elm = "latest"
 nim = "latest"
-node = "latest"
+node = "lts"
+pnpm = "latest"
+# bun = "latest"
 deno = "latest"
 usage = "latest"
 java = "temurin-21"
@@ -27,7 +29,6 @@ java = "temurin-21"
 "npm:less" = "latest"
 "npm:basedpyright" = "latest"
 "npm:js-beautify" = "latest"
-"npm:pnpm" = "latest"
 "npm:emmet-ls" = "latest"
 "npm:prettier" = "latest"
 "npm:typescript" = "latest"
@@ -84,6 +85,9 @@ env_file = '.env' # load env vars from a dotenv file, see `MISE_ENV_FILE`
 
 experimental = true # enable experimental features
 python_compile = false
+ruby.compile = true
+
+npm.package_manager = "pnpm"
 
 # configure messages displayed when entering directories with config files
 status = { missing_tools = "if_other_versions_installed", show_env = false, show_tools = false }

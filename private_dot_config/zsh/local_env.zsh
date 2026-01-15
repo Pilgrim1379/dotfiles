@@ -37,7 +37,9 @@ export VISUAL="code --wait"
 
 # Fzf
 # Setting fd as the default source for fzf
-export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden'
+export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git 2>/dev/null || find . -type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git 2>/dev/null || find . -type d'
 
 export PAGER=${PAGER:-less}
 # export MANPAGER='bat -l man'
@@ -67,6 +69,7 @@ export ERL_AFLAGS
 # Python
 export PNPM_HOME=$XDG_DATA_HOME/pnpm
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
+export PYTHONSTARTUP=$HOME/.pythonstartup
 
 # UV
 export INSTALLER_NO_MODIFY_PATH=1

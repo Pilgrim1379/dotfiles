@@ -1,58 +1,94 @@
 # zmodload zsh/zprof # Uncomment to profile startup time #
-# Personal Zsh configuration file. It is strongly recommended to keep all
-# shell customization and configuration (including exported environment
-# variables such as PATH) in this file or in files sourced from it.
 
-# Source history
+# If you only want .zshrc to affect interactive shells (recommended):
+[[ -o interactive ]] || return 0
+
+# Source history (history is interactive anyway)
 source "$ZDOTDIR/history.zsh"
 
-# # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# # Initialization code that may require console input (password prompts, [y/n]
-# # confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
 # Homebrew PATH
-if [[ -f "/opt/homebrew/bin/brew" ]] then
-  # If you're using macOS, you'll want this enabled
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Set the directory we want to store zinit and plugins
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
-# Download Zinit, if it's not there yet
-if [ ! -d "$ZINIT_HOME" ]; then
-   mkdir -p "$(dirname $ZINIT_HOME)"
-   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+# Homebrew command-not-found handler
+HOMEBREW_COMMAND_NOT_FOUND_HANDLER="$(brew --repository)/Library/Homebrew/command-not-found/handler.sh"
+if [[ -f "$HOMEBREW_COMMAND_NOT_FOUND_HANDLER" ]]; then
+  source "$HOMEBREW_COMMAND_NOT_FOUND_HANDLER"
 fi
 
-# Source/Load zinit
-source "${ZINIT_HOME}/zinit.zsh"
+# Env vars
+export GPG_TTY=$TTY
+source "$ZDOTDIR/local_env.zsh"
+
+# Paths (now includes manpath cache / rust cache / mise cache)
+source "$ZDOTDIR/paths.zsh"
+
+# Move zinit plugin bins just after personal bins
+zinit_bin="$XDG_DATA_HOME/zinit/plugins/direnv---direnv"
+if [[ -d "$zinit_bin" ]]; then
+  path=(
+    "$HOME/.bin"(N)
+    "$HOME/.local/bin"(N)
+    "$zinit_bin"
+    ${path:#$zinit_bin}
+  )
+fi
+typeset -U path PATH
+
+
+# Zinit location (XDG vars already set in .zshenv; you can drop the fallback if you want)
+ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
+
+# Install zinit if missing
+if [[ ! -d "$ZINIT_HOME" ]]; then
+  mkdir -p "${ZINIT_HOME:h}"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# Load zinit
+source "$ZINIT_HOME/zinit.zsh"
 
 # Plugins
 source "$ZDOTDIR/plugins.zsh"
 
-# Extend completion path - should come before compinit
-fpath=(
-	~/.zfunc(N)
-	$fpath
-)
+# Load p10k config after p10k plugin is available
+[[ -r "$ZDOTDIR/.p10k.zsh" ]] && source "$ZDOTDIR/.p10k.zsh"
 
-# Load completions
-autoload -Uz compinit && compinit
+# -- Extend completion path before compinit --
+fpath=(~/.zfunc(N) $fpath)
+
+# --- Completion init (hybrid fast + occasional full rebuild) ---
+autoload -Uz compinit
+
+_zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"
+_zcompdump_stamp="${_zcompdump}.stamp"
+_rebuild_every_days=7
+
+_do_full=0
+[[ -f "${_zcompdump}" ]] || _do_full=1
+
+if (( !_do_full )); then
+  if [[ ! -f "${_zcompdump_stamp}" ]]; then
+    _do_full=1
+  else
+    zmodload -F zsh/stat b:zstat 2>/dev/null || true
+    if (( $+functions[zstat] )); then
+      zstat -A _st +mtime -- "${_zcompdump_stamp}" 2>/dev/null || _do_full=1
+      (( EPOCHSECONDS - ${_st[1]:-0} > _rebuild_every_days * 86400 )) && _do_full=1
+    fi
+  fi
+fi
+
+if (( _do_full )); then
+  compinit -d "${_zcompdump}"
+  : >| "${_zcompdump_stamp}" 2>/dev/null
+else
+  compinit -C -d "${_zcompdump}"
+fi
+
+# Let zinit replay completion definitions after compinit
 zinit cdreplay -q
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Export environment variables.
-export GPG_TTY=$TTY
-source "$ZDOTDIR/local_env.zsh"
-
-# Extend application path.
-source "$ZDOTDIR/paths.zsh"
 
 # Keybindings
 bindkey -e
@@ -60,32 +96,47 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
-# Autoload functions.
+# Autoload functions
 autoload -Uz zmv
 
 # Completion styling
 source "$ZDOTDIR/completion_styling.zsh"
 
-# Functions and Scripts
+# Functions, aliases, shell options
 source "$ZDOTDIR/functions.zsh"
-
-# Aliases
 source "$ZDOTDIR/aliases.zsh"
-
-# Shell options 
 source "$ZDOTDIR/shell_options.zsh"
 
-# ADDITIONAL PATHS - Path's here need to be at the top
-path=(
-  $HOME/bin(N)
-  $HOME/.local/bin(N)
-  $path
-)
-
 # Shell integrations
-eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)" # This uses cd inplace of z
-# eval "$(zoxide init zsh)"
-if [ -f "~/.config/fabric/fabric-bootstrap.inc" ]; then . "~/.config/fabric/fabric-bootstrap.inc"; fi
+
+# --- fzf keybindings only (avoid fzf completion to prevent conflicts with fzf-tab) ---
+if command -v brew >/dev/null 2>&1; then
+  fzf_keybind="$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
+else
+  fzf_keybind=""
+fi
+
+if [[ -n "$fzf_keybind" && -r "$fzf_keybind" ]]; then
+  source "$fzf_keybind"
+elif [[ -r "/usr/share/fzf/key-bindings.zsh" ]]; then
+  source "/usr/share/fzf/key-bindings.zsh"
+fi
+
+# Optional: ensure Ctrl-R isn't left on fzf (Atuin will own Ctrl-R)
+# bindkey -r '^R' 2>/dev/null
+
+# --- Atuin (smart history) - keep your existing zsh history + iCloud fallback ---
+if command -v atuin >/dev/null 2>&1; then
+  # Prevent Atuin from hijacking Up Arrow (keeps your current history keys behaving as-is)
+  eval "$(atuin init zsh --disable-up-arrow)"
+fi
+
+# --- zoxide ---
+eval "$(zoxide init --cmd cd zsh)"
+
+if [[ -f "$HOME/.config/fabric/fabric-bootstrap.inc" ]]; then
+  source "$HOME/.config/fabric/fabric-bootstrap.inc"
+fi
+
 # zprof # comment out after profiling #
 ##### Nothing below this line #######

@@ -1,13 +1,23 @@
+# Only load completion styling in interactive shells
+[[ -o interactive ]] || return 0
+
+# Case-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Completion menu behaviour (use menu selection, but don't auto-cycle)
 zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# If all hosts you SSH to are listed in ~/.ssh/config (good idea), add this to improve completions for ssh and similar commands:
-zstyle ':completion:*:ssh:argument-1:'       tag-order  hosts users
-zstyle ':completion:*:scp:argument-rest:'    tag-order  hosts files users
+# fzf-tab previews
+# Use a portable directory listing command for previews.
+if [[ "$OSTYPE" == darwin* ]]; then
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'command ls -G -- "$realpath"'
+  zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'command ls -G -- "$realpath"'
+else
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'command ls --color=auto -- "$realpath"'
+  zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'command ls --color=auto -- "$realpath"'
+fi
+
+# Better ssh/scp host completion (uses ~/.ssh/config)
+zstyle ':completion:*:ssh:argument-1:'       tag-order hosts users
+zstyle ':completion:*:scp:argument-rest:'    tag-order hosts files users
 zstyle ':completion:*:(ssh|scp|rdp):*:hosts' hosts
-
-function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
-compdef _directories md
