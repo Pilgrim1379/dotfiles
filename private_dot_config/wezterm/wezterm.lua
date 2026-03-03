@@ -38,7 +38,7 @@ config.font = wezterm.font_with_fallback({
     { family = "Symbols Nerd Font Mono", scale = 1 } -- Ensures correct rendering of Nerd Font icons
 })
 
-config.font_size = 16
+config.font_size = 14
 
 -- Disable all ligatures (optional: can be relaxed if you like `==`, `->`, etc. ligatures)
 config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }

@@ -52,33 +52,16 @@ local function jk_handler(lhs)
 
     local ok, blink_mod = pcall(require, "blink.cmp")
     if ok and blink_mod then
-        -- blink sometimes exposes methods on blink_mod.cmp, sometimes on blink_mod directly
         local cmp = blink_mod.cmp or blink_mod
 
-        -- Robust "is menu visible?" check
-        local visible = type(cmp.is_visible) == "function" and cmp.is_visible()
-
-        if visible then
-            -- 1) Ask blink to hide if it supports it
-            if type(cmp.hide) == "function" then
-                cmp.hide()
-            elseif type(cmp.close) == "function" then
-                cmp.close()
-            end
-
-            -- 2) Also send <C-e> which closes the completion menu reliably
+        if blink_menu_visible(cmp) then
+            -- Close completion menu first (best-effort)...
+            blink_hide(cmp)
             vim.api.nvim_feedkeys(t("<C-e>"), "n", false)
 
-            -- Visual cue (goes through your Noice msg_show UI)
-            -- vim.api.nvim_echo({ { "󰒲 completion dismissed", "Comment" } }, false, {})
-            -- vim.api.nvim_echo({ { "󰒲 dismissed", "DiagnosticHint" } }, false, {})
-            -- Subtle visual cue
-            vim.api.nvim_echo({ { "󰒲", "DiagnosticHint" } }, false, {})
+            -- return "" -- keep insert mode | This traps cursor in message boxes sometimes.
 
-            -- -- Stay in insert mode
-            -- return ""
-
-            -- ✅ Close completion menu, then leave insert mode
+            -- ...then ESC out of everything
             return t("<Esc>")
         end
     end
@@ -87,16 +70,70 @@ local function jk_handler(lhs)
     return t("<Esc>")
 end
 
-
 vim.keymap.set("i", "jk", function() return jk_handler("jk") end,
-    { expr = true, nowait = true, desc = "jk: dismiss completion / escape" })
+    { expr = true, nowait = true, desc = "jk: dismiss completion or escape" })
 vim.keymap.set("i", "jj", function() return jk_handler("jj") end,
-    { expr = true, nowait = true, desc = "jj: dismiss completion / escape" })
+    { expr = true, nowait = true, desc = "jk: dismiss completion or escape" })
 
 -- UI toggle: comment continuation (buffer-local)
 vim.keymap.set(
     "n",
-    "<leader>uo",
+    "<leader>Uo",
     "<cmd>ToggleCommentContinuation<cr>",
-    { desc = "Toggle comment continuation" }
+    { desc = "Comment continuation" }
 )
+
+-- Jump over closing delimiters in Insert mode (when autopairs already inserted them)
+vim.keymap.set("i", "<C-l>", function()
+  local col = vim.api.nvim_win_get_cursor(0)[2]
+  local line = vim.api.nvim_get_current_line()
+  local nextc = line:sub(col + 1, col + 1)
+
+  -- If next char is a closing delimiter, move over it
+  if nextc:match('[%]%})%>"\'`]') then
+    return "<Right>"
+  end
+
+  -- Otherwise keep Ctrl-L's normal behavior (redraw)
+  return "<C-l>"
+end, {
+  expr = true,
+  replace_keycodes = true,
+  desc = "Jump over closing delimiter",
+})
+
+-- -- Optional upgrade: jump over multiple closers in one press
+-- vim.keymap.set("i", "<C-l>", function()
+--   local col = vim.api.nvim_win_get_cursor(0)[2]
+--   local line = vim.api.nvim_get_current_line()
+--   local out = {}
+
+--   while true do
+--     local nextc = line:sub(col + 1, col + 1)
+--     if nextc == "" or not nextc:match('[%]%})%>"\']') then
+--       break
+--     end
+--     table.insert(out, "<Right>")
+--     col = col + 1
+--   end
+
+--   return #out > 0 and table.concat(out) or "<C-l>"
+-- end, {
+--   expr = true,
+--   replace_keycodes = true,
+--   desc = "Jump over closing delimiters",
+-- })
+--
+vim.keymap.set("i", "<C-j>", function()
+  local ms = require("mini.snippets")
+  if ms.session.get() then
+    ms.session.jump(1)
+  end
+end, { desc = "Next snippet placeholder" })
+
+vim.keymap.set("i", "<C-k>", function()
+  local ms = require("mini.snippets")
+  if ms.session.get() then
+    ms.session.jump(-1)
+  end
+end, { desc = "Prev snippet placeholder" })

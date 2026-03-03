@@ -5,6 +5,9 @@
 local g = vim.g
 local opt = vim.opt
 
+-- General
+-- vim.opt.guifont = { "Maple Mono NF", ":h14", ":#-liga" }
+
 -- Key timing
 opt.timeoutlen = 300
 

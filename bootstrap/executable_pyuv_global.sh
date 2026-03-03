@@ -33,8 +33,6 @@ SYSTEM_PKGS=(
   "camoufox[geoip]"
 )
 
-# NOTE: configparser is stdlib on Python 3.x; omit it.
-
 log "Installing/upgrading system packages: ${SYSTEM_PKGS[*]}"
 uv pip install -U --system "${SYSTEM_PKGS[@]}"
 
@@ -77,6 +75,7 @@ TOOLS=(
   pyinstaller
   sphinx
   mypy
+  ty
   ruff
   codespell
   black

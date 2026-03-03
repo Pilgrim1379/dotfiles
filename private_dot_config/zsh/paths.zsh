@@ -2,7 +2,7 @@
 
 path=(
     $HOME/.nimble/bin(N) # Nim
-    $XDG_DATA_HOME/pnpm(N) # PNPM
+    # $XDG_DATA_HOME/pnpm(N) # PNPM
     $HOME/.cargo/bin(N) # Rust
     $HOME/.juliaup/bin(N) # Julia
     ${GOPATH:-$HOME/go}/bin(N) # Golang

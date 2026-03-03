@@ -9,8 +9,8 @@ return {
             views = {
                 bottom = {
                     backend = "popup",
+                    -- Move messages up to keep a 2-line safe typing zone
                     position = { row = -2, col = 0 },
-
                     size = {
                         width = "96%",
                         height = "auto",
@@ -26,7 +26,7 @@ return {
                         winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
                     },
 
-                    timeout = 5000,
+                    timeout = 3000,
                 },
 
                 -- ✅ THIS is the important addition
@@ -39,18 +39,6 @@ return {
 
             presets = {
                 lsp_doc_border = true,
-            },
-
-            routes = {
-                {
-                    filter = {
-                        event = "msg_show",
-                        find = "completion dismissed",
-                    },
-                    opts = {
-                        timeout = 300,
-                    },
-                },
             },
         },
     },

@@ -1,7 +1,7 @@
 [tools]
 # global tool versions go here
 # you can set these with `mise use -g`
-python = ["latest", "3.12", "3.10"]
+python = ["latest", "3.14", "3.12"]
 erlang = "latest"
 elixir = "latest"
 ruby = "latest"
@@ -11,7 +11,7 @@ node = "lts"
 pnpm = "latest"
 # bun = "latest"
 deno = "latest"
-usage = "latest"
+# usage = "latest"
 java = "temurin-21"
 "npm:elm-oracle" = "latest"
 "npm:elm-review" = "latest"
@@ -22,6 +22,7 @@ java = "temurin-21"
 "npm:npm-name-cli" = "latest"
 "npm:np" = "latest"
 "npm:@tailwindcss/language-server" = "latest"
+"npm:@vtsls/language-server" = "latest"
 "npm:npm-check" = "latest"
 "npm:yaml-language-server" = "latest"
 "npm:npm-check-updates" = "latest"
@@ -47,6 +48,76 @@ java = "temurin-21"
 "npm:@elm-tooling/elm-language-server" = "latest"
 "npm:@vue/language-server" = "latest"
 "npm:elm-format" = "latest"
+
+
+[tasks."python:system"]
+run = """
+echo "Installing system packages"
+uv pip install -U --system \
+  wheel \
+  pipdeptree \
+  debugpy \
+  pynvim \
+  bpyutils \
+  "camoufox[geoip]"
+"""
+
+[tasks."python:tools"]
+depends = ["python:system"]
+run = """
+TOOLS_PY=$(mise where python 3.14)/bin/python
+
+echo "Installing dev tools"
+uv tool install --force --python "$TOOLS_PY" \
+  --with mypy \
+  --with codespell \
+  ruff
+
+echo "Installing build tools"
+uv tool install --force --python "$TOOLS_PY" \
+  --with sphinx \
+  pyinstaller
+
+echo "Installing data tools"
+uv tool install --force --python "$TOOLS_PY" \
+  --with "catppuccin[pygments]" \
+  ipython
+
+uv tool install --force --python "$TOOLS_PY" \
+  --with jupyterlab-lsp \
+  --with jupyterlab-git \
+  --with jupyterlab_code_formatter \
+  --with jupyterlab_templates \
+  --with catppuccin-jupyterlab \
+  --with catppuccin-matplotlib \
+  --with python-lsp-server \
+  --with ipywidgets \
+  jupyterlab
+
+echo "Installing standalone tools"
+for tool in ty neovim-remote xxh-xxh asciinema; do
+  uv tool install --force --python "$TOOLS_PY" "$tool"
+done
+"""
+
+
+[tasks."python:doctor"]
+run = """
+python -V
+uv tool list
+pip list
+"""
+
+
+[hooks]
+postinstall = """
+if echo "$MISE_INSTALLED_TOOLS" | grep -q '"name":"python"'; then
+  mise run python:tools
+fi
+"""
+
+# [hooks]
+# postinstall = "env | grep -i mise > /tmp/mise-hook-debug.txt"
 
 [settings]
 # plugins can read the versions files used by other version managers (if enabled by the plugin)

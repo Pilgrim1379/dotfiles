@@ -98,37 +98,42 @@ return {
                     -- Python: Ruff + basedpyright
                     -- -------------------------------------------------------------------
                     ruff = {
-                        mason = false,
-                        init_options = {
-                            settings = {
-                                configuration = vim.fn.expand("~/.config/ruff/ruff.toml"),
-                                configurationPreference = "filesystemFirst",
-                                showSyntaxErrors = true,
-                                logLevel = "info",
-                            },
-                        },
-                    },
-
-                    basedpyright = {
-                        mason = false,
-                        cmd = { "basedpyright-langserver", "--stdio" },
-                        single_file_support = true,
+                      mason = false,
+                      filetypes = { "python" },
+                      init_options = {
                         settings = {
-                            python = {
-                                analysis = {
-                                    typeCheckingMode = "standard",
-                                    diagnosticMode = "openFilesOnly",
-                                    useLibraryCodeForTypes = true,
-                                    autoSearchPaths = true,
-                                    inlayHints = {
-                                        variableTypes = true,
-                                        functionReturnTypes = true,
-                                        callArgumentNames = true,
-                                        genericTypes = true,
-                                    },
-                                },
-                            },
+                          configuration = vim.fn.expand("~/.config/ruff/ruff.toml"),
+                          configurationPreference = "filesystemFirst",
+                          showSyntaxErrors = true,
+                          logLevel = "info",
                         },
+                      },
+                    },
+                    basedpyright = {
+                      mason = false,
+                      filetypes = { "python" },
+                      cmd = { "basedpyright-langserver", "--stdio" },
+                      single_file_support = true,
+                      settings = {
+                        python = {
+                          analysis = {
+                            typeCheckingMode = "standard",
+                            diagnosticMode = "openFilesOnly",
+                            useLibraryCodeForTypes = true,
+                            autoSearchPaths = true,
+
+                            -- 🔴 Disable auto-imports
+                            autoImportCompletions = false,
+
+                            inlayHints = {
+                              variableTypes = true,
+                              functionReturnTypes = true,
+                              callArgumentNames = true,
+                              genericTypes = true,
+                            },
+                          },
+                        },
+                      },
                     },
 
                     -- -------------------------------------------------------------------
@@ -183,21 +188,35 @@ return {
                 -- Setup hooks (capabilities merge, tailwind filtering)
                 -- ---------------------------------------------------------------------
                 setup = {
-                    -- Merge capabilities (extend, don't replace)
-                    ["*"] = function(_, server_opts)
-                        server_opts.capabilities = vim.tbl_deep_extend("force", server_opts.capabilities or {}, {
-                            general = { positionEncodings = { "utf-16" } },
-                            workspace = { fileOperations = { didRename = true, willRename = true } },
-                        })
-                    end,
+                  -- Merge capabilities (extend, don't replace)
+                  ["*"] = function(_, server_opts)
+                    server_opts.capabilities = vim.tbl_deep_extend("force", server_opts.capabilities or {}, {
+                      general = { positionEncodings = { "utf-16" } },
+                      workspace = { fileOperations = { didRename = true, willRename = true } },
+                    })
+                  end,
 
-                    -- Tailwind filetype filtering helper
-                    tailwindcss = function(_, server_opts)
-                        local tw = require("lspconfig.configs.tailwindcss")
-                        server_opts.filetypes = vim.tbl_filter(function(ft)
-                            return not vim.tbl_contains(server_opts.filetypes_exclude or {}, ft)
-                        end, tw.default_config.filetypes)
-                    end,
+                  -- 🚫 Workaround: vtsls sometimes returns malformed LSP snippets -> Neovim snippet parser error
+                  -- Disable LSP snippet completions ONLY for vtsls (keeps snippet completions for other servers)
+                  vtsls = function(_, server_opts)
+                    server_opts.capabilities = vim.tbl_deep_extend("force", server_opts.capabilities or {}, {
+                      textDocument = {
+                        completion = {
+                          completionItem = {
+                            snippetSupport = false,
+                          },
+                        },
+                      },
+                    })
+                  end,
+
+                  -- Tailwind filetype filtering helper
+                  tailwindcss = function(_, server_opts)
+                    local tw = require("lspconfig.configs.tailwindcss")
+                    server_opts.filetypes = vim.tbl_filter(function(ft)
+                      return not vim.tbl_contains(server_opts.filetypes_exclude or {}, ft)
+                    end, tw.default_config.filetypes)
+                  end,
                 },
             }
 

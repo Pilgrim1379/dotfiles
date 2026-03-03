@@ -220,6 +220,9 @@ updallapps() {
   brew upgrade --formula &&
   brew cu -aqy --no-brew-update --cleanup &&
 
+  echo "\nstarting MISE tools update ..." &&
+  mise upgrade &&
+
   echo "\nstarting NPM update ..." &&
   npm -g update &&
 
@@ -239,14 +242,16 @@ updallapps() {
 }
 
 cleanup() {
-  echo "Cleaning homebrew cache ..." && brew cleanup --prune=all &&
-  echo "Cleaning npm cache ..." && npm cache clean --force && npm cache verify &&
-  echo "Cleaning go cache ..." && go clean -modcache &&
+  echo "Cleaning Homebrew cache ..." && brew cleanup --prune=all &&
+  echo "Cleaning NPM cache ..." && npm cache clean --force && npm cache verify &&
+  echo "Cleaning Go cache ..." && go clean -modcache &&
+  # Blow away Rust cache (if you use the cached sysroot approach)
+  echo "Cleaning Rust cache ..." && rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/rustc-sysroot.cache" 2>/dev/null &&
+  echo "Prunning UV cache ..." && uv cache prune &&
   gem cleanup
 }
 
-bunupd()  { echo "starting Bun update ..." && bun update -g }
-miseupd() { echo "starting MISE update ..." && mise self-update && mise upgrade }
+# bunupd()  { echo "starting Bun update ..." && bun update -g }
 
 brewupd() {
   echo "starting HOMEBREW update ..." &&
@@ -265,7 +270,7 @@ npmupd() {
 
 gemupd()  { echo "starting Ruby gem update ..." && gem update --system && gem update }
 rustupd() { echo "starting Rust update ..." && rustup update }
-gupd()    { echo "starting Go update ..." && gup update }
+goupd()    { echo "starting Go update ..." && gup update }
 
 # -------------------------
 # Folder jumpers (moved from aliases)
@@ -307,9 +312,6 @@ zup() {
 
   # Blow away compdump so compinit -C will rebuild it next start
   rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"* 2>/dev/null
-
-  # Blow away Rust cache (if you use the cached sysroot approach)
-  rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/rustc-sysroot.cache" 2>/dev/null
 
   # If you're using the hybrid compinit stamp, also remove it to force a full rebuild:
   # rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump.stamp" 2>/dev/null

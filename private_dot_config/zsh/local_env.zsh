@@ -75,6 +75,7 @@ export PYTHONSTARTUP=$HOME/.pythonstartup
 export INSTALLER_NO_MODIFY_PATH=1
 export UV_PYTHON_PREFERENCE="only-system" # [only-managed, system and only-system] Whether to prefer only-managed, managed or system Python installations
 # export UV_PYTHON_DOWNLOADS="manual" # Automatic downloads of Python
+export UV_CACHE_DIR="$HOME/.cache/uv"
 
 # Bun / Deno
 # export BUN_INSTALL=$HOME/.bun # Bun
