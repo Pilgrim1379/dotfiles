@@ -109,12 +109,26 @@ pip list
 """
 
 
+# [hooks]
+# postinstall = """
+# if echo "$MISE_INSTALLED_TOOLS" | grep -q '"name":"python"'; then
+#   mise run python:tools
+# fi
+# """
+
+# [hooks]
+# postinstall = '''
+# if echo "$MISE_INSTALLED_TOOLS" | grep -q '"version":"3.14'; then
+#   mise run python:tools
+# fi
+# '''
+
 [hooks]
-postinstall = """
-if echo "$MISE_INSTALLED_TOOLS" | grep -q '"name":"python"'; then
+postinstall = '''
+if echo "$MISE_INSTALLED_TOOLS" | grep -qE '"version":"(3\.14|3\.15)'; then
   mise run python:tools
 fi
-"""
+'''
 
 # [hooks]
 # postinstall = "env | grep -i mise > /tmp/mise-hook-debug.txt"
