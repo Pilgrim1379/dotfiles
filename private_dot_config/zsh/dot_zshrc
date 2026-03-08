@@ -138,5 +138,9 @@ if [[ -f "$HOME/.config/fabric/fabric-bootstrap.inc" ]]; then
   source "$HOME/.config/fabric/fabric-bootstrap.inc"
 fi
 
+# --- Note that zsh-syntax-highlighting must be the last plugin sourced.
+# --- The zsh-syntax-highlighting authors recommend manual installation over the use of a framework or plugin manager.
+zinit light zsh-users/zsh-syntax-highlighting
+
 # zprof # comment out after profiling #
 ##### Nothing below this line #######
