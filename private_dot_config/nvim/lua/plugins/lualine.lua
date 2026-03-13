@@ -6,7 +6,7 @@ return {
     },
     opts = {
         options = {
-            theme = "catppuccin", -- follows catppuccin-mocha/latte automatically
+            theme = "catppuccin-nvim", -- follows catppuccin-mocha/latte automatically
             component_separators = { left = "", right = "" },
             section_separators = { left = "", right = "" },
             globalstatus = true, -- nice modern single statusline (optional)
