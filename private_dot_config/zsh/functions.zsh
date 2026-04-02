@@ -316,5 +316,7 @@ zup() {
   # If you're using the hybrid compinit stamp, also remove it to force a full rebuild:
   # rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump.stamp" 2>/dev/null
 
+  zinit cclear
+
   exec zsh
 }

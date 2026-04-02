@@ -6,6 +6,7 @@ local api = vim.api
 
 -- ---------------------------------------------------------------------------
 -- UI toggle notifier helper
+-- Used by ToggleCommentContinuation and ToggleInlayHints below.
 -- ---------------------------------------------------------------------------
 local function notify_toggle(icon, label, enabled, scope)
     scope = scope or "this buffer"
@@ -41,6 +42,8 @@ vim.cmd("silent! Copilot disable")
 
 -- ---------------------------------------------------------------------------
 -- Restore terminal cursor shape on exit or suspend
+-- Without this, the block cursor persists in the terminal after Neovim exits.
+-- "a:ver1" = thin vertical bar across all modes.
 -- ---------------------------------------------------------------------------
 do
     local group = api.nvim_create_augroup("restore_cursor_shape_on_exit", { clear = true })
@@ -55,7 +58,11 @@ end
 
 -- ---------------------------------------------------------------------------
 -- Disable automatic comment continuation (default: OFF)
--- Fixes extra quotes / comment leaders in multiline comments
+--
+-- Neovim's default formatoptions include c, r, o which auto-insert the
+-- comment leader when you press Enter or o/O inside a comment. This is
+-- often annoying (extra slashes, quote marks). We remove them on every
+-- BufEnter and expose a toggle to restore them per-buffer if needed.
 -- ---------------------------------------------------------------------------
 do
     local group = api.nvim_create_augroup("disable_comment_continuation", { clear = true })
@@ -64,7 +71,7 @@ do
         group = group,
         callback = function(args)
             vim.opt_local.formatoptions:remove({ "c", "r", "o" })
-            -- Track state so the toggle is consistent
+            -- Track state so the toggle command below starts in the right state
             vim.b[args.buf].cc_disabled = true
         end,
     })
@@ -72,30 +79,31 @@ end
 
 -- ---------------------------------------------------------------------------
 -- Toggle comment continuation per-buffer
--- Default: OFF (we remove c/r/o on BufEnter)
--- Toggle: restores original formatoptions for this buffer
+-- Default: OFF (we strip c/r/o on BufEnter above)
+-- Toggle restores the buffer's original formatoptions.
+-- Keymap: <leader>Uo (defined in keymaps.lua)
 -- ---------------------------------------------------------------------------
 do
     api.nvim_create_user_command("ToggleCommentContinuation", function()
         local bufnr = api.nvim_get_current_buf()
 
-        -- Skip special buffers
+        -- Skip special buffers (terminals, quickfix, help, etc.)
         if vim.bo[bufnr].buftype ~= "" then
             return
         end
 
-        -- Save original formatoptions once per buffer
+        -- Save the original formatoptions once per buffer (before we stripped c/r/o)
         if vim.b[bufnr].fo_before_cc_disable == nil then
             vim.b[bufnr].fo_before_cc_disable = vim.bo[bufnr].formatoptions
         end
 
-        -- Our state flag (default OFF because BufEnter removes c/r/o)
+        -- Initialise state flag (default OFF because BufEnter removes c/r/o)
         if vim.b[bufnr].cc_disabled == nil then
             vim.b[bufnr].cc_disabled = true
         end
 
         if vim.b[bufnr].cc_disabled then
-            -- Turn ON: restore original formatoptions
+            -- Turn ON: restore the original formatoptions snapshot
             local orig = vim.b[bufnr].fo_before_cc_disable
             if type(orig) == "string" and orig ~= "" then
                 vim.bo[bufnr].formatoptions = orig
@@ -105,108 +113,65 @@ do
             vim.b[bufnr].cc_disabled = false
             notify_toggle("󰅺", "Comment continuation", true)
         else
-            -- Turn OFF: remove c/r/o
+            -- Turn OFF: remove c/r/o again
             vim.opt_local.formatoptions:remove({ "c", "r", "o" })
             vim.b[bufnr].cc_disabled = true
             notify_toggle("󰅺", "Comment continuation", false)
         end
     end, { desc = "Toggle automatic comment continuation for current buffer" })
-
-    -- UI toggle mapping (LazyVim-style, no known conflicts)
-    vim.keymap.set("n", "<leader>Uo", "<cmd>ToggleCommentContinuation<cr>", {
-        desc = "Comment continuation",
-    })
+    -- NOTE: the <leader>Uo keymap lives in keymaps.lua — not duplicated here.
 end
 
 -- ---------------------------------------------------------------------------
--- LspAttach tweaks:
--- - Disable Ruff hover provider (so basedpyright owns hover + type info)
--- - Disable LSP formatting for ruff + basedpyright (Conform owns formatting)
--- - Disable LSP formatting for vtsls (Prettier via Conform owns JS/TS formatting)
+-- LspAttach tweaks
+--
+-- Why disable formatting capabilities here?
+-- Conform owns all formatting (see conform.lua). If we leave the LSP
+-- formatting providers enabled, :Format and format-on-save could use the
+-- LSP instead of Conform, giving inconsistent results.
+--
+-- Why disable Ruff hover?
+-- Ty (the type checker) provides richer hover with type info. Ruff's
+-- hover is redundant and creates duplicate popups.
+--
+-- NOTE: No basedpyright checks — it is explicitly disabled (= false) in
+-- lspconfig.lua, so it will never attach. Removing dead guard clauses.
 -- ---------------------------------------------------------------------------
 do
-  local group = api.nvim_create_augroup("lsp_attach_tweaks", { clear = true })
+    local group = api.nvim_create_augroup("lsp_attach_tweaks", { clear = true })
 
-  api.nvim_create_autocmd("LspAttach", {
-    group = group,
-    callback = function(args)
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      if not client then
-        return
-      end
-
-      -- Ruff should NOT provide hover (basedpyright has richer type hover)
-      if client.name == "ruff" then
-        client.server_capabilities.hoverProvider = false
-      end
-
-      -- Ensure Conform always owns formatting for Python
-      if client.name == "basedpyright" or client.name == "ruff" then
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentRangeFormattingProvider = false
-      end
-
-      -- Ensure Conform (prettierd/prettier) owns formatting for JS/TS
-      if client.name == "vtsls" then
-        client.server_capabilities.documentFormattingProvider = false
-        client.server_capabilities.documentRangeFormattingProvider = false
-      end
-    end,
-  })
-end
-
--- ---------------------------------------------------------------------------
--- Ensure basedpyright attaches to ALL python buffers
--- ---------------------------------------------------------------------------
-do
-    local group = api.nvim_create_augroup("auto_attach_basedpyright", { clear = true })
-
-    api.nvim_create_autocmd("FileType", {
+    api.nvim_create_autocmd("LspAttach", {
         group = group,
-        pattern = "python",
         callback = function(args)
-            local bufnr = args.buf
-
-            if vim.bo[bufnr].buftype ~= "" then
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            if not client then
                 return
             end
 
-            vim.schedule(function()
-                for _, c in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
-                    if c.name == "basedpyright" then
-                        return
-                    end
-                end
+            -- Ruff should NOT provide hover — Ty has richer type-hover
+            if client.name == "ruff" then
+                client.server_capabilities.hoverProvider = false
+            end
 
-                for _, c in ipairs(vim.lsp.get_clients()) do
-                    if c.name == "basedpyright" then
-                        pcall(vim.lsp.buf_attach_client, bufnr, c.id)
-                        return
-                    end
-                end
+            -- Ruff: let Conform own formatting (ruff + ruff_format via conform.lua)
+            if client.name == "ruff" then
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentRangeFormattingProvider = false
+            end
 
-                vim.cmd("silent! LspStart basedpyright")
-            end)
+            -- vtsls: let Conform (prettierd/prettier) own JS/TS formatting
+            if client.name == "vtsls" then
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentRangeFormattingProvider = false
+            end
         end,
     })
 end
 
 -- ---------------------------------------------------------------------------
--- Highlight yanked text
--- ---------------------------------------------------------------------------
-do
-    local group = api.nvim_create_augroup("user_highlight_yank", { clear = true })
-
-    api.nvim_create_autocmd("TextYankPost", {
-        group = group,
-        callback = function()
-            vim.highlight.on_yank()
-        end,
-    })
-end
-
--- ---------------------------------------------------------------------------
--- Automatically create missing directories on save
+-- Automatically create missing parent directories on save
+-- Useful when editing a new file at a path that doesn't exist yet.
+-- Skips protocol URLs (e.g. oil://, fugitive://).
 -- ---------------------------------------------------------------------------
 do
     local group = api.nvim_create_augroup("user_auto_mkdir", { clear = true })
@@ -229,20 +194,15 @@ end
 
 -- ---------------------------------------------------------------------------
 -- Toggle LSP inlay hints (type hints) per-buffer
+-- Requires Neovim 0.10+ and server support (ty, lua_ls, etc.)
+-- Keymap: <leader>Uh (defined in keymaps.lua)
 -- ---------------------------------------------------------------------------
 do
     api.nvim_create_user_command("ToggleInlayHints", function()
         local bufnr = api.nvim_get_current_buf()
-
-        -- Neovim 0.10+ API: get/set per-buffer enablement
         local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
         vim.lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
-
         notify_toggle("󰞋", "Inlay hints", not enabled)
     end, { desc = "Toggle LSP inlay hints (type hints) for current buffer" })
-
-    -- LazyVim UI toggle group: <leader>U...
-    vim.keymap.set("n", "<leader>Uh", "<cmd>ToggleInlayHints<cr>", {
-        desc = "Inlay hints",
-    })
+    -- NOTE: the <leader>Uh keymap lives in keymaps.lua — not duplicated here.
 end

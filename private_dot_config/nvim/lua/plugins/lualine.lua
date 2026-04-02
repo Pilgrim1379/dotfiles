@@ -2,14 +2,17 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     dependencies = {
-        "nvim-tree/nvim-web-devicons", -- optional, but recommended for icons
+        "nvim-tree/nvim-web-devicons",
     },
     opts = {
         options = {
-            theme = "catppuccin-nvim", -- follows catppuccin-mocha/latte automatically
-            component_separators = { left = "", right = "" },
-            section_separators = { left = "", right = "" },
-            globalstatus = true, -- nice modern single statusline (optional)
+            -- catppuccin-nvim theme follows mocha/latte automatically
+            -- because colorscheme.lua sets the variant before lualine loads.
+            theme                = "catppuccin-nvim",
+            component_separators = { left = "", right = "" },
+            section_separators   = { left = "", right = "" },
+            -- NOTE: globalstatus removed — LazyVim sets it to true by default.
+            -- Keeping it here was harmless but redundant.
         },
     },
 }
