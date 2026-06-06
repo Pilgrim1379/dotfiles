@@ -1,182 +1,187 @@
+
 [tools]
-# global tool versions go here
-# you can set these with `mise use -g`
-python = ["latest", "3.14", "3.12"]
-erlang = "latest"
-elixir = "latest"
-ruby = "latest"
-elm = "latest"
-nim = "latest"
-node = "lts"
-pnpm = "latest"
-# bun = "latest"
-deno = "latest"
-# usage = "latest"
-java = "temurin-21"
-"npm:elm-oracle" = "latest"
-"npm:elm-review" = "latest"
-"npm:elm-live" = "latest"
-"npm:cliui" = "latest"
-"npm:vscode-markdown-languageserver" = "latest"
-"npm:eslint" = "latest"
-"npm:npm-name-cli" = "latest"
-"npm:np" = "latest"
-"npm:@tailwindcss/language-server" = "latest"
-"npm:@vtsls/language-server" = "latest"
-"npm:npm-check" = "latest"
-"npm:yaml-language-server" = "latest"
-"npm:npm-check-updates" = "latest"
-"npm:stylus" = "latest"
-"npm:less" = "latest"
-# "npm:basedpyright" = "latest"
-"npm:js-beautify" = "latest"
-"npm:emmet-ls" = "latest"
-"npm:prettier" = "latest"
-"npm:typescript" = "latest"
-"npm:git-recent" = "latest"
-"npm:@fsouza/prettierd" = "latest"
-"npm:neovim" = "latest"
-"npm:stylelint" = "latest"
-"npm:prettier-plugin-elm" = "latest"
-"npm:wscat" = "latest"
-"npm:bash-language-server" = "latest"
-"npm:typescript-language-server" = "latest"
-"npm:import-js" = "latest"
-"npm:vscode-langservers-extracted" = "latest"
-"npm:diagnostic-languageserver" = "latest"
-"npm:elm-test" = "latest"
-"npm:@elm-tooling/elm-language-server" = "latest"
-"npm:@vue/language-server" = "latest"
-"npm:elm-format" = "latest"
+## Core runtimes — all pinned for stability (review quarterly)
+python = ["3.14", "3.12"]
+
+erlang = "28"
+elixir = "1.19"
+ruby  = "4"
+zig = "latest"
+java = "temurin-25"
+#elm   = "latest"   # no semver releases; latest is safe here
+# dotnet SDK — managed by Microsoft installer, not mise
+# See: https://dotnet.microsoft.com/en-us/download
+# "dotnet = latest" intentionally omitted to avoid shadowing the system install
+
+## Node ecosystem
+node  = "26"
+npm = "11"
+pnpm  = "11"
+deno  = "2.7"
 
 
+## npm-based tooling
+# "npm:elm-oracle"                      = "latest"
+# "npm:elm-review"                      = "latest"
+# "npm:elm-live"                        = "latest"
+"npm:vscode-markdown-languageserver"  = "latest"
+"npm:np"                              = "latest"
+"npm:@tailwindcss/language-server"    = "latest"
+"npm:@vtsls/language-server"          = "latest"
+"npm:yaml-language-server"            = "latest"
+"npm:emmet-ls"                        = "latest"
+"npm:typescript"                      = "latest"
+"npm:git-recent"                      = "latest"
+"npm:neovim"                          = "latest"
+"npm:stylelint"                       = "latest"
+# prettier-plugin-elm: kept intentionally — Biome does not support Elm,
+# so Prettier remains the formatter for .elm files
+#"npm:prettier-plugin-elm"             = "latest"
+#"npm:elm-test"                        = "latest"
+#"npm:@elm-tooling/elm-language-server" = "latest"
+#"npm:elm-format"                      = "latest"
+"npm:wscat"                           = "latest"
+"npm:bash-language-server"            = "latest"
+"npm:vscode-langservers-extracted"    = "latest"
+"npm:@vue/language-server"            = "latest"
+"npm:@biomejs/biome"                  = "latest"
+# Removed: cliui (library, not a CLI tool), import-js (superseded by LSPs),
+#          diagnostic-languageserver (redundant alongside dedicated language servers)
+
+
+# -----------------------------
+# Python System (minimal only)
+# -----------------------------
 [tasks."python:system"]
 run = """
-echo "Installing system packages"
+echo "Installing minimal system Python packages"
+# pynvim and debugpy are installed with --system intentionally:
+# pynvim must be importable by Neovim's rplugin host (which doesn't use uv tool envs),
+# and debugpy is consumed directly by nvim-dap rather than as a standalone CLI.
 uv pip install -U --system \
-  wheel \
-  pipdeptree \
-  debugpy \
   pynvim \
-  bpyutils \
-  "camoufox[geoip]"
+  debugpy
 """
 
+
+# -----------------------------
+# Python Tooling (main setup)
+# -----------------------------
 [tasks."python:tools"]
 depends = ["python:system"]
 run = """
+# Guard: ensure Python 3.14 is actually installed before proceeding
+if ! mise where python 3.14 &>/dev/null; then
+  echo "ERROR: Python 3.14 is not installed. Run 'mise install python 3.14' first."
+  exit 1
+fi
+
 TOOLS_PY=$(mise where python 3.14)/bin/python
 
-echo "Installing dev tools"
-uv tool install --force --python "$TOOLS_PY" \
-  --with mypy \
-  --with codespell \
-  ruff
+echo "Installing core dev tools"
+for tool in ruff ty codespell; do
+  uv tool install --force --python "$TOOLS_PY" "$tool"
+done
+
+echo "Installing CLI tools"
+for tool in neovim-remote xxh-xxh asciinema; do
+  uv tool install --force --python "$TOOLS_PY" "$tool"
+done
 
 echo "Installing build tools"
-uv tool install --force --python "$TOOLS_PY" \
-  --with sphinx \
-  pyinstaller
+for tool in pyinstaller sphinx; do
+  uv tool install --force --python "$TOOLS_PY" "$tool"
+done
 
 echo "Installing data tools"
-uv tool install --force --python "$TOOLS_PY" \
-  --with "catppuccin[pygments]" \
-  ipython
+uv tool install --force --python "$TOOLS_PY" ipython
 
+echo "Installing Jupyter stack"
 uv tool install --force --python "$TOOLS_PY" \
+  --with catppuccin-jupyterlab \
+  --with catppuccin-matplotlib \
+  --with "catppuccin[pygments]" \
   --with jupyterlab-lsp \
   --with jupyterlab-git \
   --with jupyterlab_code_formatter \
   --with jupyterlab_templates \
-  --with catppuccin-jupyterlab \
-  --with catppuccin-matplotlib \
   --with python-lsp-server \
   --with ipywidgets \
   jupyterlab
-
-echo "Installing standalone tools"
-for tool in ty neovim-remote xxh-xxh asciinema; do
-  uv tool install --force --python "$TOOLS_PY" "$tool"
-done
 """
 
 
+# -----------------------------
+# Diagnostics
+# -----------------------------
 [tasks."python:doctor"]
 run = """
+echo "Python version:"
 python -V
+
+echo "\nInstalled uv tools:"
 uv tool list
+
+echo "\nSystem packages:"
 pip list
 """
 
 
-# [hooks]
-# postinstall = """
-# if echo "$MISE_INSTALLED_TOOLS" | grep -q '"name":"python"'; then
-#   mise run python:tools
-# fi
-# """
-
-# [hooks]
-# postinstall = '''
-# if echo "$MISE_INSTALLED_TOOLS" | grep -q '"version":"3.14'; then
-#   mise run python:tools
-# fi
-# '''
-
+# -----------------------------
+# Hooks
+# -----------------------------
 [hooks]
 postinstall = '''
-if echo "$MISE_INSTALLED_TOOLS" | grep -qE '"version":"(3\.14|3\.15)'; then
+STAMP="$HOME/.cache/mise/python-tools.stamp"
+CURRENT=$(mise current python 2>/dev/null | grep -E "^3\.14" | head -1)
+
+[ -z "$CURRENT" ] && exit 0
+
+PREVIOUS=$(cat "$STAMP" 2>/dev/null || true)
+
+if [ "$CURRENT" != "$PREVIOUS" ]; then
   mise run python:tools
+  echo "$CURRENT" > "$STAMP"
 fi
 '''
 
-# [hooks]
-# postinstall = "env | grep -i mise > /tmp/mise-hook-debug.txt"
 
+# -----------------------------
+# Settings
+# -----------------------------
 [settings]
-# plugins can read the versions files used by other version managers (if enabled by the plugin)
-# for example, .nvmrc in the case of node's nvm
-idiomatic_version_file = false            # enabled by default (unlike asdf)
-# idiomatic_version_file_disable_tools = [] # disable for specific tools
-idiomatic_version_file_enable_tools = [] # enable for specific tools
+idiomatic_version_file = false
+idiomatic_version_file_enable_tools = []
 
-# configure `mise install` to always keep the downloaded archive
-always_keep_download = false        # deleted after install by default
-always_keep_install = false         # deleted on failure by default
+always_keep_download = false
+always_keep_install  = false
 
-# configure how frequently (in minutes) to fetch updated plugin repository changes
-# this is updated whenever a new runtime is installed
-# (note: this isn't currently implemented but there are plans to add it: https://github.com/jdx/mise/issues/128)
-plugin_autoupdate_last_check_duration = '1 week' # set to 0 to disable updates
+plugin_autoupdate_last_check_duration = '1 week'
 
-# config files with these prefixes will be trusted by default
 trusted_config_paths = ['~/workspace']
 
-verbose = false       # set to true to see full installation output, see `MISE_VERBOSE`
-http_timeout = "30s"  # set the timeout for http requests as duration string, see `MISE_HTTP_TIMEOUT`
-jobs = 4              # number of plugins or runtimes to install in parallel. The default is `4`.
-raw = false           # set to true to directly pipe plugins to stdin/stdout/stderr
-yes = false           # set to true to automatically answer yes to all prompts
+verbose      = false
+http_timeout = "30s"
+jobs         = 4
+raw          = false
+yes          = false
 
-not_found_auto_install = true # see MISE_NOT_FOUND_AUTO_INSTALL
-task_output = "prefix" # see Tasks Runner for more information
-paranoid = false       # see MISE_PARANOID
+not_found_auto_install = true
+task_output            = "prefix"
+paranoid               = false
 
-shorthands_file = '~/.config/mise/shorthands.toml' # path to the shorthands file, see `MISE_SHORTHANDS_FILE`
-disable_default_shorthands = false # disable the default shorthands, see `MISE_DISABLE_DEFAULT_SHORTHANDS`
-# disable_tools = ['node']           # disable specific tools, generally used to turn off core tools
+shorthands_file           = '~/.config/mise/shorthands.toml'
+disable_default_registry  = false
 
-env_file = '.env' # load env vars from a dotenv file, see `MISE_ENV_FILE`
+# env_file removed from global config — loading a project .env globally risks
+# leaking secrets (DATABASE_URL, API keys, etc.) into every shell session.
+# Enable per-project in a local mise.toml instead: env_file = '.env'
 
-experimental = true # enable experimental features
-python_compile = false
-ruby.compile = true
+# experimental enables the task runner and python.compile/ruby.compile flags below
+experimental = true
+python.compile = false
+ruby.compile   = false
 
 npm.package_manager = "pnpm"
 
-# configure messages displayed when entering directories with config files
 status = { missing_tools = "if_other_versions_installed", show_env = false, show_tools = false }
-
-# "_" is a special key for information you'd like to put into mise.toml that mise will never parse
-[_]
-# foo = "bar"

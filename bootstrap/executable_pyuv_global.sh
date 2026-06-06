@@ -74,11 +74,9 @@ TOOLS=(
   cmake-language-server
   pyinstaller
   sphinx
-  mypy
   ty
   ruff
   codespell
-  black
   neovim-remote
   pytest
   nose

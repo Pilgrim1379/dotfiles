@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # ~/.zshenv
 # This file is sourced for EVERY zsh invocation (interactive or not).
 # Keep it minimal to avoid slowing down non-interactive shells.

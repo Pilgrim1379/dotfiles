@@ -1,28 +1,46 @@
 # Window size in character cells
+# Two presets — uncomment the block that matches your active font size.
 
-# Use these for font size 14
+# font-size = 14
 window-height = 60
 window-width = 100
 
-# Use these for font size 16
+# font-size = 16
 # window-height = 54
 # window-width = 85
 
-# Window position on screen (top-right corner on most setups)
+# Window position on screen (top-right corner of second monitor)
 window-position-x = 1798
 window-position-y = 0
 
 # Catppuccin color themes for dark and light modes
 theme = dark:Catppuccin Mocha,light:Catppuccin Latte
 
-# Main font for all standard text
+# Font — switch between the two blocks below to change font
+# Uncomment font-feature to disable ligatures if they appear unexpectedly.
 #font-family = "Monaspace Neon"
 #font-size = 16
+#font-feature = -liga,-calt
 
 font-family = "Maple Mono NF"
-#font-feature = -liga,-calt
 font-size = 14
 
+# Cursor
 cursor-style = bar
 cursor-style-blink = false
+
+# Disable Ghostty's shell-integration cursor management — cursor-style above owns this.
 shell-integration-features = no-cursor
+
+# Left Option key acts as Meta for readline bindings (Alt+B, Alt+F, Alt+D etc.)
+# Right Option keeps its macOS role for typing special characters (™, •, ümlauts)
+# Remove if you prefer standard macOS Option behaviour on both sides.
+macos-option-as-alt = left
+
+# Don't copy text to clipboard on selection — use Cmd+C explicitly.
+# Set to true if you prefer Linux-style copy-on-highlight behaviour.
+copy-on-select = false
+
+# Prompt before closing a window that has a running process.
+# Set to false if you find the confirmation prompt annoying.
+confirm-close-surface = true

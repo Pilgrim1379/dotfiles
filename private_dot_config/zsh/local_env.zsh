@@ -1,3 +1,4 @@
+
 # Environment variables
 # ghostty provides TERM=xterm-ghostty. https://ghostty.org/docs/help/terminfo
 if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
@@ -49,11 +50,25 @@ export LESS='-FiMr -j.5 --incsearch'
 export LESSHISTFILE=$XDG_DATA_HOME/less/lesshst
 mkdir -pm 0700 "$LESSHISTFILE":h
 
-[[ $VENDOR == apple ]] && MANPAGER="col -bpx | $MANPAGER"
+# NOTE: The apple-specific MANPAGER override was removed. It wrapped the already
+# correct MANPAGER above in an extra `col -bpx`, causing double col processing.
+# The `sh -c 'col -bx | bat -l man -p'` form works correctly on macOS as-is.
+
 export QUOTING_STYLE=escape # Used by GNU ls
 
 # Golang environment variables
-export GOROOT=$(brew --prefix go)/libexec
+#
+# GOROOT is cached to avoid spawning `brew --prefix go` on every shell start.
+# If you upgrade Go via Homebrew and GOROOT stops resolving correctly, clear
+# the cache with: rm ~/.cache/goroot.cache
+_goroot_cache="${XDG_CACHE_HOME:-$HOME/.cache}/goroot.cache"
+if [[ ! -s "$_goroot_cache" ]]; then
+  brew --prefix go 2>/dev/null >| "$_goroot_cache" || : >| "$_goroot_cache"
+fi
+_goroot_prefix="$(<"$_goroot_cache")"
+[[ -n "$_goroot_prefix" ]] && export GOROOT="${_goroot_prefix}/libexec"
+unset _goroot_cache _goroot_prefix
+
 export GOPATH=$HOME/go
 
 # Erlang Exports

@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # zmodload zsh/zprof # Uncomment to profile startup time #
 
 # If you only want .zshrc to affect interactive shells (recommended):
@@ -98,6 +99,9 @@ bindkey '^[w' kill-region
 
 # Autoload functions
 autoload -Uz zmv
+
+# Catppuccin Mocha Colours
+source "$ZDOTDIR/catppuccin_mocha.zsh"
 
 # Completion styling
 source "$ZDOTDIR/completion_styling.zsh"

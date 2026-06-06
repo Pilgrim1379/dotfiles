@@ -1,3 +1,4 @@
+
 # =============================================================================
 # functions.zsh
 # =============================================================================
@@ -109,7 +110,7 @@ nvims() {
   # If we only have default, still allow selection without failing
   config=$(
     printf "%s\n" "${items[@]}" |
-      fzf --prompt=" Neovim Config 󰄾 " --height=50% --layout=reverse --border --exit-0
+      fzf --prompt=" Neovim Config 󰄾 " --height=50% --layout=reverse --border --exit-0
   )
 
   [[ -z "$config" ]] && { print "Nothing selected"; return 0; }
@@ -212,33 +213,27 @@ zshaddhistory() {
 # -------------------------
 # App update helpers (moved from aliases)
 # -------------------------
-updallapps() {
+upallapps() {
   command -v caffeinate >/dev/null 2>&1 && caffeinate -dimsu true >/dev/null 2>&1 || true
 
-  echo "starting HOMEBREW update ..." &&
-  brew update &&
-  brew upgrade --formula &&
-  brew cu -aqy --no-brew-update --cleanup &&
+  echo "${bold}${peach}starting HOMEBREW update ...${reset}" &&
+  brew update && brew upgrade --formula && brew upgrade --cask &&
 
-  echo "\nstarting MISE tools update ..." &&
+  echo "\n${bold}${mauve}starting MISE tools update ...${reset}" &&
   mise upgrade &&
 
-  echo "\nstarting NPM update ..." &&
-  npm -g update &&
-
-  echo "\nstarting Rust update ..." &&
+  echo "\n${bold}${red}starting Rust update ...${reset}" &&
   rustup update &&
 
-  echo "\nstarting Go update ..." &&
+  echo "\n${bold}${sky}starting Go update ...${reset}" &&
   gup update &&
 
-  echo "\nstarting UV update ..." &&
+  echo "\n${bold}${yellow}starting UV update ...${reset}" &&
   uv self update &&
   uv tool upgrade --all &&
 
-  echo "\nstarting Ruby update ..." &&
-  gem update --system &&
-  gem update
+  echo "\n${bold}${blue}Checking .NET SDK status ...${reset}" &&
+  dotnet sdk check
 }
 
 cleanup() {
@@ -253,14 +248,12 @@ cleanup() {
 
 # bunupd()  { echo "starting Bun update ..." && bun update -g }
 
-brewupd() {
+brewup() {
   echo "starting HOMEBREW update ..." &&
-  brew update &&
-  brew upgrade --formula &&
-  brew cu -aqy --no-brew-update --cleanup
+  brew update && brew upgrade --formula && brew upgrade --cask
 }
 
-npmupd() {
+npmup() {
   echo "starting NPM update ..." &&
   npm -g update &&
   corepack prepare pnpm@latest --activate &&
@@ -268,9 +261,7 @@ npmupd() {
   pnpm update -g --latest
 }
 
-gemupd()  { echo "starting Ruby gem update ..." && gem update --system && gem update }
-rustupd() { echo "starting Rust update ..." && rustup update }
-goupd()    { echo "starting Go update ..." && gup update }
+gemup()  { echo "starting Ruby gem update ..." && gem update --system && gem update }
 
 # -------------------------
 # Folder jumpers (moved from aliases)
@@ -313,8 +304,10 @@ zup() {
   # Blow away compdump so compinit -C will rebuild it next start
   rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"* 2>/dev/null
 
-  # If you're using the hybrid compinit stamp, also remove it to force a full rebuild:
-  # rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump.stamp" 2>/dev/null
+  # Also remove the stamp so .zshrc's hybrid compinit triggers a full rebuild,
+  # not the fast -C path. Without this, new completions from updated plugins
+  # won't be picked up until the next scheduled 7-day rebuild.
+  rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump.stamp" 2>/dev/null
 
   zinit cclear
 

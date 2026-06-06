@@ -1,8 +1,9 @@
+
 [[ -o interactive ]] || return 0
 
 path=(
     $HOME/.nimble/bin(N) # Nim
-    # $XDG_DATA_HOME/pnpm(N) # PNPM
+    $XDG_DATA_HOME/pnpm(N) # PNPM
     $HOME/.cargo/bin(N) # Rust
     $HOME/.juliaup/bin(N) # Julia
     ${GOPATH:-$HOME/go}/bin(N) # Golang
@@ -64,8 +65,8 @@ for extra in \
 done
 
 # -- Rust --
+# _cache_dir is already set above — no need to reassign here.
 if command -v rustc >/dev/null 2>&1; then
-  _cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}"
   _rust_cache="$_cache_dir/rustc-sysroot.cache"
 
   if [[ ! -s "$_rust_cache" ]]; then
@@ -77,27 +78,6 @@ if command -v rustc >/dev/null 2>&1; then
     export RUST_SRC_PATH="$_sysroot/lib/rustlib/src/rust/library"
   fi
 fi
-
-
-# ########################################################################################################
-# ## This should come after all essential PATHs has been set unless you know what you're doing          ##
-# ########################################################################################################
-# if [ -e ~/.local/bin/mise ]; then
-#     # export MISE_COLOR=1
-#     export MISE_PIPX_UVX=true
-#     # export MISE_PYTHON_UV_VENV_AUTO=true
-#     # export MISE_DATA_DIR=$XDG_DATA_HOME/mise
-#     export MISE_EXPERIMENTAL=yes
-#     # export MISE_PYTHON_COMPILE=1
-#     # export MISE_ASDF_COMPAT=1
-#     # export MISE_DEBUG=1
-#     # export MISE_LOG_LEVEL=debug
-#     # export RUST_BACKTRACE=1
-
-#     # eval "$($HOME/.local/bin/mise activate zsh)" #
-#     eval "$($HOME/.local/bin/mise activate zsh --shims)" # Use shims instead
-# fi
-# ########################################################################################################
 
 # -------------------------------
 # mise (cached activation)
@@ -116,7 +96,6 @@ if command -v mise >/dev/null 2>&1; then
   export MISE_PIPX_UVX=true
   export MISE_EXPERIMENTAL=yes
 
-  _cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}"
   _mise_cache="$_cache_dir/mise-activate.zsh"
   _mise_ver_cache="$_cache_dir/mise-version.cache"
 

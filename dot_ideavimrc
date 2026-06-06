@@ -1,0 +1,202 @@
+" ============================================================
+" CORE BEHAVIOUR
+" ============================================================
+set scrolloff=8
+set number
+set relativenumber
+set incsearch
+set ignorecase
+set smartcase
+set clipboard=unnamedplus        " sync with system clipboard
+
+" IdeaVim-specific
+set ideajoin                     " use the IDE's join line (smarter for C#/Python)
+set idearefactormode=keep        " stay in normal mode after refactors
+set ideamarks                    " sync IdeaVim marks with IDE bookmarks
+set clipboard^=ideaput
+
+" Exit insert mode
+inoremap jj <Esc>
+inoremap jk <Esc>
+
+" Plugins (IdeaVim bundled extensions)
+set surround
+set commentary
+set argtextobj
+set textobj-entire
+set highlightedyank
+set which-key                    " shows pending keybind hints
+let g:WhichKey_ShowVimActions = "true"
+
+" ============================================================
+" CHORD ARBITRATION  (Vim vs IDE — the important safety net)
+" ============================================================
+" When a Ctrl-chord is wanted by BOTH Vim and the IDE, the IDE wins
+" silently unless we declare a winner here. 'n-v:vim' = Vim owns this
+" key in Normal + Visual modes; the IDE keeps it everywhere else (e.g.
+" insert mode, so the IDE's own Ctrl bindings still work while typing).
+" Without these, the <C-w>h/j/k/l window jumps below can fail because
+" the IDE grabs Ctrl+L / Ctrl+K etc. for its own actions.
+sethandler <C-h> n-v:vim
+sethandler <C-j> n-v:vim
+sethandler <C-k> n-v:vim
+sethandler <C-l> n-v:vim
+
+" ============================================================
+" BASIC NAVIGATION
+" ============================================================
+let mapleader = " "
+
+" Move through wrapped lines naturally
+nnoremap j gj
+nnoremap k gk
+
+" Keep cursor centred when jumping
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" ============================================================
+" WINDOW / SPLIT NAVIGATION
+" ============================================================
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+
+" ============================================================
+" FILE & PROJECT NAVIGATION
+" ============================================================
+" Fuzzy file search (like Telescope find_files)
+nnoremap <leader>ff :action GotoFile<CR>
+
+" Search text in project (like Telescope live_grep)
+nnoremap <leader>fg :action FindInPath<CR>
+
+" Recent files
+nnoremap <leader>fr :action RecentFiles<CR>
+
+" Project explorer
+nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+
+" ============================================================
+" CODE NAVIGATION  (shared across Rider + PyCharm)
+" ============================================================
+" Go to definition
+nnoremap gd :action GotoDeclaration<CR>
+
+" Go to implementation (interfaces in C#, ABCs/protocols in Python)
+nnoremap gi :action GotoImplementation<CR>
+
+" Go to type declaration
+nnoremap gy :action GotoTypeDeclaration<CR>
+
+" Jump to the base/overridden member (interface or superclass)
+" C#: interface member or base class method.  Python: overridden method.
+nnoremap gD :action GotoSuperMethod<CR>
+
+" Find all usages (tool window)
+nnoremap gr :action FindUsages<CR>
+
+" Lighter-weight usages popup (no tool window — faster for a quick look)
+nnoremap <leader>cu :action ShowUsages<CR>
+
+" Go to symbol in file (like Telescope lsp_document_symbols)
+nnoremap <leader>fs :action FileStructurePopup<CR>
+
+" Go to any symbol in project
+nnoremap <leader>fS :action GotoSymbol<CR>
+
+" Navigate back / forward (IDE history — richer than the Vim jumplist).
+" NOTE: remapping <C-i> can shadow <Tab> in normal mode (they share the
+" same keycode at the terminal level). If <Tab> ever stops working in
+" normal mode, this line is the reason — comment it out to get <Tab> back.
+nnoremap <C-o> :action Back<CR>
+nnoremap <C-i> :action Forward<CR>
+
+" Jump to last edit location
+nnoremap <leader>. :action JumpToLastChange<CR>
+
+" ============================================================
+" DOCS / HOVER
+" ============================================================
+" Hover docs (the Neovim 'K' reflex). Reads C# XML doc comments and
+" Python docstrings. Press twice / it auto-focuses to scroll the popup.
+nnoremap K :action QuickJavaDoc<CR>
+
+" Parameter hints while sitting in a call's argument list
+nnoremap <leader>cp :action ParameterInfo<CR>
+
+" ============================================================
+" CODE ACTIONS & REFACTORING
+" ============================================================
+" Show intention actions / quick fix (like <leader>ca in Neovim)
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+
+" Rename symbol
+nnoremap <leader>rn :action RenameElement<CR>
+
+" Refactor this (opens refactor menu)
+nnoremap <leader>rf :action RefactoringMenu<CR>
+
+" Format file
+nnoremap <leader>cf :action ReformatCode<CR>
+
+" Organise usings (C#) / optimise imports (Python) — same action name
+nnoremap <leader>co :action OptimizeImports<CR>
+
+" ============================================================
+" CODE GENERATION  (the Alt+Insert workhorse)
+" ============================================================
+" Generate menu: constructors, properties, Equals/GetHashCode (C#);
+" __init__, __eq__, properties, test methods (Python). Most-used C# action.
+nnoremap <leader>cg :action Generate<CR>
+
+" Implement interface / abstract members
+nnoremap <leader>ci :action ImplementMethods<CR>
+
+" Override base-class members
+nnoremap <leader>cO :action OverrideMethods<CR>
+
+" ============================================================
+" DIAGNOSTICS
+" ============================================================
+" Next / previous error
+nnoremap ]d :action GotoNextError<CR>
+nnoremap [d :action GotoPreviousError<CR>
+
+" Show error description at cursor (like vim.diagnostic.open_float)
+nnoremap <leader>cd :action ShowErrorDescription<CR>
+
+" ============================================================
+" BUILD & RUN
+" ============================================================
+nnoremap <leader>bb :action BuildSolutionAction<CR>
+nnoremap <leader>rr :action Run<CR>
+nnoremap <leader>rd :action Debug<CR>
+nnoremap <leader>rs :action Stop<CR>
+
+" ============================================================
+" GIT
+" ============================================================
+nnoremap <leader>gb :action Annotate<CR>            " git blame
+nnoremap <leader>gd :action Compare.LastVersion<CR> " diff current file
+nnoremap <leader>gh :action Vcs.ShowTabbedFileHistory<CR>
+
+" ============================================================
+" BUFFER / TAB MANAGEMENT
+" ============================================================
+nnoremap <leader>bd :action CloseContent<CR>
+nnoremap <leader>bo :action CloseAllEditorsButActive<CR>
+nnoremap H :action PreviousTab<CR>
+nnoremap L :action NextTab<CR>
+
+" ============================================================
+" MISC
+" ============================================================
+" Clear search highlight
+nnoremap <leader>hl :nohlsearch<CR>
+
+" Toggle terminal
+nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>

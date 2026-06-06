@@ -21,14 +21,24 @@ return {
                 elixir          = { "mix" },
                 zig             = { "zig fmt" },
 
-                -- JS/TS/Vue: prettierd is faster (daemon); prettier is the fallback.
-                -- stop_after_first = true: use prettierd if available, else prettier.
-                javascript      = { "prettierd", "prettier", stop_after_first = true },
-                typescript      = { "prettierd", "prettier", stop_after_first = true },
-                javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-                typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-                vue             = { "prettierd", "prettier", stop_after_first = true },
-                tailwind        = { "prettierd", "prettier", stop_after_first = true },
+                -- JS/TS/JSX/TSX: Biome handles formatting and linting in one pass.
+                -- The Biome LSP (lspconfig.lua) provides inline diagnostics.
+                -- Requires a biome.json at the project root to activate.
+                javascript      = { "biome" },
+                typescript      = { "biome" },
+                javascriptreact = { "biome" },
+                typescriptreact = { "biome" },
+
+                -- CSS, JSON, JSONC, GraphQL: all natively supported by Biome.
+                css             = { "biome" },
+                json            = { "biome" },
+                jsonc           = { "biome" },
+                graphql         = { "biome" },
+
+                -- Vue: Biome's Vue support is experimental as of 2025.
+                -- Uncomment once it stabilises, and add biome to vue filetypes
+                -- in lspconfig.lua at the same time.
+                -- vue          = { "biome" },
 
                 -- Python: run BOTH ruff (fixer) and ruff_format (formatter) in sequence.
                 -- The function checks availability and returns all formatters to run.
@@ -64,7 +74,7 @@ return {
                     args = {
                         "check",
                         "--fix",
-                        "--select=I", -- imports only
+                        "--select=I",  -- imports only
                         "--exit-zero", -- don't fail if there are unfixable diagnostics
                         "--force-exclude",
                         "--stdin-filename",

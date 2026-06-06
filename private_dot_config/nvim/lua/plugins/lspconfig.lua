@@ -190,8 +190,10 @@ return {
                 bashls       = { mason = false },
                 clangd       = { mason = false },
                 gopls        = { mason = false },
-
-                elmls        = { mason = false, cmd = { "elm-language-server" } },
+                biome        = {
+                    mason = false, -- managed by mise, consistent with your setup
+                },
+                -- elmls        = { mason = false, cmd = { "elm-language-server" } },
                 yamlls       = { mason = false },
                 hls          = { mason = false },
 
