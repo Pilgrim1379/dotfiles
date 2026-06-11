@@ -96,7 +96,5 @@ export UV_CACHE_DIR="$HOME/.cache/uv"
 # export BUN_INSTALL=$HOME/.bun # Bun
 export DENO_INSTALL_ROOT=$HOME/.deno # Deno
 
-
-
 # Don't put anything below this line
 ################################################################################

@@ -200,3 +200,6 @@ nnoremap <leader>hl :nohlsearch<CR>
 
 " Toggle terminal
 nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
+
+" Select all text in buffer
+nnoremap <leader>va ggVG

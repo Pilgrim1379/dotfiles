@@ -216,33 +216,33 @@ zshaddhistory() {
 upallapps() {
   command -v caffeinate >/dev/null 2>&1 && caffeinate -dimsu true >/dev/null 2>&1 || true
 
-  echo "${bold}${peach}starting HOMEBREW update ...${reset}" &&
+  echo "${bold}${blue}Starting HOMEBREW update ...${reset}" &&
   brew update && brew upgrade --formula && brew upgrade --cask &&
 
-  echo "\n${bold}${mauve}starting MISE tools update ...${reset}" &&
+  echo "\n${bold}${mauve}Starting MISE tools update ...${reset}" &&
   mise upgrade &&
 
-  echo "\n${bold}${red}starting Rust update ...${reset}" &&
+  echo "\n${bold}${red}Starting Rust update ...${reset}" &&
   rustup update &&
 
-  echo "\n${bold}${sky}starting Go update ...${reset}" &&
+  echo "\n${bold}${sky}Starting Go update ...${reset}" &&
   gup update &&
 
-  echo "\n${bold}${yellow}starting UV update ...${reset}" &&
+  echo "\n${bold}${yellow}Starting UV update ...${reset}" &&
   uv self update &&
   uv tool upgrade --all &&
 
-  echo "\n${bold}${blue}Checking .NET SDK status ...${reset}" &&
+  echo "\n${bold}${peach}Checking .NET SDK status ...${reset}" &&
   dotnet sdk check
 }
 
 cleanup() {
-  echo "Cleaning Homebrew cache ..." && brew cleanup --prune=all &&
-  echo "Cleaning NPM cache ..." && npm cache clean --force && npm cache verify &&
-  echo "Cleaning Go cache ..." && go clean -modcache &&
+  echo "${bold}${blue}Cleaning Homebrew cache ...${reset}" && brew cleanup --prune=all &&
+  echo "${bold}${mauve}Cleaning NPM cache ...${reset}" && npm cache clean --force && npm cache verify &&
   # Blow away Rust cache (if you use the cached sysroot approach)
-  echo "Cleaning Rust cache ..." && rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/rustc-sysroot.cache" 2>/dev/null &&
-  echo "Prunning UV cache ..." && uv cache prune &&
+  echo "${bold}${red}Cleaning Rust cache ...${reset}" && rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/rustc-sysroot.cache" 2>/dev/null &&
+  echo "${bold}${sky}Cleaning Go cache ...${reset}" && go clean -modcache &&
+  echo "${bold}${yellow}Prunning UV cache ...${reset}" && uv cache prune &&
   gem cleanup
 }
 

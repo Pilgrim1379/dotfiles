@@ -73,6 +73,8 @@ vim.keymap.set("i", "jk", function() return jk_handler("jk") end,
 vim.keymap.set("i", "jj", function() return jk_handler("jj") end,
     { expr = true, nowait = true, desc = "jj: dismiss completion or escape" })
 
+-- Select all text in buffer
+vim.keymap.set("n", "<leader>va", "ggVG", { desc = "Select all" })
 -- ---------------------------------------------------------------------------
 -- UI toggles (LazyVim <leader>U group)
 -- These commands are defined in autocmds.lua; keymaps live here.
