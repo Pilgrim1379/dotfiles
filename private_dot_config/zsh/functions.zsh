@@ -209,15 +209,26 @@ zshaddhistory() {
   return 0
 }
 
+# -------------------------
+# Colourise gem cleanup output 
+# -------------------------
+gem() {
+    if [[ "$1" == "cleanup" ]]; then
+        print -P "%F{green}Ruby cleaning up installed gems%f"
+        command gem "$@" 2>&1 | tail -n +2
+    else
+        command gem "$@"
+    fi
+}
 
 # -------------------------
-# App update helpers (moved from aliases)
+# App update helpers
 # -------------------------
 upallapps() {
   command -v caffeinate >/dev/null 2>&1 && caffeinate -dimsu true >/dev/null 2>&1 || true
 
   echo "${bold}${blue}Starting HOMEBREW update ...${reset}" &&
-  brew update && brew upgrade --formula && brew upgrade --cask &&
+  brew update && brew upgrade -y --formula && brew upgrade -y --cask &&
 
   echo "\n${bold}${mauve}Starting MISE tools update ...${reset}" &&
   mise upgrade &&
@@ -237,12 +248,13 @@ upallapps() {
 }
 
 cleanup() {
-  echo "${bold}${blue}Cleaning Homebrew cache ...${reset}" && brew cleanup --prune=all &&
-  echo "${bold}${mauve}Cleaning NPM cache ...${reset}" && npm cache clean --force && npm cache verify &&
+  echo "${bold}${blue}Homebrew cleaning cache ...${reset}" && brew cleanup --prune=all &&
+  echo "${bold}${mauve}MISE deleting unused versions of tools ...${reset}" && mise prune --yes &&
+  echo "${bold}${pink}NPM cleaning cache ...${reset}" && npm cache clean --force && npm cache verify &&
   # Blow away Rust cache (if you use the cached sysroot approach)
-  echo "${bold}${red}Cleaning Rust cache ...${reset}" && rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/rustc-sysroot.cache" 2>/dev/null &&
-  echo "${bold}${sky}Cleaning Go cache ...${reset}" && go clean -modcache &&
-  echo "${bold}${yellow}Prunning UV cache ...${reset}" && uv cache prune &&
+  echo "${bold}${red}Rust cleaning cache ...${reset}" && rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/rustc-sysroot.cache" 2>/dev/null &&
+  echo "${bold}${sky}Go cleaning cache ...${reset}" && go clean -modcache &&
+  echo "${bold}${yellow}UV prunning cache ...${reset}" && uv cache prune &&
   gem cleanup
 }
 
@@ -312,4 +324,25 @@ zup() {
   zinit cclear
 
   exec zsh
+}
+
+# -------------------------
+# mise uninstall all npm backed tools
+# -------------------------
+mise-uninstall-all-npm() {
+  local tools
+  tools=($(mise ls --installed | awk '/^npm:/ {print $1}'))
+
+  (( ${#tools[@]} == 0 )) && {
+    echo "No npm tools installed via mise."
+    return 0
+  }
+
+  printf '%s\n' "${tools[@]}"
+  echo
+  read "reply?Uninstall these tools? [y/N] "
+
+  [[ $reply =~ ^[Yy]$ ]] || return 1
+
+  mise uninstall "${tools[@]}"
 }
