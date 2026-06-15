@@ -214,6 +214,7 @@ zshaddhistory() {
 # -------------------------
 gem() {
     if [[ "$1" == "cleanup" ]]; then
+        print
         print -P "%F{green}Ruby cleaning up installed gems%f"
         command gem "$@" 2>&1 | tail -n +2
     else
@@ -249,12 +250,12 @@ upallapps() {
 
 cleanup() {
   echo "${bold}${blue}Homebrew cleaning cache ...${reset}" && brew cleanup --prune=all &&
-  echo "${bold}${mauve}MISE deleting unused versions of tools ...${reset}" && mise prune --yes &&
-  echo "${bold}${pink}NPM cleaning cache ...${reset}" && npm cache clean --force && npm cache verify &&
+  echo "\n${bold}${mauve}MISE deleting unused versions of tools ...${reset}" && mise prune --yes &&
+  echo "\n${bold}${pink}NPM cleaning cache ...${reset}" && npm cache clean --force && npm cache verify &&
   # Blow away Rust cache (if you use the cached sysroot approach)
-  echo "${bold}${red}Rust cleaning cache ...${reset}" && rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/rustc-sysroot.cache" 2>/dev/null &&
-  echo "${bold}${sky}Go cleaning cache ...${reset}" && go clean -modcache &&
-  echo "${bold}${yellow}UV prunning cache ...${reset}" && uv cache prune &&
+  echo "\n${bold}${red}Rust cleaning cache ...${reset}" && rm -f "${XDG_CACHE_HOME:-$HOME/.cache}/rustc-sysroot.cache" 2>/dev/null &&
+  echo "\n${bold}${sky}Go cleaning cache ...${reset}" && go clean -modcache &&
+  echo "\n${bold}${yellow}UV prunning cache ...${reset}" && uv cache prune &&
   gem cleanup
 }
 
