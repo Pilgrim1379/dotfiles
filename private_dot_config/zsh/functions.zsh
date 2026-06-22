@@ -347,3 +347,21 @@ mise-uninstall-all-npm() {
 
   mise uninstall "${tools[@]}"
 }
+
+# -------------------------
+# Add a completion script to ~/.zfunc and rebuild the completion cache
+# -------------------------
+add-completion() {
+  local name="$1"
+  local cmd="$2"
+
+  if [[ -z "$name" || -z "$cmd" ]]; then
+    echo "Usage: add-completion <name> <completion-command>"
+    echo "Example: add-completion aube 'aube completion zsh'"
+    return 1
+  fi
+
+  eval "$cmd" > ~/.zfunc/"_${name}"
+  rm -f ~/.config/zsh/.zcompdump ~/.cache/zcompdump ~/.cache/zcompdump.stamp
+  exec zsh
+}
