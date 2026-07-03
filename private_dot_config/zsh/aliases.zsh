@@ -184,6 +184,10 @@ alias zshrc='${=EDITOR} ${ZDOTDIR:-$HOME}/.zshrc'
 alias fdd='find . -type d -name'
 alias ff='find . -type f -name'
 
+# Compdump reset
+alias compdumpfind="find ~ -name '*zcompdump*' -maxdepth 5 2>/dev/null"
+alias compdumpzap="rm -f ~/.config/zsh/.zcompdump ~/.cache/zcompdump ~/.cache/zcompdump.stamp && exec zsh"
+
 alias hgrep="fc -El 0 | grep"
 alias ps='ps -f'
 alias sortnr='sort -n -r'

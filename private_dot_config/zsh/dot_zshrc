@@ -108,6 +108,7 @@ source "$ZDOTDIR/completion_styling.zsh"
 
 # Functions, aliases, shell options
 source "$ZDOTDIR/functions.zsh"
+source "$ZDOTDIR/github.zsh"
 source "$ZDOTDIR/aliases.zsh"
 source "$ZDOTDIR/shell_options.zsh"
 
