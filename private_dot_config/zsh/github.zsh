@@ -68,6 +68,10 @@ ghcancel() {
   fi
 }
 
+gpecommit(){
+  git commit --allow-empty -m "Trigger fresh Pages deploy" && git push
+}
+
 # --- Tab completion for owner/repo argument --------------------------------
 _gh_repo_complete() {
   local -a repos
