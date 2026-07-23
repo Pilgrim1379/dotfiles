@@ -16,7 +16,7 @@ java = "temurin-25"
 ## Node ecosystem
 node  = "26"
 deno  = "2.7"
-npm = "11"
+npm = "12"
 # pnpm  = "11"
 aube = "latest"
 
@@ -142,6 +142,11 @@ if [ "$CURRENT" != "$PREVIOUS" ]; then
 fi
 '''
 
+# -----------------------------
+# Plugins
+# -----------------------------
+[plugins]
+
 
 # -----------------------------
 # Settings
@@ -167,7 +172,7 @@ not_found_auto_install = true
 task_output            = "prefix"
 paranoid               = false
 
-shorthands_file           = '~/.config/mise/shorthands.toml'
+# shorthands_file           = '~/.config/mise/shorthands.toml' # deprecated
 disable_default_registry  = false
 
 # env_file removed from global config — loading a project .env globally risks

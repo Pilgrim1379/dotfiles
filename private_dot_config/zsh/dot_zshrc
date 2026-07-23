@@ -31,6 +31,7 @@ if [[ -d "$zinit_bin" ]]; then
   path=(
     "$HOME/.bin"(N)
     "$HOME/.local/bin"(N)
+    "$HOME/.config/emacs/bin"(N)
     "$zinit_bin"
     ${path:#$zinit_bin}
   )
